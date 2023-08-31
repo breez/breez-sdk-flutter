@@ -3,6 +3,10 @@
 #include <stdlib.h>
 typedef struct _Dart_Handle* Dart_Handle;
 
+#define ESTIMATED_CLAIM_TX_VSIZE 138
+
+#define ESTIMATED_LOCKUP_TX_VSIZE 153
+
 typedef struct DartCObject DartCObject;
 
 typedef int64_t DartPort;
@@ -49,6 +53,35 @@ typedef struct wire_Config {
   struct wire_NodeConfig node_config;
 } wire_Config;
 
+typedef struct wire_SignMessageRequest {
+  struct wire_uint_8_list *message;
+} wire_SignMessageRequest;
+
+typedef struct wire_CheckMessageRequest {
+  struct wire_uint_8_list *message;
+  struct wire_uint_8_list *pubkey;
+  struct wire_uint_8_list *signature;
+} wire_CheckMessageRequest;
+
+typedef struct wire_OpeningFeeParams {
+  uint64_t min_msat;
+  uint32_t proportional;
+  struct wire_uint_8_list *valid_until;
+  uint32_t max_idle_time;
+  uint32_t max_client_to_self_delay;
+  struct wire_uint_8_list *promise;
+} wire_OpeningFeeParams;
+
+typedef struct wire_ReceivePaymentRequest {
+  uint64_t amount_sats;
+  struct wire_uint_8_list *description;
+  struct wire_uint_8_list *preimage;
+  struct wire_OpeningFeeParams *opening_fee_params;
+  bool *use_description_hash;
+  uint64_t *expiry;
+  uint32_t *cltv;
+} wire_ReceivePaymentRequest;
+
 typedef struct wire_LnUrlPayRequestData {
   struct wire_uint_8_list *callback;
   uint64_t min_sendable;
@@ -74,6 +107,19 @@ typedef struct wire_LnUrlAuthRequestData {
   struct wire_uint_8_list *url;
 } wire_LnUrlAuthRequestData;
 
+typedef struct wire_ReceiveOnchainRequest {
+  struct wire_OpeningFeeParams *opening_fee_params;
+} wire_ReceiveOnchainRequest;
+
+typedef struct wire_BuyBitcoinRequest {
+  int32_t provider;
+  struct wire_OpeningFeeParams *opening_fee_params;
+} wire_BuyBitcoinRequest;
+
+typedef struct wire_ReverseSwapFeesRequest {
+  uint64_t *send_amount_sat;
+} wire_ReverseSwapFeesRequest;
+
 typedef struct DartCObject *WireSyncReturn;
 
 void store_dart_post_cobject(DartPostCObjectFnType ptr);
@@ -86,27 +132,50 @@ uintptr_t new_dart_opaque(Dart_Handle handle);
 
 intptr_t init_frb_dart_api_dl(void *obj);
 
-void wire_initialized(int64_t port_);
-
 void wire_connect(int64_t port_, struct wire_Config *config, struct wire_uint_8_list *seed);
+
+void wire_is_initialized(int64_t port_);
+
+void wire_sync(int64_t port_);
+
+void wire_node_info(int64_t port_);
+
+void wire_disconnect(int64_t port_);
+
+void wire_sign_message(int64_t port_, struct wire_SignMessageRequest *request);
+
+void wire_check_message(int64_t port_, struct wire_CheckMessageRequest *request);
+
+void wire_mnemonic_to_seed(int64_t port_, struct wire_uint_8_list *phrase);
+
+void wire_default_config(int64_t port_,
+                         int32_t env_type,
+                         struct wire_uint_8_list *api_key,
+                         struct wire_NodeConfig *node_config);
 
 void wire_breez_events_stream(int64_t port_);
 
 void wire_breez_log_stream(int64_t port_);
 
-void wire_stop_node(int64_t port_);
+void wire_list_lsps(int64_t port_);
 
-void wire_send_payment(int64_t port_, struct wire_uint_8_list *bolt11, uint64_t *amount_sats);
+void wire_connect_lsp(int64_t port_, struct wire_uint_8_list *lsp_id);
 
-void wire_send_spontaneous_payment(int64_t port_,
-                                   struct wire_uint_8_list *node_id,
-                                   uint64_t amount_sats);
+void wire_lsp_id(int64_t port_);
 
-void wire_receive_payment(int64_t port_,
-                          uint64_t amount_sats,
-                          struct wire_uint_8_list *description);
+void wire_fetch_lsp_info(int64_t port_, struct wire_uint_8_list *id);
 
-void wire_node_info(int64_t port_);
+void wire_lsp_info(int64_t port_);
+
+void wire_close_lsp_channels(int64_t port_);
+
+void wire_backup(int64_t port_);
+
+void wire_backup_status(int64_t port_);
+
+void wire_parse_invoice(int64_t port_, struct wire_uint_8_list *invoice);
+
+void wire_parse_input(int64_t port_, struct wire_uint_8_list *input);
 
 void wire_list_payments(int64_t port_,
                         int32_t filter,
@@ -115,52 +184,13 @@ void wire_list_payments(int64_t port_,
 
 void wire_payment_by_hash(int64_t port_, struct wire_uint_8_list *hash);
 
-void wire_list_lsps(int64_t port_);
+void wire_send_payment(int64_t port_, struct wire_uint_8_list *bolt11, uint64_t *amount_sats);
 
-void wire_connect_lsp(int64_t port_, struct wire_uint_8_list *lsp_id);
+void wire_send_spontaneous_payment(int64_t port_,
+                                   struct wire_uint_8_list *node_id,
+                                   uint64_t amount_sats);
 
-void wire_fetch_lsp_info(int64_t port_, struct wire_uint_8_list *id);
-
-void wire_lsp_id(int64_t port_);
-
-void wire_fetch_fiat_rates(int64_t port_);
-
-void wire_list_fiat_currencies(int64_t port_);
-
-void wire_close_lsp_channels(int64_t port_);
-
-void wire_sweep(int64_t port_,
-                struct wire_uint_8_list *to_address,
-                uint64_t fee_rate_sats_per_vbyte);
-
-void wire_receive_onchain(int64_t port_);
-
-void wire_in_progress_swap(int64_t port_);
-
-void wire_list_refundables(int64_t port_);
-
-void wire_refund(int64_t port_,
-                 struct wire_uint_8_list *swap_address,
-                 struct wire_uint_8_list *to_address,
-                 uint32_t sat_per_vbyte);
-
-void wire_fetch_reverse_swap_fees(int64_t port_);
-
-void wire_in_progress_reverse_swaps(int64_t port_);
-
-void wire_send_onchain(int64_t port_,
-                       uint64_t amount_sat,
-                       struct wire_uint_8_list *onchain_recipient_address,
-                       struct wire_uint_8_list *pair_hash,
-                       uint64_t sat_per_vbyte);
-
-void wire_execute_command(int64_t port_, struct wire_uint_8_list *command);
-
-void wire_sync_node(int64_t port_);
-
-void wire_parse_invoice(int64_t port_, struct wire_uint_8_list *invoice);
-
-void wire_parse(int64_t port_, struct wire_uint_8_list *s);
+void wire_receive_payment(int64_t port_, struct wire_ReceivePaymentRequest *req_data);
 
 void wire_lnurl_pay(int64_t port_,
                     uint64_t user_amount_sat,
@@ -174,20 +204,46 @@ void wire_lnurl_withdraw(int64_t port_,
 
 void wire_lnurl_auth(int64_t port_, struct wire_LnUrlAuthRequestData *req_data);
 
-void wire_mnemonic_to_seed(int64_t port_, struct wire_uint_8_list *phrase);
+void wire_fetch_fiat_rates(int64_t port_);
+
+void wire_list_fiat_currencies(int64_t port_);
+
+void wire_send_onchain(int64_t port_,
+                       uint64_t amount_sat,
+                       struct wire_uint_8_list *onchain_recipient_address,
+                       struct wire_uint_8_list *pair_hash,
+                       uint64_t sat_per_vbyte);
+
+void wire_receive_onchain(int64_t port_, struct wire_ReceiveOnchainRequest *req_data);
+
+void wire_buy_bitcoin(int64_t port_, struct wire_BuyBitcoinRequest *req_data);
+
+void wire_sweep(int64_t port_,
+                struct wire_uint_8_list *to_address,
+                uint64_t fee_rate_sats_per_vbyte);
+
+void wire_list_refundables(int64_t port_);
+
+void wire_refund(int64_t port_,
+                 struct wire_uint_8_list *swap_address,
+                 struct wire_uint_8_list *to_address,
+                 uint32_t sat_per_vbyte);
+
+void wire_in_progress_swap(int64_t port_);
+
+void wire_in_progress_reverse_swaps(int64_t port_);
+
+void wire_fetch_reverse_swap_fees(int64_t port_, struct wire_ReverseSwapFeesRequest *req);
 
 void wire_recommended_fees(int64_t port_);
 
-void wire_default_config(int64_t port_,
-                         int32_t env_type,
-                         struct wire_uint_8_list *api_key,
-                         struct wire_NodeConfig *node_config);
+void wire_execute_command(int64_t port_, struct wire_uint_8_list *command);
 
-void wire_buy_bitcoin(int64_t port_, int32_t provider);
+bool *new_box_autoadd_bool_0(bool value);
 
-void wire_backup(int64_t port_);
+struct wire_BuyBitcoinRequest *new_box_autoadd_buy_bitcoin_request_0(void);
 
-void wire_backup_status(int64_t port_);
+struct wire_CheckMessageRequest *new_box_autoadd_check_message_request_0(void);
 
 struct wire_Config *new_box_autoadd_config_0(void);
 
@@ -205,6 +261,18 @@ struct wire_LnUrlWithdrawRequestData *new_box_autoadd_ln_url_withdraw_request_da
 
 struct wire_NodeConfig *new_box_autoadd_node_config_0(void);
 
+struct wire_OpeningFeeParams *new_box_autoadd_opening_fee_params_0(void);
+
+struct wire_ReceiveOnchainRequest *new_box_autoadd_receive_onchain_request_0(void);
+
+struct wire_ReceivePaymentRequest *new_box_autoadd_receive_payment_request_0(void);
+
+struct wire_ReverseSwapFeesRequest *new_box_autoadd_reverse_swap_fees_request_0(void);
+
+struct wire_SignMessageRequest *new_box_autoadd_sign_message_request_0(void);
+
+uint32_t *new_box_autoadd_u32_0(uint32_t value);
+
 uint64_t *new_box_autoadd_u64_0(uint64_t value);
 
 struct wire_uint_8_list *new_uint_8_list_0(int32_t len);
@@ -215,45 +283,51 @@ void free_WireSyncReturn(WireSyncReturn ptr);
 
 static int64_t dummy_method_to_enforce_bundling(void) {
     int64_t dummy_var = 0;
-    dummy_var ^= ((int64_t) (void*) wire_initialized);
     dummy_var ^= ((int64_t) (void*) wire_connect);
+    dummy_var ^= ((int64_t) (void*) wire_is_initialized);
+    dummy_var ^= ((int64_t) (void*) wire_sync);
+    dummy_var ^= ((int64_t) (void*) wire_node_info);
+    dummy_var ^= ((int64_t) (void*) wire_disconnect);
+    dummy_var ^= ((int64_t) (void*) wire_sign_message);
+    dummy_var ^= ((int64_t) (void*) wire_check_message);
+    dummy_var ^= ((int64_t) (void*) wire_mnemonic_to_seed);
+    dummy_var ^= ((int64_t) (void*) wire_default_config);
     dummy_var ^= ((int64_t) (void*) wire_breez_events_stream);
     dummy_var ^= ((int64_t) (void*) wire_breez_log_stream);
-    dummy_var ^= ((int64_t) (void*) wire_stop_node);
+    dummy_var ^= ((int64_t) (void*) wire_list_lsps);
+    dummy_var ^= ((int64_t) (void*) wire_connect_lsp);
+    dummy_var ^= ((int64_t) (void*) wire_lsp_id);
+    dummy_var ^= ((int64_t) (void*) wire_fetch_lsp_info);
+    dummy_var ^= ((int64_t) (void*) wire_lsp_info);
+    dummy_var ^= ((int64_t) (void*) wire_close_lsp_channels);
+    dummy_var ^= ((int64_t) (void*) wire_backup);
+    dummy_var ^= ((int64_t) (void*) wire_backup_status);
+    dummy_var ^= ((int64_t) (void*) wire_parse_invoice);
+    dummy_var ^= ((int64_t) (void*) wire_parse_input);
+    dummy_var ^= ((int64_t) (void*) wire_list_payments);
+    dummy_var ^= ((int64_t) (void*) wire_payment_by_hash);
     dummy_var ^= ((int64_t) (void*) wire_send_payment);
     dummy_var ^= ((int64_t) (void*) wire_send_spontaneous_payment);
     dummy_var ^= ((int64_t) (void*) wire_receive_payment);
-    dummy_var ^= ((int64_t) (void*) wire_node_info);
-    dummy_var ^= ((int64_t) (void*) wire_list_payments);
-    dummy_var ^= ((int64_t) (void*) wire_payment_by_hash);
-    dummy_var ^= ((int64_t) (void*) wire_list_lsps);
-    dummy_var ^= ((int64_t) (void*) wire_connect_lsp);
-    dummy_var ^= ((int64_t) (void*) wire_fetch_lsp_info);
-    dummy_var ^= ((int64_t) (void*) wire_lsp_id);
-    dummy_var ^= ((int64_t) (void*) wire_fetch_fiat_rates);
-    dummy_var ^= ((int64_t) (void*) wire_list_fiat_currencies);
-    dummy_var ^= ((int64_t) (void*) wire_close_lsp_channels);
-    dummy_var ^= ((int64_t) (void*) wire_sweep);
-    dummy_var ^= ((int64_t) (void*) wire_receive_onchain);
-    dummy_var ^= ((int64_t) (void*) wire_in_progress_swap);
-    dummy_var ^= ((int64_t) (void*) wire_list_refundables);
-    dummy_var ^= ((int64_t) (void*) wire_refund);
-    dummy_var ^= ((int64_t) (void*) wire_fetch_reverse_swap_fees);
-    dummy_var ^= ((int64_t) (void*) wire_in_progress_reverse_swaps);
-    dummy_var ^= ((int64_t) (void*) wire_send_onchain);
-    dummy_var ^= ((int64_t) (void*) wire_execute_command);
-    dummy_var ^= ((int64_t) (void*) wire_sync_node);
-    dummy_var ^= ((int64_t) (void*) wire_parse_invoice);
-    dummy_var ^= ((int64_t) (void*) wire_parse);
     dummy_var ^= ((int64_t) (void*) wire_lnurl_pay);
     dummy_var ^= ((int64_t) (void*) wire_lnurl_withdraw);
     dummy_var ^= ((int64_t) (void*) wire_lnurl_auth);
-    dummy_var ^= ((int64_t) (void*) wire_mnemonic_to_seed);
-    dummy_var ^= ((int64_t) (void*) wire_recommended_fees);
-    dummy_var ^= ((int64_t) (void*) wire_default_config);
+    dummy_var ^= ((int64_t) (void*) wire_fetch_fiat_rates);
+    dummy_var ^= ((int64_t) (void*) wire_list_fiat_currencies);
+    dummy_var ^= ((int64_t) (void*) wire_send_onchain);
+    dummy_var ^= ((int64_t) (void*) wire_receive_onchain);
     dummy_var ^= ((int64_t) (void*) wire_buy_bitcoin);
-    dummy_var ^= ((int64_t) (void*) wire_backup);
-    dummy_var ^= ((int64_t) (void*) wire_backup_status);
+    dummy_var ^= ((int64_t) (void*) wire_sweep);
+    dummy_var ^= ((int64_t) (void*) wire_list_refundables);
+    dummy_var ^= ((int64_t) (void*) wire_refund);
+    dummy_var ^= ((int64_t) (void*) wire_in_progress_swap);
+    dummy_var ^= ((int64_t) (void*) wire_in_progress_reverse_swaps);
+    dummy_var ^= ((int64_t) (void*) wire_fetch_reverse_swap_fees);
+    dummy_var ^= ((int64_t) (void*) wire_recommended_fees);
+    dummy_var ^= ((int64_t) (void*) wire_execute_command);
+    dummy_var ^= ((int64_t) (void*) new_box_autoadd_bool_0);
+    dummy_var ^= ((int64_t) (void*) new_box_autoadd_buy_bitcoin_request_0);
+    dummy_var ^= ((int64_t) (void*) new_box_autoadd_check_message_request_0);
     dummy_var ^= ((int64_t) (void*) new_box_autoadd_config_0);
     dummy_var ^= ((int64_t) (void*) new_box_autoadd_greenlight_credentials_0);
     dummy_var ^= ((int64_t) (void*) new_box_autoadd_greenlight_node_config_0);
@@ -262,6 +336,12 @@ static int64_t dummy_method_to_enforce_bundling(void) {
     dummy_var ^= ((int64_t) (void*) new_box_autoadd_ln_url_pay_request_data_0);
     dummy_var ^= ((int64_t) (void*) new_box_autoadd_ln_url_withdraw_request_data_0);
     dummy_var ^= ((int64_t) (void*) new_box_autoadd_node_config_0);
+    dummy_var ^= ((int64_t) (void*) new_box_autoadd_opening_fee_params_0);
+    dummy_var ^= ((int64_t) (void*) new_box_autoadd_receive_onchain_request_0);
+    dummy_var ^= ((int64_t) (void*) new_box_autoadd_receive_payment_request_0);
+    dummy_var ^= ((int64_t) (void*) new_box_autoadd_reverse_swap_fees_request_0);
+    dummy_var ^= ((int64_t) (void*) new_box_autoadd_sign_message_request_0);
+    dummy_var ^= ((int64_t) (void*) new_box_autoadd_u32_0);
     dummy_var ^= ((int64_t) (void*) new_box_autoadd_u64_0);
     dummy_var ^= ((int64_t) (void*) new_uint_8_list_0);
     dummy_var ^= ((int64_t) (void*) inflate_NodeConfig_Greenlight);

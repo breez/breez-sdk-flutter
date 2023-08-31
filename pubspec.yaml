@@ -1,46 +1,30 @@
 name: breez_sdk
-description: A new flutter plugin project.
-version: 0.1.3
+version: 0.0.2
 publish_to: none
-
-environment:
-  sdk: ">=2.19.6 <3.0.0"
-  flutter: ">=3.7.12"
-
-dependencies:
-  flutter:
-    sdk: flutter
+description: A new flutter plugin project.
+environment: 
+  sdk: '>=2.19.6 <3.0.0'
+  flutter: '>=3.7.12'
+dependencies: 
   fimber: ^0.7.0
-  ### flutter_rust_bridge_codegen dependencies
   ffi: ^2.0.2
   flutter_rust_bridge: 1.75.2
   freezed: ^2.3.5
   freezed_annotation: ^2.2.0
-  ###
   rxdart: ^0.27.7
-
-dev_dependencies:
-  flutter_test:
+  flutter: 
     sdk: flutter
+dev_dependencies: 
   flutter_lints: ^2.0.2
-  # The following dependencies are required by flutter_rust_bridge_codegen to
-  # be defined under dev_dependencies to generate Dart files
-  build_runner: <2.4.0 # Requires Flutter 3.10
-  ffigen: <8.0.0-dev.0 # Requires Flutter 3.10
-
-# For information on the generic Dart part of this file, see the
-# following page: https://dart.dev/tools/pub/pubspec
-
-# The following section is specific to Flutter.
-flutter:
-  # This section identifies this Flutter project as a plugin project.
-  # The 'pluginClass' and Android 'package' identifiers should not ordinarily
-  # be modified. They are used by the tooling to maintain consistency when
-  # adding or updating assets for this project.
-  plugin:
-    platforms:
-      android:
+  build_runner: '<2.4.0'
+  ffigen: '<8.0.0-dev.0'
+  flutter_test: 
+    sdk: flutter
+flutter: 
+  plugin: 
+    platforms: 
+      android: 
         package: com.breez.breez_sdk
         pluginClass: BreezSDKPlugin
-      ios:
+      ios: 
         pluginClass: BreezSDKPlugin
