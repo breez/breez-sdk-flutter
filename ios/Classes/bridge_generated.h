@@ -3,7 +3,7 @@
 #include <stdlib.h>
 typedef struct _Dart_Handle* Dart_Handle;
 
-#define SWAP_PAYMENT_FEE_EXPIRY_SECONDS (((60 * 60) * 24) * 7)
+#define SWAP_PAYMENT_FEE_EXPIRY_SECONDS (((60 * 60) * 24) * 2)
 
 #define INVOICE_PAYMENT_FEE_EXPIRY_SECONDS (60 * 60)
 
@@ -54,6 +54,7 @@ typedef struct wire_Config {
   struct wire_uint_8_list *default_lsp_id;
   struct wire_uint_8_list *api_key;
   double maxfee_percent;
+  uint64_t exemptfee_msat;
   struct wire_NodeConfig node_config;
 } wire_Config;
 
@@ -66,6 +67,17 @@ typedef struct wire_CheckMessageRequest {
   struct wire_uint_8_list *pubkey;
   struct wire_uint_8_list *signature;
 } wire_CheckMessageRequest;
+
+typedef struct wire_StaticBackupRequest {
+  struct wire_uint_8_list *working_dir;
+} wire_StaticBackupRequest;
+
+typedef struct wire_ListPaymentsRequest {
+  int32_t filter;
+  int64_t *from_timestamp;
+  int64_t *to_timestamp;
+  bool *include_failures;
+} wire_ListPaymentsRequest;
 
 typedef struct wire_OpeningFeeParams {
   uint64_t min_msat;
@@ -120,6 +132,16 @@ typedef struct wire_BuyBitcoinRequest {
   struct wire_OpeningFeeParams *opening_fee_params;
 } wire_BuyBitcoinRequest;
 
+typedef struct wire_SweepRequest {
+  struct wire_uint_8_list *to_address;
+  uint32_t fee_rate_sats_per_vbyte;
+} wire_SweepRequest;
+
+typedef struct wire_OpenChannelFeeRequest {
+  uint64_t amount_msat;
+  uint32_t *expiry;
+} wire_OpenChannelFeeRequest;
+
 typedef struct wire_ReverseSwapFeesRequest {
   uint64_t *send_amount_sat;
 } wire_ReverseSwapFeesRequest;
@@ -157,6 +179,8 @@ void wire_default_config(int64_t port_,
                          struct wire_uint_8_list *api_key,
                          struct wire_NodeConfig *node_config);
 
+void wire_static_backup(int64_t port_, struct wire_StaticBackupRequest *request);
+
 void wire_breez_events_stream(int64_t port_);
 
 void wire_breez_log_stream(int64_t port_);
@@ -181,10 +205,7 @@ void wire_parse_invoice(int64_t port_, struct wire_uint_8_list *invoice);
 
 void wire_parse_input(int64_t port_, struct wire_uint_8_list *input);
 
-void wire_list_payments(int64_t port_,
-                        int32_t filter,
-                        int64_t *from_timestamp,
-                        int64_t *to_timestamp);
+void wire_list_payments(int64_t port_, struct wire_ListPaymentsRequest *request);
 
 void wire_payment_by_hash(int64_t port_, struct wire_uint_8_list *hash);
 
@@ -222,9 +243,7 @@ void wire_receive_onchain(int64_t port_, struct wire_ReceiveOnchainRequest *req_
 
 void wire_buy_bitcoin(int64_t port_, struct wire_BuyBitcoinRequest *req_data);
 
-void wire_sweep(int64_t port_,
-                struct wire_uint_8_list *to_address,
-                uint64_t fee_rate_sats_per_vbyte);
+void wire_sweep(int64_t port_, struct wire_SweepRequest *request);
 
 void wire_list_refundables(int64_t port_);
 
@@ -236,6 +255,8 @@ void wire_refund(int64_t port_,
 void wire_in_progress_swap(int64_t port_);
 
 void wire_in_progress_reverse_swaps(int64_t port_);
+
+void wire_open_channel_fee(int64_t port_, struct wire_OpenChannelFeeRequest *req);
 
 void wire_fetch_reverse_swap_fees(int64_t port_, struct wire_ReverseSwapFeesRequest *req);
 
@@ -257,6 +278,8 @@ struct wire_GreenlightNodeConfig *new_box_autoadd_greenlight_node_config_0(void)
 
 int64_t *new_box_autoadd_i64_0(int64_t value);
 
+struct wire_ListPaymentsRequest *new_box_autoadd_list_payments_request_0(void);
+
 struct wire_LnUrlAuthRequestData *new_box_autoadd_ln_url_auth_request_data_0(void);
 
 struct wire_LnUrlPayRequestData *new_box_autoadd_ln_url_pay_request_data_0(void);
@@ -264,6 +287,8 @@ struct wire_LnUrlPayRequestData *new_box_autoadd_ln_url_pay_request_data_0(void)
 struct wire_LnUrlWithdrawRequestData *new_box_autoadd_ln_url_withdraw_request_data_0(void);
 
 struct wire_NodeConfig *new_box_autoadd_node_config_0(void);
+
+struct wire_OpenChannelFeeRequest *new_box_autoadd_open_channel_fee_request_0(void);
 
 struct wire_OpeningFeeParams *new_box_autoadd_opening_fee_params_0(void);
 
@@ -274,6 +299,10 @@ struct wire_ReceivePaymentRequest *new_box_autoadd_receive_payment_request_0(voi
 struct wire_ReverseSwapFeesRequest *new_box_autoadd_reverse_swap_fees_request_0(void);
 
 struct wire_SignMessageRequest *new_box_autoadd_sign_message_request_0(void);
+
+struct wire_StaticBackupRequest *new_box_autoadd_static_backup_request_0(void);
+
+struct wire_SweepRequest *new_box_autoadd_sweep_request_0(void);
 
 uint32_t *new_box_autoadd_u32_0(uint32_t value);
 
@@ -296,6 +325,7 @@ static int64_t dummy_method_to_enforce_bundling(void) {
     dummy_var ^= ((int64_t) (void*) wire_check_message);
     dummy_var ^= ((int64_t) (void*) wire_mnemonic_to_seed);
     dummy_var ^= ((int64_t) (void*) wire_default_config);
+    dummy_var ^= ((int64_t) (void*) wire_static_backup);
     dummy_var ^= ((int64_t) (void*) wire_breez_events_stream);
     dummy_var ^= ((int64_t) (void*) wire_breez_log_stream);
     dummy_var ^= ((int64_t) (void*) wire_list_lsps);
@@ -326,6 +356,7 @@ static int64_t dummy_method_to_enforce_bundling(void) {
     dummy_var ^= ((int64_t) (void*) wire_refund);
     dummy_var ^= ((int64_t) (void*) wire_in_progress_swap);
     dummy_var ^= ((int64_t) (void*) wire_in_progress_reverse_swaps);
+    dummy_var ^= ((int64_t) (void*) wire_open_channel_fee);
     dummy_var ^= ((int64_t) (void*) wire_fetch_reverse_swap_fees);
     dummy_var ^= ((int64_t) (void*) wire_recommended_fees);
     dummy_var ^= ((int64_t) (void*) wire_execute_command);
@@ -336,15 +367,19 @@ static int64_t dummy_method_to_enforce_bundling(void) {
     dummy_var ^= ((int64_t) (void*) new_box_autoadd_greenlight_credentials_0);
     dummy_var ^= ((int64_t) (void*) new_box_autoadd_greenlight_node_config_0);
     dummy_var ^= ((int64_t) (void*) new_box_autoadd_i64_0);
+    dummy_var ^= ((int64_t) (void*) new_box_autoadd_list_payments_request_0);
     dummy_var ^= ((int64_t) (void*) new_box_autoadd_ln_url_auth_request_data_0);
     dummy_var ^= ((int64_t) (void*) new_box_autoadd_ln_url_pay_request_data_0);
     dummy_var ^= ((int64_t) (void*) new_box_autoadd_ln_url_withdraw_request_data_0);
     dummy_var ^= ((int64_t) (void*) new_box_autoadd_node_config_0);
+    dummy_var ^= ((int64_t) (void*) new_box_autoadd_open_channel_fee_request_0);
     dummy_var ^= ((int64_t) (void*) new_box_autoadd_opening_fee_params_0);
     dummy_var ^= ((int64_t) (void*) new_box_autoadd_receive_onchain_request_0);
     dummy_var ^= ((int64_t) (void*) new_box_autoadd_receive_payment_request_0);
     dummy_var ^= ((int64_t) (void*) new_box_autoadd_reverse_swap_fees_request_0);
     dummy_var ^= ((int64_t) (void*) new_box_autoadd_sign_message_request_0);
+    dummy_var ^= ((int64_t) (void*) new_box_autoadd_static_backup_request_0);
+    dummy_var ^= ((int64_t) (void*) new_box_autoadd_sweep_request_0);
     dummy_var ^= ((int64_t) (void*) new_box_autoadd_u32_0);
     dummy_var ^= ((int64_t) (void*) new_box_autoadd_u64_0);
     dummy_var ^= ((int64_t) (void*) new_uint_8_list_0);
