@@ -29,6 +29,11 @@ abstract class BreezSdkCore {
 
   FlutterRustBridgeTaskConstMeta get kSyncConstMeta;
 
+  /// See [BreezServices::node_credentials]
+  Future<NodeCredentials?> nodeCredentials({dynamic hint});
+
+  FlutterRustBridgeTaskConstMeta get kNodeCredentialsConstMeta;
+
   /// See [BreezServices::node_info]
   Future<NodeState> nodeInfo({dynamic hint});
 
@@ -108,6 +113,10 @@ abstract class BreezSdkCore {
 
   FlutterRustBridgeTaskConstMeta get kCloseLspChannelsConstMeta;
 
+  Future<void> registerWebhook({required String webhookUrl, dynamic hint});
+
+  FlutterRustBridgeTaskConstMeta get kRegisterWebhookConstMeta;
+
   /// See [BreezServices::backup]
   Future<void> backup({dynamic hint});
 
@@ -166,6 +175,16 @@ abstract class BreezSdkCore {
   Future<LnUrlCallbackStatus> lnurlAuth({required LnUrlAuthRequestData reqData, dynamic hint});
 
   FlutterRustBridgeTaskConstMeta get kLnurlAuthConstMeta;
+
+  /// See [BreezServices::service_health_check]
+  Future<ServiceHealthCheckResponse> serviceHealthCheck({dynamic hint});
+
+  FlutterRustBridgeTaskConstMeta get kServiceHealthCheckConstMeta;
+
+  /// See [BreezServices::report_issue]
+  Future<void> reportIssue({required ReportIssueRequest req, dynamic hint});
+
+  FlutterRustBridgeTaskConstMeta get kReportIssueConstMeta;
 
   /// See [BreezServices::fetch_fiat_rates]
   Future<List<Rate>> fetchFiatRates({dynamic hint});
@@ -265,6 +284,16 @@ class AesSuccessActionDataDecrypted {
     required this.description,
     required this.plaintext,
   });
+}
+
+@freezed
+sealed class AesSuccessActionDataResult with _$AesSuccessActionDataResult {
+  const factory AesSuccessActionDataResult.decrypted({
+    required AesSuccessActionDataDecrypted data,
+  }) = AesSuccessActionDataResult_Decrypted;
+  const factory AesSuccessActionDataResult.errorStatus({
+    required String reason,
+  }) = AesSuccessActionDataResult_ErrorStatus;
 }
 
 class BackupFailedData {
@@ -516,6 +545,13 @@ class GreenlightNodeConfig {
   });
 }
 
+/// Indicates the different service health check statuses.
+enum HealthCheckStatus {
+  Operational,
+  Maintenance,
+  ServiceDisruption,
+}
+
 @freezed
 sealed class InputType with _$InputType {
   /// # Supported standards
@@ -579,10 +615,12 @@ sealed class InputType with _$InputType {
 class InvoicePaidDetails {
   final String paymentHash;
   final String bolt11;
+  final Payment? payment;
 
   const InvoicePaidDetails({
     required this.paymentHash,
     required this.bolt11,
+    this.payment,
   });
 }
 
@@ -612,6 +650,7 @@ class ListPaymentsRequest {
 /// Wrapper for a BOLT11 LN invoice
 class LNInvoice {
   final String bolt11;
+  final Network network;
   final String payeePubkey;
   final String paymentHash;
   final String? description;
@@ -625,6 +664,7 @@ class LNInvoice {
 
   const LNInvoice({
     required this.bolt11,
+    required this.network,
     required this.payeePubkey,
     required this.paymentHash,
     this.description,
@@ -1005,6 +1045,13 @@ sealed class NodeConfig with _$NodeConfig {
   }) = NodeConfig_Greenlight;
 }
 
+@freezed
+sealed class NodeCredentials with _$NodeCredentials {
+  const factory NodeCredentials.greenlight({
+    required GreenlightCredentials credentials,
+  }) = NodeCredentials_Greenlight;
+}
+
 /// The node state of a Greenlight LN node running in the cloud
 class NodeState {
   final String id;
@@ -1187,11 +1234,11 @@ class PrepareRefundResponse {
 /// satoshis per vbyte which will be converted to absolute satoshis.
 class PrepareSweepRequest {
   final String toAddress;
-  final int satsPerVbyte;
+  final int satPerVbyte;
 
   const PrepareSweepRequest({
     required this.toAddress,
-    required this.satsPerVbyte,
+    required this.satPerVbyte,
   });
 }
 
@@ -1309,6 +1356,26 @@ class RefundResponse {
 
   const RefundResponse({
     required this.refundTxId,
+  });
+}
+
+@freezed
+sealed class ReportIssueRequest with _$ReportIssueRequest {
+  const factory ReportIssueRequest.paymentFailure({
+    required ReportPaymentFailureDetails data,
+  }) = ReportIssueRequest_PaymentFailure;
+}
+
+class ReportPaymentFailureDetails {
+  /// The payment hash of the payment failure
+  final String paymentHash;
+
+  /// The comment or error text
+  final String? comment;
+
+  const ReportPaymentFailureDetails({
+    required this.paymentHash,
+    this.comment,
   });
 }
 
@@ -1505,6 +1572,15 @@ class SendSpontaneousPaymentRequest {
   });
 }
 
+/// Represents a service health check response.
+class ServiceHealthCheckResponse {
+  final HealthCheckStatus status;
+
+  const ServiceHealthCheckResponse({
+    required this.status,
+  });
+}
+
 /// Request to sign a message with the node's private key.
 class SignMessageRequest {
   /// The message to be signed by the node's private key.
@@ -1548,7 +1624,7 @@ sealed class SuccessActionProcessed with _$SuccessActionProcessed {
   ///
   /// See [AesSuccessActionDataDecrypted] for decrypted payload
   const factory SuccessActionProcessed.aes({
-    required AesSuccessActionDataDecrypted data,
+    required AesSuccessActionDataResult result,
   }) = SuccessActionProcessed_Aes;
 
   /// See [SuccessAction::Message]
@@ -1633,11 +1709,11 @@ enum SwapStatus {
 
 class SweepRequest {
   final String toAddress;
-  final int feeRateSatsPerVbyte;
+  final int satPerVbyte;
 
   const SweepRequest({
     required this.toAddress,
-    required this.feeRateSatsPerVbyte,
+    required this.satPerVbyte,
   });
 }
 
@@ -1742,6 +1818,21 @@ class BreezSdkCoreImpl implements BreezSdkCore {
 
   FlutterRustBridgeTaskConstMeta get kSyncConstMeta => const FlutterRustBridgeTaskConstMeta(
         debugName: "sync",
+        argNames: [],
+      );
+
+  Future<NodeCredentials?> nodeCredentials({dynamic hint}) {
+    return _platform.executeNormal(FlutterRustBridgeTask(
+      callFfi: (port_) => _platform.inner.wire_node_credentials(port_),
+      parseSuccessData: _wire2api_opt_box_autoadd_node_credentials,
+      constMeta: kNodeCredentialsConstMeta,
+      argValues: [],
+      hint: hint,
+    ));
+  }
+
+  FlutterRustBridgeTaskConstMeta get kNodeCredentialsConstMeta => const FlutterRustBridgeTaskConstMeta(
+        debugName: "node_credentials",
         argNames: [],
       );
 
@@ -1983,6 +2074,22 @@ class BreezSdkCoreImpl implements BreezSdkCore {
         argNames: [],
       );
 
+  Future<void> registerWebhook({required String webhookUrl, dynamic hint}) {
+    var arg0 = _platform.api2wire_String(webhookUrl);
+    return _platform.executeNormal(FlutterRustBridgeTask(
+      callFfi: (port_) => _platform.inner.wire_register_webhook(port_, arg0),
+      parseSuccessData: _wire2api_unit,
+      constMeta: kRegisterWebhookConstMeta,
+      argValues: [webhookUrl],
+      hint: hint,
+    ));
+  }
+
+  FlutterRustBridgeTaskConstMeta get kRegisterWebhookConstMeta => const FlutterRustBridgeTaskConstMeta(
+        debugName: "register_webhook",
+        argNames: ["webhookUrl"],
+      );
+
   Future<void> backup({dynamic hint}) {
     return _platform.executeNormal(FlutterRustBridgeTask(
       callFfi: (port_) => _platform.inner.wire_backup(port_),
@@ -2172,6 +2279,37 @@ class BreezSdkCoreImpl implements BreezSdkCore {
   FlutterRustBridgeTaskConstMeta get kLnurlAuthConstMeta => const FlutterRustBridgeTaskConstMeta(
         debugName: "lnurl_auth",
         argNames: ["reqData"],
+      );
+
+  Future<ServiceHealthCheckResponse> serviceHealthCheck({dynamic hint}) {
+    return _platform.executeNormal(FlutterRustBridgeTask(
+      callFfi: (port_) => _platform.inner.wire_service_health_check(port_),
+      parseSuccessData: _wire2api_service_health_check_response,
+      constMeta: kServiceHealthCheckConstMeta,
+      argValues: [],
+      hint: hint,
+    ));
+  }
+
+  FlutterRustBridgeTaskConstMeta get kServiceHealthCheckConstMeta => const FlutterRustBridgeTaskConstMeta(
+        debugName: "service_health_check",
+        argNames: [],
+      );
+
+  Future<void> reportIssue({required ReportIssueRequest req, dynamic hint}) {
+    var arg0 = _platform.api2wire_box_autoadd_report_issue_request(req);
+    return _platform.executeNormal(FlutterRustBridgeTask(
+      callFfi: (port_) => _platform.inner.wire_report_issue(port_, arg0),
+      parseSuccessData: _wire2api_unit,
+      constMeta: kReportIssueConstMeta,
+      argValues: [req],
+      hint: hint,
+    ));
+  }
+
+  FlutterRustBridgeTaskConstMeta get kReportIssueConstMeta => const FlutterRustBridgeTaskConstMeta(
+        debugName: "report_issue",
+        argNames: ["req"],
       );
 
   Future<List<Rate>> fetchFiatRates({dynamic hint}) {
@@ -2461,6 +2599,21 @@ class BreezSdkCoreImpl implements BreezSdkCore {
     );
   }
 
+  AesSuccessActionDataResult _wire2api_aes_success_action_data_result(dynamic raw) {
+    switch (raw[0]) {
+      case 0:
+        return AesSuccessActionDataResult_Decrypted(
+          data: _wire2api_box_autoadd_aes_success_action_data_decrypted(raw[1]),
+        );
+      case 1:
+        return AesSuccessActionDataResult_ErrorStatus(
+          reason: _wire2api_String(raw[1]),
+        );
+      default:
+        throw Exception("unreachable");
+    }
+  }
+
   BackupFailedData _wire2api_backup_failed_data(dynamic raw) {
     final arr = raw as List<dynamic>;
     if (arr.length != 1) throw Exception('unexpected arr length: expect 1 but see ${arr.length}');
@@ -2496,6 +2649,10 @@ class BreezSdkCoreImpl implements BreezSdkCore {
 
   AesSuccessActionDataDecrypted _wire2api_box_autoadd_aes_success_action_data_decrypted(dynamic raw) {
     return _wire2api_aes_success_action_data_decrypted(raw);
+  }
+
+  AesSuccessActionDataResult _wire2api_box_autoadd_aes_success_action_data_result(dynamic raw) {
+    return _wire2api_aes_success_action_data_result(raw);
   }
 
   BackupFailedData _wire2api_box_autoadd_backup_failed_data(dynamic raw) {
@@ -2568,6 +2725,10 @@ class BreezSdkCoreImpl implements BreezSdkCore {
 
   MessageSuccessActionData _wire2api_box_autoadd_message_success_action_data(dynamic raw) {
     return _wire2api_message_success_action_data(raw);
+  }
+
+  NodeCredentials _wire2api_box_autoadd_node_credentials(dynamic raw) {
+    return _wire2api_node_credentials(raw);
   }
 
   OpeningFeeParams _wire2api_box_autoadd_opening_fee_params(dynamic raw) {
@@ -2733,6 +2894,10 @@ class BreezSdkCoreImpl implements BreezSdkCore {
     );
   }
 
+  HealthCheckStatus _wire2api_health_check_status(dynamic raw) {
+    return HealthCheckStatus.values[raw as int];
+  }
+
   int _wire2api_i32(dynamic raw) {
     return raw as int;
   }
@@ -2782,10 +2947,11 @@ class BreezSdkCoreImpl implements BreezSdkCore {
 
   InvoicePaidDetails _wire2api_invoice_paid_details(dynamic raw) {
     final arr = raw as List<dynamic>;
-    if (arr.length != 2) throw Exception('unexpected arr length: expect 2 but see ${arr.length}');
+    if (arr.length != 3) throw Exception('unexpected arr length: expect 3 but see ${arr.length}');
     return InvoicePaidDetails(
       paymentHash: _wire2api_String(arr[0]),
       bolt11: _wire2api_String(arr[1]),
+      payment: _wire2api_opt_box_autoadd_payment(arr[2]),
     );
   }
 
@@ -2839,19 +3005,20 @@ class BreezSdkCoreImpl implements BreezSdkCore {
 
   LNInvoice _wire2api_ln_invoice(dynamic raw) {
     final arr = raw as List<dynamic>;
-    if (arr.length != 11) throw Exception('unexpected arr length: expect 11 but see ${arr.length}');
+    if (arr.length != 12) throw Exception('unexpected arr length: expect 12 but see ${arr.length}');
     return LNInvoice(
       bolt11: _wire2api_String(arr[0]),
-      payeePubkey: _wire2api_String(arr[1]),
-      paymentHash: _wire2api_String(arr[2]),
-      description: _wire2api_opt_String(arr[3]),
-      descriptionHash: _wire2api_opt_String(arr[4]),
-      amountMsat: _wire2api_opt_box_autoadd_u64(arr[5]),
-      timestamp: _wire2api_u64(arr[6]),
-      expiry: _wire2api_u64(arr[7]),
-      routingHints: _wire2api_list_route_hint(arr[8]),
-      paymentSecret: _wire2api_uint_8_list(arr[9]),
-      minFinalCltvExpiryDelta: _wire2api_u64(arr[10]),
+      network: _wire2api_network(arr[1]),
+      payeePubkey: _wire2api_String(arr[2]),
+      paymentHash: _wire2api_String(arr[3]),
+      description: _wire2api_opt_String(arr[4]),
+      descriptionHash: _wire2api_opt_String(arr[5]),
+      amountMsat: _wire2api_opt_box_autoadd_u64(arr[6]),
+      timestamp: _wire2api_u64(arr[7]),
+      expiry: _wire2api_u64(arr[8]),
+      routingHints: _wire2api_list_route_hint(arr[9]),
+      paymentSecret: _wire2api_uint_8_list(arr[10]),
+      minFinalCltvExpiryDelta: _wire2api_u64(arr[11]),
     );
   }
 
@@ -3070,6 +3237,17 @@ class BreezSdkCoreImpl implements BreezSdkCore {
     }
   }
 
+  NodeCredentials _wire2api_node_credentials(dynamic raw) {
+    switch (raw[0]) {
+      case 0:
+        return NodeCredentials_Greenlight(
+          credentials: _wire2api_box_autoadd_greenlight_credentials(raw[1]),
+        );
+      default:
+        throw Exception("unreachable");
+    }
+  }
+
   NodeState _wire2api_node_state(dynamic raw) {
     final arr = raw as List<dynamic>;
     if (arr.length != 11) throw Exception('unexpected arr length: expect 11 but see ${arr.length}');
@@ -3140,6 +3318,10 @@ class BreezSdkCoreImpl implements BreezSdkCore {
 
   LspInformation? _wire2api_opt_box_autoadd_lsp_information(dynamic raw) {
     return raw == null ? null : _wire2api_box_autoadd_lsp_information(raw);
+  }
+
+  NodeCredentials? _wire2api_opt_box_autoadd_node_credentials(dynamic raw) {
+    return raw == null ? null : _wire2api_box_autoadd_node_credentials(raw);
   }
 
   OpeningFeeParams? _wire2api_opt_box_autoadd_opening_fee_params(dynamic raw) {
@@ -3352,6 +3534,14 @@ class BreezSdkCoreImpl implements BreezSdkCore {
     );
   }
 
+  ServiceHealthCheckResponse _wire2api_service_health_check_response(dynamic raw) {
+    final arr = raw as List<dynamic>;
+    if (arr.length != 1) throw Exception('unexpected arr length: expect 1 but see ${arr.length}');
+    return ServiceHealthCheckResponse(
+      status: _wire2api_health_check_status(arr[0]),
+    );
+  }
+
   SignMessageResponse _wire2api_sign_message_response(dynamic raw) {
     final arr = raw as List<dynamic>;
     if (arr.length != 1) throw Exception('unexpected arr length: expect 1 but see ${arr.length}');
@@ -3372,7 +3562,7 @@ class BreezSdkCoreImpl implements BreezSdkCore {
     switch (raw[0]) {
       case 0:
         return SuccessActionProcessed_Aes(
-          data: _wire2api_box_autoadd_aes_success_action_data_decrypted(raw[1]),
+          result: _wire2api_box_autoadd_aes_success_action_data_result(raw[1]),
         );
       case 1:
         return SuccessActionProcessed_Message(
@@ -3686,6 +3876,21 @@ class BreezSdkCorePlatform extends FlutterRustBridgeBase<BreezSdkCoreWire> {
   }
 
   @protected
+  ffi.Pointer<wire_ReportIssueRequest> api2wire_box_autoadd_report_issue_request(ReportIssueRequest raw) {
+    final ptr = inner.new_box_autoadd_report_issue_request_0();
+    _api_fill_to_wire_report_issue_request(raw, ptr.ref);
+    return ptr;
+  }
+
+  @protected
+  ffi.Pointer<wire_ReportPaymentFailureDetails> api2wire_box_autoadd_report_payment_failure_details(
+      ReportPaymentFailureDetails raw) {
+    final ptr = inner.new_box_autoadd_report_payment_failure_details_0();
+    _api_fill_to_wire_report_payment_failure_details(raw, ptr.ref);
+    return ptr;
+  }
+
+  @protected
   ffi.Pointer<wire_ReverseSwapFeesRequest> api2wire_box_autoadd_reverse_swap_fees_request(
       ReverseSwapFeesRequest raw) {
     final ptr = inner.new_box_autoadd_reverse_swap_fees_request_0();
@@ -3905,6 +4110,16 @@ class BreezSdkCorePlatform extends FlutterRustBridgeBase<BreezSdkCoreWire> {
     _api_fill_to_wire_refund_request(apiObj, wireObj.ref);
   }
 
+  void _api_fill_to_wire_box_autoadd_report_issue_request(
+      ReportIssueRequest apiObj, ffi.Pointer<wire_ReportIssueRequest> wireObj) {
+    _api_fill_to_wire_report_issue_request(apiObj, wireObj.ref);
+  }
+
+  void _api_fill_to_wire_box_autoadd_report_payment_failure_details(
+      ReportPaymentFailureDetails apiObj, ffi.Pointer<wire_ReportPaymentFailureDetails> wireObj) {
+    _api_fill_to_wire_report_payment_failure_details(apiObj, wireObj.ref);
+  }
+
   void _api_fill_to_wire_box_autoadd_reverse_swap_fees_request(
       ReverseSwapFeesRequest apiObj, ffi.Pointer<wire_ReverseSwapFeesRequest> wireObj) {
     _api_fill_to_wire_reverse_swap_fees_request(apiObj, wireObj.ref);
@@ -4070,7 +4285,7 @@ class BreezSdkCorePlatform extends FlutterRustBridgeBase<BreezSdkCoreWire> {
 
   void _api_fill_to_wire_prepare_sweep_request(PrepareSweepRequest apiObj, wire_PrepareSweepRequest wireObj) {
     wireObj.to_address = api2wire_String(apiObj.toAddress);
-    wireObj.sats_per_vbyte = api2wire_u64(apiObj.satsPerVbyte);
+    wireObj.sat_per_vbyte = api2wire_u64(apiObj.satPerVbyte);
   }
 
   void _api_fill_to_wire_receive_onchain_request(
@@ -4093,6 +4308,22 @@ class BreezSdkCorePlatform extends FlutterRustBridgeBase<BreezSdkCoreWire> {
     wireObj.swap_address = api2wire_String(apiObj.swapAddress);
     wireObj.to_address = api2wire_String(apiObj.toAddress);
     wireObj.sat_per_vbyte = api2wire_u32(apiObj.satPerVbyte);
+  }
+
+  void _api_fill_to_wire_report_issue_request(ReportIssueRequest apiObj, wire_ReportIssueRequest wireObj) {
+    if (apiObj is ReportIssueRequest_PaymentFailure) {
+      var pre_data = api2wire_box_autoadd_report_payment_failure_details(apiObj.data);
+      wireObj.tag = 0;
+      wireObj.kind = inner.inflate_ReportIssueRequest_PaymentFailure();
+      wireObj.kind.ref.PaymentFailure.ref.data = pre_data;
+      return;
+    }
+  }
+
+  void _api_fill_to_wire_report_payment_failure_details(
+      ReportPaymentFailureDetails apiObj, wire_ReportPaymentFailureDetails wireObj) {
+    wireObj.payment_hash = api2wire_String(apiObj.paymentHash);
+    wireObj.comment = api2wire_opt_String(apiObj.comment);
   }
 
   void _api_fill_to_wire_reverse_swap_fees_request(
@@ -4128,7 +4359,7 @@ class BreezSdkCorePlatform extends FlutterRustBridgeBase<BreezSdkCoreWire> {
 
   void _api_fill_to_wire_sweep_request(SweepRequest apiObj, wire_SweepRequest wireObj) {
     wireObj.to_address = api2wire_String(apiObj.toAddress);
-    wireObj.fee_rate_sats_per_vbyte = api2wire_u32(apiObj.feeRateSatsPerVbyte);
+    wireObj.sat_per_vbyte = api2wire_u32(apiObj.satPerVbyte);
   }
 }
 
@@ -4257,6 +4488,18 @@ class BreezSdkCoreWire implements FlutterRustBridgeWireBase {
 
   late final _wire_syncPtr = _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Int64)>>('wire_sync');
   late final _wire_sync = _wire_syncPtr.asFunction<void Function(int)>();
+
+  void wire_node_credentials(
+    int port_,
+  ) {
+    return _wire_node_credentials(
+      port_,
+    );
+  }
+
+  late final _wire_node_credentialsPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Int64)>>('wire_node_credentials');
+  late final _wire_node_credentials = _wire_node_credentialsPtr.asFunction<void Function(int)>();
 
   void wire_node_info(
     int port_,
@@ -4467,6 +4710,22 @@ class BreezSdkCoreWire implements FlutterRustBridgeWireBase {
       _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Int64)>>('wire_close_lsp_channels');
   late final _wire_close_lsp_channels = _wire_close_lsp_channelsPtr.asFunction<void Function(int)>();
 
+  void wire_register_webhook(
+    int port_,
+    ffi.Pointer<wire_uint_8_list> webhook_url,
+  ) {
+    return _wire_register_webhook(
+      port_,
+      webhook_url,
+    );
+  }
+
+  late final _wire_register_webhookPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Int64, ffi.Pointer<wire_uint_8_list>)>>(
+          'wire_register_webhook');
+  late final _wire_register_webhook =
+      _wire_register_webhookPtr.asFunction<void Function(int, ffi.Pointer<wire_uint_8_list>)>();
+
   void wire_backup(
     int port_,
   ) {
@@ -4649,6 +4908,34 @@ class BreezSdkCoreWire implements FlutterRustBridgeWireBase {
           'wire_lnurl_auth');
   late final _wire_lnurl_auth =
       _wire_lnurl_authPtr.asFunction<void Function(int, ffi.Pointer<wire_LnUrlAuthRequestData>)>();
+
+  void wire_service_health_check(
+    int port_,
+  ) {
+    return _wire_service_health_check(
+      port_,
+    );
+  }
+
+  late final _wire_service_health_checkPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Int64)>>('wire_service_health_check');
+  late final _wire_service_health_check = _wire_service_health_checkPtr.asFunction<void Function(int)>();
+
+  void wire_report_issue(
+    int port_,
+    ffi.Pointer<wire_ReportIssueRequest> req,
+  ) {
+    return _wire_report_issue(
+      port_,
+      req,
+    );
+  }
+
+  late final _wire_report_issuePtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Int64, ffi.Pointer<wire_ReportIssueRequest>)>>(
+          'wire_report_issue');
+  late final _wire_report_issue =
+      _wire_report_issuePtr.asFunction<void Function(int, ffi.Pointer<wire_ReportIssueRequest>)>();
 
   void wire_fetch_fiat_rates(
     int port_,
@@ -5087,6 +5374,27 @@ class BreezSdkCoreWire implements FlutterRustBridgeWireBase {
   late final _new_box_autoadd_refund_request_0 =
       _new_box_autoadd_refund_request_0Ptr.asFunction<ffi.Pointer<wire_RefundRequest> Function()>();
 
+  ffi.Pointer<wire_ReportIssueRequest> new_box_autoadd_report_issue_request_0() {
+    return _new_box_autoadd_report_issue_request_0();
+  }
+
+  late final _new_box_autoadd_report_issue_request_0Ptr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<wire_ReportIssueRequest> Function()>>(
+          'new_box_autoadd_report_issue_request_0');
+  late final _new_box_autoadd_report_issue_request_0 = _new_box_autoadd_report_issue_request_0Ptr
+      .asFunction<ffi.Pointer<wire_ReportIssueRequest> Function()>();
+
+  ffi.Pointer<wire_ReportPaymentFailureDetails> new_box_autoadd_report_payment_failure_details_0() {
+    return _new_box_autoadd_report_payment_failure_details_0();
+  }
+
+  late final _new_box_autoadd_report_payment_failure_details_0Ptr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<wire_ReportPaymentFailureDetails> Function()>>(
+          'new_box_autoadd_report_payment_failure_details_0');
+  late final _new_box_autoadd_report_payment_failure_details_0 =
+      _new_box_autoadd_report_payment_failure_details_0Ptr
+          .asFunction<ffi.Pointer<wire_ReportPaymentFailureDetails> Function()>();
+
   ffi.Pointer<wire_ReverseSwapFeesRequest> new_box_autoadd_reverse_swap_fees_request_0() {
     return _new_box_autoadd_reverse_swap_fees_request_0();
   }
@@ -5219,6 +5527,16 @@ class BreezSdkCoreWire implements FlutterRustBridgeWireBase {
       _lookup<ffi.NativeFunction<ffi.Pointer<NodeConfigKind> Function()>>('inflate_NodeConfig_Greenlight');
   late final _inflate_NodeConfig_Greenlight =
       _inflate_NodeConfig_GreenlightPtr.asFunction<ffi.Pointer<NodeConfigKind> Function()>();
+
+  ffi.Pointer<ReportIssueRequestKind> inflate_ReportIssueRequest_PaymentFailure() {
+    return _inflate_ReportIssueRequest_PaymentFailure();
+  }
+
+  late final _inflate_ReportIssueRequest_PaymentFailurePtr =
+      _lookup<ffi.NativeFunction<ffi.Pointer<ReportIssueRequestKind> Function()>>(
+          'inflate_ReportIssueRequest_PaymentFailure');
+  late final _inflate_ReportIssueRequest_PaymentFailure = _inflate_ReportIssueRequest_PaymentFailurePtr
+      .asFunction<ffi.Pointer<ReportIssueRequestKind> Function()>();
 
   void free_WireSyncReturn(
     WireSyncReturn ptr,
@@ -5441,6 +5759,27 @@ final class wire_LnUrlAuthRequestData extends ffi.Struct {
   external ffi.Pointer<wire_uint_8_list> url;
 }
 
+final class wire_ReportPaymentFailureDetails extends ffi.Struct {
+  external ffi.Pointer<wire_uint_8_list> payment_hash;
+
+  external ffi.Pointer<wire_uint_8_list> comment;
+}
+
+final class wire_ReportIssueRequest_PaymentFailure extends ffi.Struct {
+  external ffi.Pointer<wire_ReportPaymentFailureDetails> data;
+}
+
+final class ReportIssueRequestKind extends ffi.Union {
+  external ffi.Pointer<wire_ReportIssueRequest_PaymentFailure> PaymentFailure;
+}
+
+final class wire_ReportIssueRequest extends ffi.Struct {
+  @ffi.Int32()
+  external int tag;
+
+  external ffi.Pointer<ReportIssueRequestKind> kind;
+}
+
 final class wire_SendOnchainRequest extends ffi.Struct {
   @ffi.Uint64()
   external int amount_sat;
@@ -5468,14 +5807,14 @@ final class wire_SweepRequest extends ffi.Struct {
   external ffi.Pointer<wire_uint_8_list> to_address;
 
   @ffi.Uint32()
-  external int fee_rate_sats_per_vbyte;
+  external int sat_per_vbyte;
 }
 
 final class wire_PrepareSweepRequest extends ffi.Struct {
   external ffi.Pointer<wire_uint_8_list> to_address;
 
   @ffi.Uint64()
-  external int sats_per_vbyte;
+  external int sat_per_vbyte;
 }
 
 final class wire_PrepareRefundRequest extends ffi.Struct {

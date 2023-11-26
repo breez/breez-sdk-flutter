@@ -66,6 +66,13 @@ class BreezSDK {
 
   Stream<NodeState?> get nodeStateStream => nodeStateController.stream;
 
+  /// Register for webhook callbacks at the given `webhook_url` whenever a new payment is received.
+  ///
+  /// More webhook types may be supported in the future.
+  Future<void> registerWebhook({required String webhookUrl}) async {
+    return _lnToolkit.registerWebhook(webhookUrl: webhookUrl);
+  }
+
   /// connect initializes the global NodeService, schedule the node to run in the cloud and
   /// run the signer. This must be called in order to start communicate with the node
   ///
@@ -286,10 +293,6 @@ class BreezSDK {
 
   /* On-Chain Swap API's */
 
-  Future<MaxReverseSwapAmountResponse> maxReverseSwapAmount() async {
-    return await _lnToolkit.maxReverseSwapAmount();
-  }
-
   /// Creates a reverse swap and attempts to pay the HODL invoice
   Future<SendOnchainResponse> sendOnchain({
     required SendOnchainRequest req,
@@ -318,6 +321,15 @@ class BreezSDK {
     final sweepResponse = await _lnToolkit.sweep(req: req);
     await listPayments(req: const ListPaymentsRequest());
     return sweepResponse;
+  }
+
+  /// Returns the max amount that can be sent on-chain using the send_onchain method.
+  /// The returned amount is the sum of the max amount that can be sent on each channel
+  /// minus the expected fees.
+  /// This is possible since the route to the swapper node is known in advance and is expected
+  /// to consist of maximum 3 hops.
+  Future<MaxReverseSwapAmountResponse> maxReverseSwapAmount() async {
+    return await _lnToolkit.maxReverseSwapAmount();
   }
 
   /* Refundables API's */
@@ -371,15 +383,23 @@ class BreezSDK {
   Future<RecommendedFees> recommendedFees() async => await _lnToolkit.recommendedFees();
 
   Future<PrepareSweepResponse> prepareSweep({
-    required String address,
-    required int satsPerVbyte,
+    required PrepareSweepRequest req,
   }) async =>
-      _lnToolkit.prepareSweep(
-        req: PrepareSweepRequest(
-          toAddress: address,
-          satsPerVbyte: satsPerVbyte,
-        ),
-      );
+      _lnToolkit.prepareSweep(req: req);
+
+  /* Support API's */
+
+  /// Send an issue report using the Support API.
+  /// - `ReportIssueRequest.paymentFailure` sends a payment failure report to the Support API
+  ///   using the provided `paymentHash` to lookup the failed `Payment` and the current `NodeState`.
+  Future<void> reportIssue({
+    required ReportIssueRequest req,
+  }) async {
+    return await _lnToolkit.reportIssue(req: req);
+  }
+
+  /// Fetches the service health check from the support API.
+  Future<ServiceHealthCheckResponse> serviceHealthCheck() async => await _lnToolkit.serviceHealthCheck();
 
   /* CLI API's */
 

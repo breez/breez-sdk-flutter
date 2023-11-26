@@ -15,6 +15,339 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
+mixin _$AesSuccessActionDataResult {
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(AesSuccessActionDataDecrypted data) decrypted,
+    required TResult Function(String reason) errorStatus,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(AesSuccessActionDataDecrypted data)? decrypted,
+    TResult? Function(String reason)? errorStatus,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(AesSuccessActionDataDecrypted data)? decrypted,
+    TResult Function(String reason)? errorStatus,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(AesSuccessActionDataResult_Decrypted value) decrypted,
+    required TResult Function(AesSuccessActionDataResult_ErrorStatus value) errorStatus,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(AesSuccessActionDataResult_Decrypted value)? decrypted,
+    TResult? Function(AesSuccessActionDataResult_ErrorStatus value)? errorStatus,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(AesSuccessActionDataResult_Decrypted value)? decrypted,
+    TResult Function(AesSuccessActionDataResult_ErrorStatus value)? errorStatus,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $AesSuccessActionDataResultCopyWith<$Res> {
+  factory $AesSuccessActionDataResultCopyWith(
+          AesSuccessActionDataResult value, $Res Function(AesSuccessActionDataResult) then) =
+      _$AesSuccessActionDataResultCopyWithImpl<$Res, AesSuccessActionDataResult>;
+}
+
+/// @nodoc
+class _$AesSuccessActionDataResultCopyWithImpl<$Res, $Val extends AesSuccessActionDataResult>
+    implements $AesSuccessActionDataResultCopyWith<$Res> {
+  _$AesSuccessActionDataResultCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+}
+
+/// @nodoc
+abstract class _$$AesSuccessActionDataResult_DecryptedImplCopyWith<$Res> {
+  factory _$$AesSuccessActionDataResult_DecryptedImplCopyWith(
+          _$AesSuccessActionDataResult_DecryptedImpl value,
+          $Res Function(_$AesSuccessActionDataResult_DecryptedImpl) then) =
+      __$$AesSuccessActionDataResult_DecryptedImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({AesSuccessActionDataDecrypted data});
+}
+
+/// @nodoc
+class __$$AesSuccessActionDataResult_DecryptedImplCopyWithImpl<$Res>
+    extends _$AesSuccessActionDataResultCopyWithImpl<$Res, _$AesSuccessActionDataResult_DecryptedImpl>
+    implements _$$AesSuccessActionDataResult_DecryptedImplCopyWith<$Res> {
+  __$$AesSuccessActionDataResult_DecryptedImplCopyWithImpl(_$AesSuccessActionDataResult_DecryptedImpl _value,
+      $Res Function(_$AesSuccessActionDataResult_DecryptedImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? data = null,
+  }) {
+    return _then(_$AesSuccessActionDataResult_DecryptedImpl(
+      data: null == data
+          ? _value.data
+          : data // ignore: cast_nullable_to_non_nullable
+              as AesSuccessActionDataDecrypted,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$AesSuccessActionDataResult_DecryptedImpl implements AesSuccessActionDataResult_Decrypted {
+  const _$AesSuccessActionDataResult_DecryptedImpl({required this.data});
+
+  @override
+  final AesSuccessActionDataDecrypted data;
+
+  @override
+  String toString() {
+    return 'AesSuccessActionDataResult.decrypted(data: $data)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$AesSuccessActionDataResult_DecryptedImpl &&
+            (identical(other.data, data) || other.data == data));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, data);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$AesSuccessActionDataResult_DecryptedImplCopyWith<_$AesSuccessActionDataResult_DecryptedImpl>
+      get copyWith => __$$AesSuccessActionDataResult_DecryptedImplCopyWithImpl<
+          _$AesSuccessActionDataResult_DecryptedImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(AesSuccessActionDataDecrypted data) decrypted,
+    required TResult Function(String reason) errorStatus,
+  }) {
+    return decrypted(data);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(AesSuccessActionDataDecrypted data)? decrypted,
+    TResult? Function(String reason)? errorStatus,
+  }) {
+    return decrypted?.call(data);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(AesSuccessActionDataDecrypted data)? decrypted,
+    TResult Function(String reason)? errorStatus,
+    required TResult orElse(),
+  }) {
+    if (decrypted != null) {
+      return decrypted(data);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(AesSuccessActionDataResult_Decrypted value) decrypted,
+    required TResult Function(AesSuccessActionDataResult_ErrorStatus value) errorStatus,
+  }) {
+    return decrypted(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(AesSuccessActionDataResult_Decrypted value)? decrypted,
+    TResult? Function(AesSuccessActionDataResult_ErrorStatus value)? errorStatus,
+  }) {
+    return decrypted?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(AesSuccessActionDataResult_Decrypted value)? decrypted,
+    TResult Function(AesSuccessActionDataResult_ErrorStatus value)? errorStatus,
+    required TResult orElse(),
+  }) {
+    if (decrypted != null) {
+      return decrypted(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class AesSuccessActionDataResult_Decrypted implements AesSuccessActionDataResult {
+  const factory AesSuccessActionDataResult_Decrypted({required final AesSuccessActionDataDecrypted data}) =
+      _$AesSuccessActionDataResult_DecryptedImpl;
+
+  AesSuccessActionDataDecrypted get data;
+  @JsonKey(ignore: true)
+  _$$AesSuccessActionDataResult_DecryptedImplCopyWith<_$AesSuccessActionDataResult_DecryptedImpl>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$AesSuccessActionDataResult_ErrorStatusImplCopyWith<$Res> {
+  factory _$$AesSuccessActionDataResult_ErrorStatusImplCopyWith(
+          _$AesSuccessActionDataResult_ErrorStatusImpl value,
+          $Res Function(_$AesSuccessActionDataResult_ErrorStatusImpl) then) =
+      __$$AesSuccessActionDataResult_ErrorStatusImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String reason});
+}
+
+/// @nodoc
+class __$$AesSuccessActionDataResult_ErrorStatusImplCopyWithImpl<$Res>
+    extends _$AesSuccessActionDataResultCopyWithImpl<$Res, _$AesSuccessActionDataResult_ErrorStatusImpl>
+    implements _$$AesSuccessActionDataResult_ErrorStatusImplCopyWith<$Res> {
+  __$$AesSuccessActionDataResult_ErrorStatusImplCopyWithImpl(
+      _$AesSuccessActionDataResult_ErrorStatusImpl _value,
+      $Res Function(_$AesSuccessActionDataResult_ErrorStatusImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? reason = null,
+  }) {
+    return _then(_$AesSuccessActionDataResult_ErrorStatusImpl(
+      reason: null == reason
+          ? _value.reason
+          : reason // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$AesSuccessActionDataResult_ErrorStatusImpl implements AesSuccessActionDataResult_ErrorStatus {
+  const _$AesSuccessActionDataResult_ErrorStatusImpl({required this.reason});
+
+  @override
+  final String reason;
+
+  @override
+  String toString() {
+    return 'AesSuccessActionDataResult.errorStatus(reason: $reason)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$AesSuccessActionDataResult_ErrorStatusImpl &&
+            (identical(other.reason, reason) || other.reason == reason));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, reason);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$AesSuccessActionDataResult_ErrorStatusImplCopyWith<_$AesSuccessActionDataResult_ErrorStatusImpl>
+      get copyWith => __$$AesSuccessActionDataResult_ErrorStatusImplCopyWithImpl<
+          _$AesSuccessActionDataResult_ErrorStatusImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(AesSuccessActionDataDecrypted data) decrypted,
+    required TResult Function(String reason) errorStatus,
+  }) {
+    return errorStatus(reason);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(AesSuccessActionDataDecrypted data)? decrypted,
+    TResult? Function(String reason)? errorStatus,
+  }) {
+    return errorStatus?.call(reason);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(AesSuccessActionDataDecrypted data)? decrypted,
+    TResult Function(String reason)? errorStatus,
+    required TResult orElse(),
+  }) {
+    if (errorStatus != null) {
+      return errorStatus(reason);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(AesSuccessActionDataResult_Decrypted value) decrypted,
+    required TResult Function(AesSuccessActionDataResult_ErrorStatus value) errorStatus,
+  }) {
+    return errorStatus(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(AesSuccessActionDataResult_Decrypted value)? decrypted,
+    TResult? Function(AesSuccessActionDataResult_ErrorStatus value)? errorStatus,
+  }) {
+    return errorStatus?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(AesSuccessActionDataResult_Decrypted value)? decrypted,
+    TResult Function(AesSuccessActionDataResult_ErrorStatus value)? errorStatus,
+    required TResult orElse(),
+  }) {
+    if (errorStatus != null) {
+      return errorStatus(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class AesSuccessActionDataResult_ErrorStatus implements AesSuccessActionDataResult {
+  const factory AesSuccessActionDataResult_ErrorStatus({required final String reason}) =
+      _$AesSuccessActionDataResult_ErrorStatusImpl;
+
+  String get reason;
+  @JsonKey(ignore: true)
+  _$$AesSuccessActionDataResult_ErrorStatusImplCopyWith<_$AesSuccessActionDataResult_ErrorStatusImpl>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
 mixin _$BreezEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
@@ -4129,6 +4462,209 @@ abstract class NodeConfig_Greenlight implements NodeConfig {
 }
 
 /// @nodoc
+mixin _$NodeCredentials {
+  GreenlightCredentials get credentials => throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(GreenlightCredentials credentials) greenlight,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(GreenlightCredentials credentials)? greenlight,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(GreenlightCredentials credentials)? greenlight,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(NodeCredentials_Greenlight value) greenlight,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(NodeCredentials_Greenlight value)? greenlight,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(NodeCredentials_Greenlight value)? greenlight,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $NodeCredentialsCopyWith<NodeCredentials> get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $NodeCredentialsCopyWith<$Res> {
+  factory $NodeCredentialsCopyWith(NodeCredentials value, $Res Function(NodeCredentials) then) =
+      _$NodeCredentialsCopyWithImpl<$Res, NodeCredentials>;
+  @useResult
+  $Res call({GreenlightCredentials credentials});
+}
+
+/// @nodoc
+class _$NodeCredentialsCopyWithImpl<$Res, $Val extends NodeCredentials>
+    implements $NodeCredentialsCopyWith<$Res> {
+  _$NodeCredentialsCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? credentials = null,
+  }) {
+    return _then(_value.copyWith(
+      credentials: null == credentials
+          ? _value.credentials
+          : credentials // ignore: cast_nullable_to_non_nullable
+              as GreenlightCredentials,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$NodeCredentials_GreenlightImplCopyWith<$Res> implements $NodeCredentialsCopyWith<$Res> {
+  factory _$$NodeCredentials_GreenlightImplCopyWith(
+          _$NodeCredentials_GreenlightImpl value, $Res Function(_$NodeCredentials_GreenlightImpl) then) =
+      __$$NodeCredentials_GreenlightImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({GreenlightCredentials credentials});
+}
+
+/// @nodoc
+class __$$NodeCredentials_GreenlightImplCopyWithImpl<$Res>
+    extends _$NodeCredentialsCopyWithImpl<$Res, _$NodeCredentials_GreenlightImpl>
+    implements _$$NodeCredentials_GreenlightImplCopyWith<$Res> {
+  __$$NodeCredentials_GreenlightImplCopyWithImpl(
+      _$NodeCredentials_GreenlightImpl _value, $Res Function(_$NodeCredentials_GreenlightImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? credentials = null,
+  }) {
+    return _then(_$NodeCredentials_GreenlightImpl(
+      credentials: null == credentials
+          ? _value.credentials
+          : credentials // ignore: cast_nullable_to_non_nullable
+              as GreenlightCredentials,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$NodeCredentials_GreenlightImpl implements NodeCredentials_Greenlight {
+  const _$NodeCredentials_GreenlightImpl({required this.credentials});
+
+  @override
+  final GreenlightCredentials credentials;
+
+  @override
+  String toString() {
+    return 'NodeCredentials.greenlight(credentials: $credentials)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$NodeCredentials_GreenlightImpl &&
+            (identical(other.credentials, credentials) || other.credentials == credentials));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, credentials);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$NodeCredentials_GreenlightImplCopyWith<_$NodeCredentials_GreenlightImpl> get copyWith =>
+      __$$NodeCredentials_GreenlightImplCopyWithImpl<_$NodeCredentials_GreenlightImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(GreenlightCredentials credentials) greenlight,
+  }) {
+    return greenlight(credentials);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(GreenlightCredentials credentials)? greenlight,
+  }) {
+    return greenlight?.call(credentials);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(GreenlightCredentials credentials)? greenlight,
+    required TResult orElse(),
+  }) {
+    if (greenlight != null) {
+      return greenlight(credentials);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(NodeCredentials_Greenlight value) greenlight,
+  }) {
+    return greenlight(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(NodeCredentials_Greenlight value)? greenlight,
+  }) {
+    return greenlight?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(NodeCredentials_Greenlight value)? greenlight,
+    required TResult orElse(),
+  }) {
+    if (greenlight != null) {
+      return greenlight(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class NodeCredentials_Greenlight implements NodeCredentials {
+  const factory NodeCredentials_Greenlight({required final GreenlightCredentials credentials}) =
+      _$NodeCredentials_GreenlightImpl;
+
+  @override
+  GreenlightCredentials get credentials;
+  @override
+  @JsonKey(ignore: true)
+  _$$NodeCredentials_GreenlightImplCopyWith<_$NodeCredentials_GreenlightImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
 mixin _$PaymentDetails {
   Object get data => throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -4458,25 +4994,229 @@ abstract class PaymentDetails_ClosedChannel implements PaymentDetails {
 }
 
 /// @nodoc
-mixin _$SuccessActionProcessed {
-  Object get data => throw _privateConstructorUsedError;
+mixin _$ReportIssueRequest {
+  ReportPaymentFailureDetails get data => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(AesSuccessActionDataDecrypted data) aes,
+    required TResult Function(ReportPaymentFailureDetails data) paymentFailure,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(ReportPaymentFailureDetails data)? paymentFailure,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(ReportPaymentFailureDetails data)? paymentFailure,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(ReportIssueRequest_PaymentFailure value) paymentFailure,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(ReportIssueRequest_PaymentFailure value)? paymentFailure,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(ReportIssueRequest_PaymentFailure value)? paymentFailure,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $ReportIssueRequestCopyWith<ReportIssueRequest> get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $ReportIssueRequestCopyWith<$Res> {
+  factory $ReportIssueRequestCopyWith(ReportIssueRequest value, $Res Function(ReportIssueRequest) then) =
+      _$ReportIssueRequestCopyWithImpl<$Res, ReportIssueRequest>;
+  @useResult
+  $Res call({ReportPaymentFailureDetails data});
+}
+
+/// @nodoc
+class _$ReportIssueRequestCopyWithImpl<$Res, $Val extends ReportIssueRequest>
+    implements $ReportIssueRequestCopyWith<$Res> {
+  _$ReportIssueRequestCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? data = null,
+  }) {
+    return _then(_value.copyWith(
+      data: null == data
+          ? _value.data
+          : data // ignore: cast_nullable_to_non_nullable
+              as ReportPaymentFailureDetails,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$ReportIssueRequest_PaymentFailureImplCopyWith<$Res>
+    implements $ReportIssueRequestCopyWith<$Res> {
+  factory _$$ReportIssueRequest_PaymentFailureImplCopyWith(_$ReportIssueRequest_PaymentFailureImpl value,
+          $Res Function(_$ReportIssueRequest_PaymentFailureImpl) then) =
+      __$$ReportIssueRequest_PaymentFailureImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({ReportPaymentFailureDetails data});
+}
+
+/// @nodoc
+class __$$ReportIssueRequest_PaymentFailureImplCopyWithImpl<$Res>
+    extends _$ReportIssueRequestCopyWithImpl<$Res, _$ReportIssueRequest_PaymentFailureImpl>
+    implements _$$ReportIssueRequest_PaymentFailureImplCopyWith<$Res> {
+  __$$ReportIssueRequest_PaymentFailureImplCopyWithImpl(_$ReportIssueRequest_PaymentFailureImpl _value,
+      $Res Function(_$ReportIssueRequest_PaymentFailureImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? data = null,
+  }) {
+    return _then(_$ReportIssueRequest_PaymentFailureImpl(
+      data: null == data
+          ? _value.data
+          : data // ignore: cast_nullable_to_non_nullable
+              as ReportPaymentFailureDetails,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$ReportIssueRequest_PaymentFailureImpl implements ReportIssueRequest_PaymentFailure {
+  const _$ReportIssueRequest_PaymentFailureImpl({required this.data});
+
+  @override
+  final ReportPaymentFailureDetails data;
+
+  @override
+  String toString() {
+    return 'ReportIssueRequest.paymentFailure(data: $data)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$ReportIssueRequest_PaymentFailureImpl &&
+            (identical(other.data, data) || other.data == data));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, data);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$ReportIssueRequest_PaymentFailureImplCopyWith<_$ReportIssueRequest_PaymentFailureImpl> get copyWith =>
+      __$$ReportIssueRequest_PaymentFailureImplCopyWithImpl<_$ReportIssueRequest_PaymentFailureImpl>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(ReportPaymentFailureDetails data) paymentFailure,
+  }) {
+    return paymentFailure(data);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(ReportPaymentFailureDetails data)? paymentFailure,
+  }) {
+    return paymentFailure?.call(data);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(ReportPaymentFailureDetails data)? paymentFailure,
+    required TResult orElse(),
+  }) {
+    if (paymentFailure != null) {
+      return paymentFailure(data);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(ReportIssueRequest_PaymentFailure value) paymentFailure,
+  }) {
+    return paymentFailure(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(ReportIssueRequest_PaymentFailure value)? paymentFailure,
+  }) {
+    return paymentFailure?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(ReportIssueRequest_PaymentFailure value)? paymentFailure,
+    required TResult orElse(),
+  }) {
+    if (paymentFailure != null) {
+      return paymentFailure(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class ReportIssueRequest_PaymentFailure implements ReportIssueRequest {
+  const factory ReportIssueRequest_PaymentFailure({required final ReportPaymentFailureDetails data}) =
+      _$ReportIssueRequest_PaymentFailureImpl;
+
+  @override
+  ReportPaymentFailureDetails get data;
+  @override
+  @JsonKey(ignore: true)
+  _$$ReportIssueRequest_PaymentFailureImplCopyWith<_$ReportIssueRequest_PaymentFailureImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+mixin _$SuccessActionProcessed {
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(AesSuccessActionDataResult result) aes,
     required TResult Function(MessageSuccessActionData data) message,
     required TResult Function(UrlSuccessActionData data) url,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(AesSuccessActionDataDecrypted data)? aes,
+    TResult? Function(AesSuccessActionDataResult result)? aes,
     TResult? Function(MessageSuccessActionData data)? message,
     TResult? Function(UrlSuccessActionData data)? url,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(AesSuccessActionDataDecrypted data)? aes,
+    TResult Function(AesSuccessActionDataResult result)? aes,
     TResult Function(MessageSuccessActionData data)? message,
     TResult Function(UrlSuccessActionData data)? url,
     required TResult orElse(),
@@ -4530,7 +5270,9 @@ abstract class _$$SuccessActionProcessed_AesImplCopyWith<$Res> {
           _$SuccessActionProcessed_AesImpl value, $Res Function(_$SuccessActionProcessed_AesImpl) then) =
       __$$SuccessActionProcessed_AesImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({AesSuccessActionDataDecrypted data});
+  $Res call({AesSuccessActionDataResult result});
+
+  $AesSuccessActionDataResultCopyWith<$Res> get result;
 }
 
 /// @nodoc
@@ -4544,28 +5286,36 @@ class __$$SuccessActionProcessed_AesImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? data = null,
+    Object? result = null,
   }) {
     return _then(_$SuccessActionProcessed_AesImpl(
-      data: null == data
-          ? _value.data
-          : data // ignore: cast_nullable_to_non_nullable
-              as AesSuccessActionDataDecrypted,
+      result: null == result
+          ? _value.result
+          : result // ignore: cast_nullable_to_non_nullable
+              as AesSuccessActionDataResult,
     ));
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $AesSuccessActionDataResultCopyWith<$Res> get result {
+    return $AesSuccessActionDataResultCopyWith<$Res>(_value.result, (value) {
+      return _then(_value.copyWith(result: value));
+    });
   }
 }
 
 /// @nodoc
 
 class _$SuccessActionProcessed_AesImpl implements SuccessActionProcessed_Aes {
-  const _$SuccessActionProcessed_AesImpl({required this.data});
+  const _$SuccessActionProcessed_AesImpl({required this.result});
 
   @override
-  final AesSuccessActionDataDecrypted data;
+  final AesSuccessActionDataResult result;
 
   @override
   String toString() {
-    return 'SuccessActionProcessed.aes(data: $data)';
+    return 'SuccessActionProcessed.aes(result: $result)';
   }
 
   @override
@@ -4573,11 +5323,11 @@ class _$SuccessActionProcessed_AesImpl implements SuccessActionProcessed_Aes {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$SuccessActionProcessed_AesImpl &&
-            (identical(other.data, data) || other.data == data));
+            (identical(other.result, result) || other.result == result));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, data);
+  int get hashCode => Object.hash(runtimeType, result);
 
   @JsonKey(ignore: true)
   @override
@@ -4588,33 +5338,33 @@ class _$SuccessActionProcessed_AesImpl implements SuccessActionProcessed_Aes {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(AesSuccessActionDataDecrypted data) aes,
+    required TResult Function(AesSuccessActionDataResult result) aes,
     required TResult Function(MessageSuccessActionData data) message,
     required TResult Function(UrlSuccessActionData data) url,
   }) {
-    return aes(data);
+    return aes(result);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(AesSuccessActionDataDecrypted data)? aes,
+    TResult? Function(AesSuccessActionDataResult result)? aes,
     TResult? Function(MessageSuccessActionData data)? message,
     TResult? Function(UrlSuccessActionData data)? url,
   }) {
-    return aes?.call(data);
+    return aes?.call(result);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(AesSuccessActionDataDecrypted data)? aes,
+    TResult Function(AesSuccessActionDataResult result)? aes,
     TResult Function(MessageSuccessActionData data)? message,
     TResult Function(UrlSuccessActionData data)? url,
     required TResult orElse(),
   }) {
     if (aes != null) {
-      return aes(data);
+      return aes(result);
     }
     return orElse();
   }
@@ -4655,11 +5405,10 @@ class _$SuccessActionProcessed_AesImpl implements SuccessActionProcessed_Aes {
 }
 
 abstract class SuccessActionProcessed_Aes implements SuccessActionProcessed {
-  const factory SuccessActionProcessed_Aes({required final AesSuccessActionDataDecrypted data}) =
+  const factory SuccessActionProcessed_Aes({required final AesSuccessActionDataResult result}) =
       _$SuccessActionProcessed_AesImpl;
 
-  @override
-  AesSuccessActionDataDecrypted get data;
+  AesSuccessActionDataResult get result;
   @JsonKey(ignore: true)
   _$$SuccessActionProcessed_AesImplCopyWith<_$SuccessActionProcessed_AesImpl> get copyWith =>
       throw _privateConstructorUsedError;
@@ -4730,7 +5479,7 @@ class _$SuccessActionProcessed_MessageImpl implements SuccessActionProcessed_Mes
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(AesSuccessActionDataDecrypted data) aes,
+    required TResult Function(AesSuccessActionDataResult result) aes,
     required TResult Function(MessageSuccessActionData data) message,
     required TResult Function(UrlSuccessActionData data) url,
   }) {
@@ -4740,7 +5489,7 @@ class _$SuccessActionProcessed_MessageImpl implements SuccessActionProcessed_Mes
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(AesSuccessActionDataDecrypted data)? aes,
+    TResult? Function(AesSuccessActionDataResult result)? aes,
     TResult? Function(MessageSuccessActionData data)? message,
     TResult? Function(UrlSuccessActionData data)? url,
   }) {
@@ -4750,7 +5499,7 @@ class _$SuccessActionProcessed_MessageImpl implements SuccessActionProcessed_Mes
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(AesSuccessActionDataDecrypted data)? aes,
+    TResult Function(AesSuccessActionDataResult result)? aes,
     TResult Function(MessageSuccessActionData data)? message,
     TResult Function(UrlSuccessActionData data)? url,
     required TResult orElse(),
@@ -4800,7 +5549,6 @@ abstract class SuccessActionProcessed_Message implements SuccessActionProcessed 
   const factory SuccessActionProcessed_Message({required final MessageSuccessActionData data}) =
       _$SuccessActionProcessed_MessageImpl;
 
-  @override
   MessageSuccessActionData get data;
   @JsonKey(ignore: true)
   _$$SuccessActionProcessed_MessageImplCopyWith<_$SuccessActionProcessed_MessageImpl> get copyWith =>
@@ -4871,7 +5619,7 @@ class _$SuccessActionProcessed_UrlImpl implements SuccessActionProcessed_Url {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(AesSuccessActionDataDecrypted data) aes,
+    required TResult Function(AesSuccessActionDataResult result) aes,
     required TResult Function(MessageSuccessActionData data) message,
     required TResult Function(UrlSuccessActionData data) url,
   }) {
@@ -4881,7 +5629,7 @@ class _$SuccessActionProcessed_UrlImpl implements SuccessActionProcessed_Url {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(AesSuccessActionDataDecrypted data)? aes,
+    TResult? Function(AesSuccessActionDataResult result)? aes,
     TResult? Function(MessageSuccessActionData data)? message,
     TResult? Function(UrlSuccessActionData data)? url,
   }) {
@@ -4891,7 +5639,7 @@ class _$SuccessActionProcessed_UrlImpl implements SuccessActionProcessed_Url {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(AesSuccessActionDataDecrypted data)? aes,
+    TResult Function(AesSuccessActionDataResult result)? aes,
     TResult Function(MessageSuccessActionData data)? message,
     TResult Function(UrlSuccessActionData data)? url,
     required TResult orElse(),
@@ -4941,7 +5689,6 @@ abstract class SuccessActionProcessed_Url implements SuccessActionProcessed {
   const factory SuccessActionProcessed_Url({required final UrlSuccessActionData data}) =
       _$SuccessActionProcessed_UrlImpl;
 
-  @override
   UrlSuccessActionData get data;
   @JsonKey(ignore: true)
   _$$SuccessActionProcessed_UrlImplCopyWith<_$SuccessActionProcessed_UrlImpl> get copyWith =>
