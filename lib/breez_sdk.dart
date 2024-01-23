@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:typed_data';
 
 import 'package:breez_sdk/bridge_generated.dart';
+import 'package:breez_sdk/exceptions.dart';
 import 'package:breez_sdk/native_toolkit.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -35,7 +36,7 @@ class BreezSDK {
         _paymentResultStream.add(event.details);
       }
       if (event is BreezEvent_PaymentFailed) {
-        _paymentResultStream.addError(Exception(event.details.error));
+        _paymentResultStream.addError(PaymentException(event.details));
       }
       if (event is BreezEvent_BackupSucceeded) {
         _backupStreamController.add(event);
@@ -44,7 +45,7 @@ class BreezSDK {
         _backupStreamController.add(event);
       }
       if (event is BreezEvent_BackupFailed) {
-        _backupStreamController.addError(Exception(event.details.error));
+        _backupStreamController.addError(BackupException(event.details));
       }
     });
     _lnToolkit.breezLogStream().listen((logEntry) {
@@ -315,12 +316,12 @@ class BreezSDK {
   }
 
   /// Withdraw on-chain funds in the wallet to an external btc address
-  Future<SweepResponse> sweep({
-    required SweepRequest req,
+  Future<RedeemOnchainFundsResponse> redeemOnchainFunds({
+    required RedeemOnchainFundsRequest req,
   }) async {
-    final sweepResponse = await _lnToolkit.sweep(req: req);
+    final redeemOnchainFundsResponse = await _lnToolkit.redeemOnchainFunds(req: req);
     await listPayments(req: const ListPaymentsRequest());
-    return sweepResponse;
+    return redeemOnchainFundsResponse;
   }
 
   /// Returns the max amount that can be sent on-chain using the send_onchain method.
@@ -382,10 +383,10 @@ class BreezSDK {
   /// Fetches the current recommended fees
   Future<RecommendedFees> recommendedFees() async => await _lnToolkit.recommendedFees();
 
-  Future<PrepareSweepResponse> prepareSweep({
-    required PrepareSweepRequest req,
+  Future<PrepareRedeemOnchainFundsResponse> prepareRedeemOnchainFunds({
+    required PrepareRedeemOnchainFundsRequest req,
   }) async =>
-      _lnToolkit.prepareSweep(req: req);
+      _lnToolkit.prepareRedeemOnchainFunds(req: req);
 
   /* Support API's */
 

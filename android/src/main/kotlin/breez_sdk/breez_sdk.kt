@@ -44,7 +44,7 @@ open class RustBuffer : Structure() {
 
     companion object {
         internal fun alloc(size: Int = 0) = rustCall() { status ->
-            _UniFFILib.INSTANCE.ffi_breez_sdk_76fc_rustbuffer_alloc(size, status).also {
+            _UniFFILib.INSTANCE.ffi_breez_sdk_bcde_rustbuffer_alloc(size, status).also {
                 if(it.data == null) {
                    throw RuntimeException("RustBuffer.alloc() returned null data pointer (size=${size})")
                }
@@ -52,7 +52,7 @@ open class RustBuffer : Structure() {
         }
 
         internal fun free(buf: RustBuffer.ByValue) = rustCall() { status ->
-            _UniFFILib.INSTANCE.ffi_breez_sdk_76fc_rustbuffer_free(buf, status)
+            _UniFFILib.INSTANCE.ffi_breez_sdk_bcde_rustbuffer_free(buf, status)
         }
     }
 
@@ -265,227 +265,231 @@ internal interface _UniFFILib : Library {
         }
     }
 
-    fun ffi_breez_sdk_76fc_BlockingBreezServices_object_free(`ptr`: Pointer,
+    fun ffi_breez_sdk_bcde_BlockingBreezServices_object_free(`ptr`: Pointer,
     _uniffi_out_err: RustCallStatus
     ): Unit
 
-    fun breez_sdk_76fc_BlockingBreezServices_disconnect(`ptr`: Pointer,
+    fun breez_sdk_bcde_BlockingBreezServices_disconnect(`ptr`: Pointer,
     _uniffi_out_err: RustCallStatus
     ): Unit
 
-    fun breez_sdk_76fc_BlockingBreezServices_send_payment(`ptr`: Pointer,`req`: RustBuffer.ByValue,
+    fun breez_sdk_bcde_BlockingBreezServices_send_payment(`ptr`: Pointer,`req`: RustBuffer.ByValue,
     _uniffi_out_err: RustCallStatus
     ): RustBuffer.ByValue
 
-    fun breez_sdk_76fc_BlockingBreezServices_send_spontaneous_payment(`ptr`: Pointer,`req`: RustBuffer.ByValue,
+    fun breez_sdk_bcde_BlockingBreezServices_send_spontaneous_payment(`ptr`: Pointer,`req`: RustBuffer.ByValue,
     _uniffi_out_err: RustCallStatus
     ): RustBuffer.ByValue
 
-    fun breez_sdk_76fc_BlockingBreezServices_receive_payment(`ptr`: Pointer,`req`: RustBuffer.ByValue,
+    fun breez_sdk_bcde_BlockingBreezServices_receive_payment(`ptr`: Pointer,`req`: RustBuffer.ByValue,
     _uniffi_out_err: RustCallStatus
     ): RustBuffer.ByValue
 
-    fun breez_sdk_76fc_BlockingBreezServices_pay_lnurl(`ptr`: Pointer,`req`: RustBuffer.ByValue,
+    fun breez_sdk_bcde_BlockingBreezServices_pay_lnurl(`ptr`: Pointer,`req`: RustBuffer.ByValue,
     _uniffi_out_err: RustCallStatus
     ): RustBuffer.ByValue
 
-    fun breez_sdk_76fc_BlockingBreezServices_withdraw_lnurl(`ptr`: Pointer,`request`: RustBuffer.ByValue,
+    fun breez_sdk_bcde_BlockingBreezServices_withdraw_lnurl(`ptr`: Pointer,`request`: RustBuffer.ByValue,
     _uniffi_out_err: RustCallStatus
     ): RustBuffer.ByValue
 
-    fun breez_sdk_76fc_BlockingBreezServices_lnurl_auth(`ptr`: Pointer,`reqData`: RustBuffer.ByValue,
+    fun breez_sdk_bcde_BlockingBreezServices_lnurl_auth(`ptr`: Pointer,`reqData`: RustBuffer.ByValue,
     _uniffi_out_err: RustCallStatus
     ): RustBuffer.ByValue
 
-    fun breez_sdk_76fc_BlockingBreezServices_report_issue(`ptr`: Pointer,`req`: RustBuffer.ByValue,
+    fun breez_sdk_bcde_BlockingBreezServices_report_issue(`ptr`: Pointer,`req`: RustBuffer.ByValue,
     _uniffi_out_err: RustCallStatus
     ): Unit
 
-    fun breez_sdk_76fc_BlockingBreezServices_node_credentials(`ptr`: Pointer,
+    fun breez_sdk_bcde_BlockingBreezServices_node_credentials(`ptr`: Pointer,
     _uniffi_out_err: RustCallStatus
     ): RustBuffer.ByValue
 
-    fun breez_sdk_76fc_BlockingBreezServices_node_info(`ptr`: Pointer,
+    fun breez_sdk_bcde_BlockingBreezServices_node_info(`ptr`: Pointer,
     _uniffi_out_err: RustCallStatus
     ): RustBuffer.ByValue
 
-    fun breez_sdk_76fc_BlockingBreezServices_sign_message(`ptr`: Pointer,`req`: RustBuffer.ByValue,
+    fun breez_sdk_bcde_BlockingBreezServices_sign_message(`ptr`: Pointer,`req`: RustBuffer.ByValue,
     _uniffi_out_err: RustCallStatus
     ): RustBuffer.ByValue
 
-    fun breez_sdk_76fc_BlockingBreezServices_check_message(`ptr`: Pointer,`req`: RustBuffer.ByValue,
+    fun breez_sdk_bcde_BlockingBreezServices_check_message(`ptr`: Pointer,`req`: RustBuffer.ByValue,
     _uniffi_out_err: RustCallStatus
     ): RustBuffer.ByValue
 
-    fun breez_sdk_76fc_BlockingBreezServices_backup_status(`ptr`: Pointer,
+    fun breez_sdk_bcde_BlockingBreezServices_backup_status(`ptr`: Pointer,
     _uniffi_out_err: RustCallStatus
     ): RustBuffer.ByValue
 
-    fun breez_sdk_76fc_BlockingBreezServices_backup(`ptr`: Pointer,
+    fun breez_sdk_bcde_BlockingBreezServices_backup(`ptr`: Pointer,
     _uniffi_out_err: RustCallStatus
     ): Unit
 
-    fun breez_sdk_76fc_BlockingBreezServices_payment_by_hash(`ptr`: Pointer,`hash`: RustBuffer.ByValue,
+    fun breez_sdk_bcde_BlockingBreezServices_list_payments(`ptr`: Pointer,`req`: RustBuffer.ByValue,
     _uniffi_out_err: RustCallStatus
     ): RustBuffer.ByValue
 
-    fun breez_sdk_76fc_BlockingBreezServices_list_payments(`ptr`: Pointer,`req`: RustBuffer.ByValue,
+    fun breez_sdk_bcde_BlockingBreezServices_payment_by_hash(`ptr`: Pointer,`hash`: RustBuffer.ByValue,
     _uniffi_out_err: RustCallStatus
     ): RustBuffer.ByValue
 
-    fun breez_sdk_76fc_BlockingBreezServices_sweep(`ptr`: Pointer,`req`: RustBuffer.ByValue,
-    _uniffi_out_err: RustCallStatus
-    ): RustBuffer.ByValue
-
-    fun breez_sdk_76fc_BlockingBreezServices_fetch_fiat_rates(`ptr`: Pointer,
-    _uniffi_out_err: RustCallStatus
-    ): RustBuffer.ByValue
-
-    fun breez_sdk_76fc_BlockingBreezServices_list_fiat_currencies(`ptr`: Pointer,
-    _uniffi_out_err: RustCallStatus
-    ): RustBuffer.ByValue
-
-    fun breez_sdk_76fc_BlockingBreezServices_list_lsps(`ptr`: Pointer,
-    _uniffi_out_err: RustCallStatus
-    ): RustBuffer.ByValue
-
-    fun breez_sdk_76fc_BlockingBreezServices_connect_lsp(`ptr`: Pointer,`lspId`: RustBuffer.ByValue,
+    fun breez_sdk_bcde_BlockingBreezServices_set_payment_metadata(`ptr`: Pointer,`hash`: RustBuffer.ByValue,`metadata`: RustBuffer.ByValue,
     _uniffi_out_err: RustCallStatus
     ): Unit
 
-    fun breez_sdk_76fc_BlockingBreezServices_fetch_lsp_info(`ptr`: Pointer,`lspId`: RustBuffer.ByValue,
+    fun breez_sdk_bcde_BlockingBreezServices_redeem_onchain_funds(`ptr`: Pointer,`req`: RustBuffer.ByValue,
     _uniffi_out_err: RustCallStatus
     ): RustBuffer.ByValue
 
-    fun breez_sdk_76fc_BlockingBreezServices_open_channel_fee(`ptr`: Pointer,`req`: RustBuffer.ByValue,
+    fun breez_sdk_bcde_BlockingBreezServices_fetch_fiat_rates(`ptr`: Pointer,
     _uniffi_out_err: RustCallStatus
     ): RustBuffer.ByValue
 
-    fun breez_sdk_76fc_BlockingBreezServices_lsp_id(`ptr`: Pointer,
+    fun breez_sdk_bcde_BlockingBreezServices_list_fiat_currencies(`ptr`: Pointer,
     _uniffi_out_err: RustCallStatus
     ): RustBuffer.ByValue
 
-    fun breez_sdk_76fc_BlockingBreezServices_lsp_info(`ptr`: Pointer,
+    fun breez_sdk_bcde_BlockingBreezServices_list_lsps(`ptr`: Pointer,
     _uniffi_out_err: RustCallStatus
     ): RustBuffer.ByValue
 
-    fun breez_sdk_76fc_BlockingBreezServices_close_lsp_channels(`ptr`: Pointer,
+    fun breez_sdk_bcde_BlockingBreezServices_connect_lsp(`ptr`: Pointer,`lspId`: RustBuffer.ByValue,
     _uniffi_out_err: RustCallStatus
     ): Unit
 
-    fun breez_sdk_76fc_BlockingBreezServices_register_webhook(`ptr`: Pointer,`webhookUrl`: RustBuffer.ByValue,
+    fun breez_sdk_bcde_BlockingBreezServices_fetch_lsp_info(`ptr`: Pointer,`lspId`: RustBuffer.ByValue,
+    _uniffi_out_err: RustCallStatus
+    ): RustBuffer.ByValue
+
+    fun breez_sdk_bcde_BlockingBreezServices_open_channel_fee(`ptr`: Pointer,`req`: RustBuffer.ByValue,
+    _uniffi_out_err: RustCallStatus
+    ): RustBuffer.ByValue
+
+    fun breez_sdk_bcde_BlockingBreezServices_lsp_id(`ptr`: Pointer,
+    _uniffi_out_err: RustCallStatus
+    ): RustBuffer.ByValue
+
+    fun breez_sdk_bcde_BlockingBreezServices_lsp_info(`ptr`: Pointer,
+    _uniffi_out_err: RustCallStatus
+    ): RustBuffer.ByValue
+
+    fun breez_sdk_bcde_BlockingBreezServices_close_lsp_channels(`ptr`: Pointer,
     _uniffi_out_err: RustCallStatus
     ): Unit
 
-    fun breez_sdk_76fc_BlockingBreezServices_receive_onchain(`ptr`: Pointer,`req`: RustBuffer.ByValue,
-    _uniffi_out_err: RustCallStatus
-    ): RustBuffer.ByValue
-
-    fun breez_sdk_76fc_BlockingBreezServices_in_progress_swap(`ptr`: Pointer,
-    _uniffi_out_err: RustCallStatus
-    ): RustBuffer.ByValue
-
-    fun breez_sdk_76fc_BlockingBreezServices_list_refundables(`ptr`: Pointer,
-    _uniffi_out_err: RustCallStatus
-    ): RustBuffer.ByValue
-
-    fun breez_sdk_76fc_BlockingBreezServices_prepare_refund(`ptr`: Pointer,`req`: RustBuffer.ByValue,
-    _uniffi_out_err: RustCallStatus
-    ): RustBuffer.ByValue
-
-    fun breez_sdk_76fc_BlockingBreezServices_refund(`ptr`: Pointer,`req`: RustBuffer.ByValue,
-    _uniffi_out_err: RustCallStatus
-    ): RustBuffer.ByValue
-
-    fun breez_sdk_76fc_BlockingBreezServices_fetch_reverse_swap_fees(`ptr`: Pointer,`req`: RustBuffer.ByValue,
-    _uniffi_out_err: RustCallStatus
-    ): RustBuffer.ByValue
-
-    fun breez_sdk_76fc_BlockingBreezServices_in_progress_reverse_swaps(`ptr`: Pointer,
-    _uniffi_out_err: RustCallStatus
-    ): RustBuffer.ByValue
-
-    fun breez_sdk_76fc_BlockingBreezServices_max_reverse_swap_amount(`ptr`: Pointer,
-    _uniffi_out_err: RustCallStatus
-    ): RustBuffer.ByValue
-
-    fun breez_sdk_76fc_BlockingBreezServices_send_onchain(`ptr`: Pointer,`req`: RustBuffer.ByValue,
-    _uniffi_out_err: RustCallStatus
-    ): RustBuffer.ByValue
-
-    fun breez_sdk_76fc_BlockingBreezServices_service_health_check(`ptr`: Pointer,
-    _uniffi_out_err: RustCallStatus
-    ): RustBuffer.ByValue
-
-    fun breez_sdk_76fc_BlockingBreezServices_execute_dev_command(`ptr`: Pointer,`command`: RustBuffer.ByValue,
-    _uniffi_out_err: RustCallStatus
-    ): RustBuffer.ByValue
-
-    fun breez_sdk_76fc_BlockingBreezServices_sync(`ptr`: Pointer,
+    fun breez_sdk_bcde_BlockingBreezServices_register_webhook(`ptr`: Pointer,`webhookUrl`: RustBuffer.ByValue,
     _uniffi_out_err: RustCallStatus
     ): Unit
 
-    fun breez_sdk_76fc_BlockingBreezServices_recommended_fees(`ptr`: Pointer,
+    fun breez_sdk_bcde_BlockingBreezServices_receive_onchain(`ptr`: Pointer,`req`: RustBuffer.ByValue,
     _uniffi_out_err: RustCallStatus
     ): RustBuffer.ByValue
 
-    fun breez_sdk_76fc_BlockingBreezServices_buy_bitcoin(`ptr`: Pointer,`req`: RustBuffer.ByValue,
+    fun breez_sdk_bcde_BlockingBreezServices_in_progress_swap(`ptr`: Pointer,
     _uniffi_out_err: RustCallStatus
     ): RustBuffer.ByValue
 
-    fun breez_sdk_76fc_BlockingBreezServices_prepare_sweep(`ptr`: Pointer,`req`: RustBuffer.ByValue,
+    fun breez_sdk_bcde_BlockingBreezServices_list_refundables(`ptr`: Pointer,
     _uniffi_out_err: RustCallStatus
     ): RustBuffer.ByValue
 
-    fun ffi_breez_sdk_76fc_LogStream_init_callback(`callbackStub`: ForeignCallback,
+    fun breez_sdk_bcde_BlockingBreezServices_prepare_refund(`ptr`: Pointer,`req`: RustBuffer.ByValue,
+    _uniffi_out_err: RustCallStatus
+    ): RustBuffer.ByValue
+
+    fun breez_sdk_bcde_BlockingBreezServices_refund(`ptr`: Pointer,`req`: RustBuffer.ByValue,
+    _uniffi_out_err: RustCallStatus
+    ): RustBuffer.ByValue
+
+    fun breez_sdk_bcde_BlockingBreezServices_fetch_reverse_swap_fees(`ptr`: Pointer,`req`: RustBuffer.ByValue,
+    _uniffi_out_err: RustCallStatus
+    ): RustBuffer.ByValue
+
+    fun breez_sdk_bcde_BlockingBreezServices_in_progress_reverse_swaps(`ptr`: Pointer,
+    _uniffi_out_err: RustCallStatus
+    ): RustBuffer.ByValue
+
+    fun breez_sdk_bcde_BlockingBreezServices_max_reverse_swap_amount(`ptr`: Pointer,
+    _uniffi_out_err: RustCallStatus
+    ): RustBuffer.ByValue
+
+    fun breez_sdk_bcde_BlockingBreezServices_send_onchain(`ptr`: Pointer,`req`: RustBuffer.ByValue,
+    _uniffi_out_err: RustCallStatus
+    ): RustBuffer.ByValue
+
+    fun breez_sdk_bcde_BlockingBreezServices_service_health_check(`ptr`: Pointer,
+    _uniffi_out_err: RustCallStatus
+    ): RustBuffer.ByValue
+
+    fun breez_sdk_bcde_BlockingBreezServices_execute_dev_command(`ptr`: Pointer,`command`: RustBuffer.ByValue,
+    _uniffi_out_err: RustCallStatus
+    ): RustBuffer.ByValue
+
+    fun breez_sdk_bcde_BlockingBreezServices_sync(`ptr`: Pointer,
     _uniffi_out_err: RustCallStatus
     ): Unit
 
-    fun ffi_breez_sdk_76fc_EventListener_init_callback(`callbackStub`: ForeignCallback,
+    fun breez_sdk_bcde_BlockingBreezServices_recommended_fees(`ptr`: Pointer,
+    _uniffi_out_err: RustCallStatus
+    ): RustBuffer.ByValue
+
+    fun breez_sdk_bcde_BlockingBreezServices_buy_bitcoin(`ptr`: Pointer,`req`: RustBuffer.ByValue,
+    _uniffi_out_err: RustCallStatus
+    ): RustBuffer.ByValue
+
+    fun breez_sdk_bcde_BlockingBreezServices_prepare_redeem_onchain_funds(`ptr`: Pointer,`req`: RustBuffer.ByValue,
+    _uniffi_out_err: RustCallStatus
+    ): RustBuffer.ByValue
+
+    fun ffi_breez_sdk_bcde_LogStream_init_callback(`callbackStub`: ForeignCallback,
     _uniffi_out_err: RustCallStatus
     ): Unit
 
-    fun breez_sdk_76fc_connect(`config`: RustBuffer.ByValue,`seed`: RustBuffer.ByValue,`listener`: Long,
+    fun ffi_breez_sdk_bcde_EventListener_init_callback(`callbackStub`: ForeignCallback,
+    _uniffi_out_err: RustCallStatus
+    ): Unit
+
+    fun breez_sdk_bcde_connect(`config`: RustBuffer.ByValue,`seed`: RustBuffer.ByValue,`listener`: Long,
     _uniffi_out_err: RustCallStatus
     ): Pointer
 
-    fun breez_sdk_76fc_set_log_stream(`logStream`: Long,
+    fun breez_sdk_bcde_set_log_stream(`logStream`: Long,
     _uniffi_out_err: RustCallStatus
     ): Unit
 
-    fun breez_sdk_76fc_parse_invoice(`invoice`: RustBuffer.ByValue,
+    fun breez_sdk_bcde_parse_invoice(`invoice`: RustBuffer.ByValue,
     _uniffi_out_err: RustCallStatus
     ): RustBuffer.ByValue
 
-    fun breez_sdk_76fc_parse_input(`s`: RustBuffer.ByValue,
+    fun breez_sdk_bcde_parse_input(`s`: RustBuffer.ByValue,
     _uniffi_out_err: RustCallStatus
     ): RustBuffer.ByValue
 
-    fun breez_sdk_76fc_mnemonic_to_seed(`phrase`: RustBuffer.ByValue,
+    fun breez_sdk_bcde_mnemonic_to_seed(`phrase`: RustBuffer.ByValue,
     _uniffi_out_err: RustCallStatus
     ): RustBuffer.ByValue
 
-    fun breez_sdk_76fc_default_config(`envType`: RustBuffer.ByValue,`apiKey`: RustBuffer.ByValue,`nodeConfig`: RustBuffer.ByValue,
+    fun breez_sdk_bcde_default_config(`envType`: RustBuffer.ByValue,`apiKey`: RustBuffer.ByValue,`nodeConfig`: RustBuffer.ByValue,
     _uniffi_out_err: RustCallStatus
     ): RustBuffer.ByValue
 
-    fun breez_sdk_76fc_static_backup(`req`: RustBuffer.ByValue,
+    fun breez_sdk_bcde_static_backup(`req`: RustBuffer.ByValue,
     _uniffi_out_err: RustCallStatus
     ): RustBuffer.ByValue
 
-    fun ffi_breez_sdk_76fc_rustbuffer_alloc(`size`: Int,
+    fun ffi_breez_sdk_bcde_rustbuffer_alloc(`size`: Int,
     _uniffi_out_err: RustCallStatus
     ): RustBuffer.ByValue
 
-    fun ffi_breez_sdk_76fc_rustbuffer_from_bytes(`bytes`: ForeignBytes.ByValue,
+    fun ffi_breez_sdk_bcde_rustbuffer_from_bytes(`bytes`: ForeignBytes.ByValue,
     _uniffi_out_err: RustCallStatus
     ): RustBuffer.ByValue
 
-    fun ffi_breez_sdk_76fc_rustbuffer_free(`buf`: RustBuffer.ByValue,
+    fun ffi_breez_sdk_bcde_rustbuffer_free(`buf`: RustBuffer.ByValue,
     _uniffi_out_err: RustCallStatus
     ): Unit
 
-    fun ffi_breez_sdk_76fc_rustbuffer_reserve(`buf`: RustBuffer.ByValue,`additional`: Int,
+    fun ffi_breez_sdk_bcde_rustbuffer_reserve(`buf`: RustBuffer.ByValue,`additional`: Int,
     _uniffi_out_err: RustCallStatus
     ): RustBuffer.ByValue
 
@@ -909,13 +913,16 @@ public interface BlockingBreezServicesInterface {
     fun `backup`()
     
     @Throws(SdkException::class)
-    fun `paymentByHash`(`hash`: String): Payment?
-    
-    @Throws(SdkException::class)
     fun `listPayments`(`req`: ListPaymentsRequest): List<Payment>
     
     @Throws(SdkException::class)
-    fun `sweep`(`req`: SweepRequest): SweepResponse
+    fun `paymentByHash`(`hash`: String): Payment?
+    
+    @Throws(SdkException::class)
+    fun `setPaymentMetadata`(`hash`: String, `metadata`: String)
+    
+    @Throws(SdkException::class)
+    fun `redeemOnchainFunds`(`req`: RedeemOnchainFundsRequest): RedeemOnchainFundsResponse
     
     @Throws(SdkException::class)
     fun `fetchFiatRates`(): List<Rate>
@@ -990,7 +997,7 @@ public interface BlockingBreezServicesInterface {
     fun `buyBitcoin`(`req`: BuyBitcoinRequest): BuyBitcoinResponse
     
     @Throws(SdkException::class)
-    fun `prepareSweep`(`req`: PrepareSweepRequest): PrepareSweepResponse
+    fun `prepareRedeemOnchainFunds`(`req`: PrepareRedeemOnchainFundsRequest): PrepareRedeemOnchainFundsResponse
     
 }
 
@@ -1008,7 +1015,7 @@ class BlockingBreezServices(
      */
     override protected fun freeRustArcPtr() {
         rustCall() { status ->
-            _UniFFILib.INSTANCE.ffi_breez_sdk_76fc_BlockingBreezServices_object_free(this.pointer, status)
+            _UniFFILib.INSTANCE.ffi_breez_sdk_bcde_BlockingBreezServices_object_free(this.pointer, status)
         }
     }
 
@@ -1016,7 +1023,7 @@ class BlockingBreezServices(
     @Throws(SdkException::class)override fun `disconnect`() =
         callWithPointer {
     rustCallWithError(SdkException) { _status ->
-    _UniFFILib.INSTANCE.breez_sdk_76fc_BlockingBreezServices_disconnect(it,  _status)
+    _UniFFILib.INSTANCE.breez_sdk_bcde_BlockingBreezServices_disconnect(it,  _status)
 }
         }
     
@@ -1024,7 +1031,7 @@ class BlockingBreezServices(
     @Throws(SendPaymentException::class)override fun `sendPayment`(`req`: SendPaymentRequest): SendPaymentResponse =
         callWithPointer {
     rustCallWithError(SendPaymentException) { _status ->
-    _UniFFILib.INSTANCE.breez_sdk_76fc_BlockingBreezServices_send_payment(it, FfiConverterTypeSendPaymentRequest.lower(`req`),  _status)
+    _UniFFILib.INSTANCE.breez_sdk_bcde_BlockingBreezServices_send_payment(it, FfiConverterTypeSendPaymentRequest.lower(`req`),  _status)
 }
         }.let {
             FfiConverterTypeSendPaymentResponse.lift(it)
@@ -1033,7 +1040,7 @@ class BlockingBreezServices(
     @Throws(SendPaymentException::class)override fun `sendSpontaneousPayment`(`req`: SendSpontaneousPaymentRequest): SendPaymentResponse =
         callWithPointer {
     rustCallWithError(SendPaymentException) { _status ->
-    _UniFFILib.INSTANCE.breez_sdk_76fc_BlockingBreezServices_send_spontaneous_payment(it, FfiConverterTypeSendSpontaneousPaymentRequest.lower(`req`),  _status)
+    _UniFFILib.INSTANCE.breez_sdk_bcde_BlockingBreezServices_send_spontaneous_payment(it, FfiConverterTypeSendSpontaneousPaymentRequest.lower(`req`),  _status)
 }
         }.let {
             FfiConverterTypeSendPaymentResponse.lift(it)
@@ -1042,7 +1049,7 @@ class BlockingBreezServices(
     @Throws(ReceivePaymentException::class)override fun `receivePayment`(`req`: ReceivePaymentRequest): ReceivePaymentResponse =
         callWithPointer {
     rustCallWithError(ReceivePaymentException) { _status ->
-    _UniFFILib.INSTANCE.breez_sdk_76fc_BlockingBreezServices_receive_payment(it, FfiConverterTypeReceivePaymentRequest.lower(`req`),  _status)
+    _UniFFILib.INSTANCE.breez_sdk_bcde_BlockingBreezServices_receive_payment(it, FfiConverterTypeReceivePaymentRequest.lower(`req`),  _status)
 }
         }.let {
             FfiConverterTypeReceivePaymentResponse.lift(it)
@@ -1051,7 +1058,7 @@ class BlockingBreezServices(
     @Throws(LnUrlPayException::class)override fun `payLnurl`(`req`: LnUrlPayRequest): LnUrlPayResult =
         callWithPointer {
     rustCallWithError(LnUrlPayException) { _status ->
-    _UniFFILib.INSTANCE.breez_sdk_76fc_BlockingBreezServices_pay_lnurl(it, FfiConverterTypeLnUrlPayRequest.lower(`req`),  _status)
+    _UniFFILib.INSTANCE.breez_sdk_bcde_BlockingBreezServices_pay_lnurl(it, FfiConverterTypeLnUrlPayRequest.lower(`req`),  _status)
 }
         }.let {
             FfiConverterTypeLnUrlPayResult.lift(it)
@@ -1060,7 +1067,7 @@ class BlockingBreezServices(
     @Throws(LnUrlWithdrawException::class)override fun `withdrawLnurl`(`request`: LnUrlWithdrawRequest): LnUrlWithdrawResult =
         callWithPointer {
     rustCallWithError(LnUrlWithdrawException) { _status ->
-    _UniFFILib.INSTANCE.breez_sdk_76fc_BlockingBreezServices_withdraw_lnurl(it, FfiConverterTypeLnUrlWithdrawRequest.lower(`request`),  _status)
+    _UniFFILib.INSTANCE.breez_sdk_bcde_BlockingBreezServices_withdraw_lnurl(it, FfiConverterTypeLnUrlWithdrawRequest.lower(`request`),  _status)
 }
         }.let {
             FfiConverterTypeLnUrlWithdrawResult.lift(it)
@@ -1069,7 +1076,7 @@ class BlockingBreezServices(
     @Throws(LnUrlAuthException::class)override fun `lnurlAuth`(`reqData`: LnUrlAuthRequestData): LnUrlCallbackStatus =
         callWithPointer {
     rustCallWithError(LnUrlAuthException) { _status ->
-    _UniFFILib.INSTANCE.breez_sdk_76fc_BlockingBreezServices_lnurl_auth(it, FfiConverterTypeLnUrlAuthRequestData.lower(`reqData`),  _status)
+    _UniFFILib.INSTANCE.breez_sdk_bcde_BlockingBreezServices_lnurl_auth(it, FfiConverterTypeLnUrlAuthRequestData.lower(`reqData`),  _status)
 }
         }.let {
             FfiConverterTypeLnUrlCallbackStatus.lift(it)
@@ -1078,7 +1085,7 @@ class BlockingBreezServices(
     @Throws(SdkException::class)override fun `reportIssue`(`req`: ReportIssueRequest) =
         callWithPointer {
     rustCallWithError(SdkException) { _status ->
-    _UniFFILib.INSTANCE.breez_sdk_76fc_BlockingBreezServices_report_issue(it, FfiConverterTypeReportIssueRequest.lower(`req`),  _status)
+    _UniFFILib.INSTANCE.breez_sdk_bcde_BlockingBreezServices_report_issue(it, FfiConverterTypeReportIssueRequest.lower(`req`),  _status)
 }
         }
     
@@ -1086,7 +1093,7 @@ class BlockingBreezServices(
     @Throws(SdkException::class)override fun `nodeCredentials`(): NodeCredentials? =
         callWithPointer {
     rustCallWithError(SdkException) { _status ->
-    _UniFFILib.INSTANCE.breez_sdk_76fc_BlockingBreezServices_node_credentials(it,  _status)
+    _UniFFILib.INSTANCE.breez_sdk_bcde_BlockingBreezServices_node_credentials(it,  _status)
 }
         }.let {
             FfiConverterOptionalTypeNodeCredentials.lift(it)
@@ -1095,7 +1102,7 @@ class BlockingBreezServices(
     @Throws(SdkException::class)override fun `nodeInfo`(): NodeState =
         callWithPointer {
     rustCallWithError(SdkException) { _status ->
-    _UniFFILib.INSTANCE.breez_sdk_76fc_BlockingBreezServices_node_info(it,  _status)
+    _UniFFILib.INSTANCE.breez_sdk_bcde_BlockingBreezServices_node_info(it,  _status)
 }
         }.let {
             FfiConverterTypeNodeState.lift(it)
@@ -1104,7 +1111,7 @@ class BlockingBreezServices(
     @Throws(SdkException::class)override fun `signMessage`(`req`: SignMessageRequest): SignMessageResponse =
         callWithPointer {
     rustCallWithError(SdkException) { _status ->
-    _UniFFILib.INSTANCE.breez_sdk_76fc_BlockingBreezServices_sign_message(it, FfiConverterTypeSignMessageRequest.lower(`req`),  _status)
+    _UniFFILib.INSTANCE.breez_sdk_bcde_BlockingBreezServices_sign_message(it, FfiConverterTypeSignMessageRequest.lower(`req`),  _status)
 }
         }.let {
             FfiConverterTypeSignMessageResponse.lift(it)
@@ -1113,7 +1120,7 @@ class BlockingBreezServices(
     @Throws(SdkException::class)override fun `checkMessage`(`req`: CheckMessageRequest): CheckMessageResponse =
         callWithPointer {
     rustCallWithError(SdkException) { _status ->
-    _UniFFILib.INSTANCE.breez_sdk_76fc_BlockingBreezServices_check_message(it, FfiConverterTypeCheckMessageRequest.lower(`req`),  _status)
+    _UniFFILib.INSTANCE.breez_sdk_bcde_BlockingBreezServices_check_message(it, FfiConverterTypeCheckMessageRequest.lower(`req`),  _status)
 }
         }.let {
             FfiConverterTypeCheckMessageResponse.lift(it)
@@ -1122,7 +1129,7 @@ class BlockingBreezServices(
     @Throws(SdkException::class)override fun `backupStatus`(): BackupStatus =
         callWithPointer {
     rustCallWithError(SdkException) { _status ->
-    _UniFFILib.INSTANCE.breez_sdk_76fc_BlockingBreezServices_backup_status(it,  _status)
+    _UniFFILib.INSTANCE.breez_sdk_bcde_BlockingBreezServices_backup_status(it,  _status)
 }
         }.let {
             FfiConverterTypeBackupStatus.lift(it)
@@ -1131,42 +1138,50 @@ class BlockingBreezServices(
     @Throws(SdkException::class)override fun `backup`() =
         callWithPointer {
     rustCallWithError(SdkException) { _status ->
-    _UniFFILib.INSTANCE.breez_sdk_76fc_BlockingBreezServices_backup(it,  _status)
+    _UniFFILib.INSTANCE.breez_sdk_bcde_BlockingBreezServices_backup(it,  _status)
 }
         }
     
-    
-    @Throws(SdkException::class)override fun `paymentByHash`(`hash`: String): Payment? =
-        callWithPointer {
-    rustCallWithError(SdkException) { _status ->
-    _UniFFILib.INSTANCE.breez_sdk_76fc_BlockingBreezServices_payment_by_hash(it, FfiConverterString.lower(`hash`),  _status)
-}
-        }.let {
-            FfiConverterOptionalTypePayment.lift(it)
-        }
     
     @Throws(SdkException::class)override fun `listPayments`(`req`: ListPaymentsRequest): List<Payment> =
         callWithPointer {
     rustCallWithError(SdkException) { _status ->
-    _UniFFILib.INSTANCE.breez_sdk_76fc_BlockingBreezServices_list_payments(it, FfiConverterTypeListPaymentsRequest.lower(`req`),  _status)
+    _UniFFILib.INSTANCE.breez_sdk_bcde_BlockingBreezServices_list_payments(it, FfiConverterTypeListPaymentsRequest.lower(`req`),  _status)
 }
         }.let {
             FfiConverterSequenceTypePayment.lift(it)
         }
     
-    @Throws(SdkException::class)override fun `sweep`(`req`: SweepRequest): SweepResponse =
+    @Throws(SdkException::class)override fun `paymentByHash`(`hash`: String): Payment? =
         callWithPointer {
     rustCallWithError(SdkException) { _status ->
-    _UniFFILib.INSTANCE.breez_sdk_76fc_BlockingBreezServices_sweep(it, FfiConverterTypeSweepRequest.lower(`req`),  _status)
+    _UniFFILib.INSTANCE.breez_sdk_bcde_BlockingBreezServices_payment_by_hash(it, FfiConverterString.lower(`hash`),  _status)
 }
         }.let {
-            FfiConverterTypeSweepResponse.lift(it)
+            FfiConverterOptionalTypePayment.lift(it)
+        }
+    
+    @Throws(SdkException::class)override fun `setPaymentMetadata`(`hash`: String, `metadata`: String) =
+        callWithPointer {
+    rustCallWithError(SdkException) { _status ->
+    _UniFFILib.INSTANCE.breez_sdk_bcde_BlockingBreezServices_set_payment_metadata(it, FfiConverterString.lower(`hash`), FfiConverterString.lower(`metadata`),  _status)
+}
+        }
+    
+    
+    @Throws(SdkException::class)override fun `redeemOnchainFunds`(`req`: RedeemOnchainFundsRequest): RedeemOnchainFundsResponse =
+        callWithPointer {
+    rustCallWithError(SdkException) { _status ->
+    _UniFFILib.INSTANCE.breez_sdk_bcde_BlockingBreezServices_redeem_onchain_funds(it, FfiConverterTypeRedeemOnchainFundsRequest.lower(`req`),  _status)
+}
+        }.let {
+            FfiConverterTypeRedeemOnchainFundsResponse.lift(it)
         }
     
     @Throws(SdkException::class)override fun `fetchFiatRates`(): List<Rate> =
         callWithPointer {
     rustCallWithError(SdkException) { _status ->
-    _UniFFILib.INSTANCE.breez_sdk_76fc_BlockingBreezServices_fetch_fiat_rates(it,  _status)
+    _UniFFILib.INSTANCE.breez_sdk_bcde_BlockingBreezServices_fetch_fiat_rates(it,  _status)
 }
         }.let {
             FfiConverterSequenceTypeRate.lift(it)
@@ -1175,7 +1190,7 @@ class BlockingBreezServices(
     @Throws(SdkException::class)override fun `listFiatCurrencies`(): List<FiatCurrency> =
         callWithPointer {
     rustCallWithError(SdkException) { _status ->
-    _UniFFILib.INSTANCE.breez_sdk_76fc_BlockingBreezServices_list_fiat_currencies(it,  _status)
+    _UniFFILib.INSTANCE.breez_sdk_bcde_BlockingBreezServices_list_fiat_currencies(it,  _status)
 }
         }.let {
             FfiConverterSequenceTypeFiatCurrency.lift(it)
@@ -1184,7 +1199,7 @@ class BlockingBreezServices(
     @Throws(SdkException::class)override fun `listLsps`(): List<LspInformation> =
         callWithPointer {
     rustCallWithError(SdkException) { _status ->
-    _UniFFILib.INSTANCE.breez_sdk_76fc_BlockingBreezServices_list_lsps(it,  _status)
+    _UniFFILib.INSTANCE.breez_sdk_bcde_BlockingBreezServices_list_lsps(it,  _status)
 }
         }.let {
             FfiConverterSequenceTypeLspInformation.lift(it)
@@ -1193,7 +1208,7 @@ class BlockingBreezServices(
     @Throws(SdkException::class)override fun `connectLsp`(`lspId`: String) =
         callWithPointer {
     rustCallWithError(SdkException) { _status ->
-    _UniFFILib.INSTANCE.breez_sdk_76fc_BlockingBreezServices_connect_lsp(it, FfiConverterString.lower(`lspId`),  _status)
+    _UniFFILib.INSTANCE.breez_sdk_bcde_BlockingBreezServices_connect_lsp(it, FfiConverterString.lower(`lspId`),  _status)
 }
         }
     
@@ -1201,7 +1216,7 @@ class BlockingBreezServices(
     @Throws(SdkException::class)override fun `fetchLspInfo`(`lspId`: String): LspInformation? =
         callWithPointer {
     rustCallWithError(SdkException) { _status ->
-    _UniFFILib.INSTANCE.breez_sdk_76fc_BlockingBreezServices_fetch_lsp_info(it, FfiConverterString.lower(`lspId`),  _status)
+    _UniFFILib.INSTANCE.breez_sdk_bcde_BlockingBreezServices_fetch_lsp_info(it, FfiConverterString.lower(`lspId`),  _status)
 }
         }.let {
             FfiConverterOptionalTypeLspInformation.lift(it)
@@ -1210,7 +1225,7 @@ class BlockingBreezServices(
     @Throws(SdkException::class)override fun `openChannelFee`(`req`: OpenChannelFeeRequest): OpenChannelFeeResponse =
         callWithPointer {
     rustCallWithError(SdkException) { _status ->
-    _UniFFILib.INSTANCE.breez_sdk_76fc_BlockingBreezServices_open_channel_fee(it, FfiConverterTypeOpenChannelFeeRequest.lower(`req`),  _status)
+    _UniFFILib.INSTANCE.breez_sdk_bcde_BlockingBreezServices_open_channel_fee(it, FfiConverterTypeOpenChannelFeeRequest.lower(`req`),  _status)
 }
         }.let {
             FfiConverterTypeOpenChannelFeeResponse.lift(it)
@@ -1219,7 +1234,7 @@ class BlockingBreezServices(
     @Throws(SdkException::class)override fun `lspId`(): String? =
         callWithPointer {
     rustCallWithError(SdkException) { _status ->
-    _UniFFILib.INSTANCE.breez_sdk_76fc_BlockingBreezServices_lsp_id(it,  _status)
+    _UniFFILib.INSTANCE.breez_sdk_bcde_BlockingBreezServices_lsp_id(it,  _status)
 }
         }.let {
             FfiConverterOptionalString.lift(it)
@@ -1228,7 +1243,7 @@ class BlockingBreezServices(
     @Throws(SdkException::class)override fun `lspInfo`(): LspInformation =
         callWithPointer {
     rustCallWithError(SdkException) { _status ->
-    _UniFFILib.INSTANCE.breez_sdk_76fc_BlockingBreezServices_lsp_info(it,  _status)
+    _UniFFILib.INSTANCE.breez_sdk_bcde_BlockingBreezServices_lsp_info(it,  _status)
 }
         }.let {
             FfiConverterTypeLspInformation.lift(it)
@@ -1237,7 +1252,7 @@ class BlockingBreezServices(
     @Throws(SdkException::class)override fun `closeLspChannels`() =
         callWithPointer {
     rustCallWithError(SdkException) { _status ->
-    _UniFFILib.INSTANCE.breez_sdk_76fc_BlockingBreezServices_close_lsp_channels(it,  _status)
+    _UniFFILib.INSTANCE.breez_sdk_bcde_BlockingBreezServices_close_lsp_channels(it,  _status)
 }
         }
     
@@ -1245,7 +1260,7 @@ class BlockingBreezServices(
     @Throws(SdkException::class)override fun `registerWebhook`(`webhookUrl`: String) =
         callWithPointer {
     rustCallWithError(SdkException) { _status ->
-    _UniFFILib.INSTANCE.breez_sdk_76fc_BlockingBreezServices_register_webhook(it, FfiConverterString.lower(`webhookUrl`),  _status)
+    _UniFFILib.INSTANCE.breez_sdk_bcde_BlockingBreezServices_register_webhook(it, FfiConverterString.lower(`webhookUrl`),  _status)
 }
         }
     
@@ -1253,7 +1268,7 @@ class BlockingBreezServices(
     @Throws(ReceiveOnchainException::class)override fun `receiveOnchain`(`req`: ReceiveOnchainRequest): SwapInfo =
         callWithPointer {
     rustCallWithError(ReceiveOnchainException) { _status ->
-    _UniFFILib.INSTANCE.breez_sdk_76fc_BlockingBreezServices_receive_onchain(it, FfiConverterTypeReceiveOnchainRequest.lower(`req`),  _status)
+    _UniFFILib.INSTANCE.breez_sdk_bcde_BlockingBreezServices_receive_onchain(it, FfiConverterTypeReceiveOnchainRequest.lower(`req`),  _status)
 }
         }.let {
             FfiConverterTypeSwapInfo.lift(it)
@@ -1262,7 +1277,7 @@ class BlockingBreezServices(
     @Throws(SdkException::class)override fun `inProgressSwap`(): SwapInfo? =
         callWithPointer {
     rustCallWithError(SdkException) { _status ->
-    _UniFFILib.INSTANCE.breez_sdk_76fc_BlockingBreezServices_in_progress_swap(it,  _status)
+    _UniFFILib.INSTANCE.breez_sdk_bcde_BlockingBreezServices_in_progress_swap(it,  _status)
 }
         }.let {
             FfiConverterOptionalTypeSwapInfo.lift(it)
@@ -1271,7 +1286,7 @@ class BlockingBreezServices(
     @Throws(SdkException::class)override fun `listRefundables`(): List<SwapInfo> =
         callWithPointer {
     rustCallWithError(SdkException) { _status ->
-    _UniFFILib.INSTANCE.breez_sdk_76fc_BlockingBreezServices_list_refundables(it,  _status)
+    _UniFFILib.INSTANCE.breez_sdk_bcde_BlockingBreezServices_list_refundables(it,  _status)
 }
         }.let {
             FfiConverterSequenceTypeSwapInfo.lift(it)
@@ -1280,7 +1295,7 @@ class BlockingBreezServices(
     @Throws(SdkException::class)override fun `prepareRefund`(`req`: PrepareRefundRequest): PrepareRefundResponse =
         callWithPointer {
     rustCallWithError(SdkException) { _status ->
-    _UniFFILib.INSTANCE.breez_sdk_76fc_BlockingBreezServices_prepare_refund(it, FfiConverterTypePrepareRefundRequest.lower(`req`),  _status)
+    _UniFFILib.INSTANCE.breez_sdk_bcde_BlockingBreezServices_prepare_refund(it, FfiConverterTypePrepareRefundRequest.lower(`req`),  _status)
 }
         }.let {
             FfiConverterTypePrepareRefundResponse.lift(it)
@@ -1289,7 +1304,7 @@ class BlockingBreezServices(
     @Throws(SdkException::class)override fun `refund`(`req`: RefundRequest): RefundResponse =
         callWithPointer {
     rustCallWithError(SdkException) { _status ->
-    _UniFFILib.INSTANCE.breez_sdk_76fc_BlockingBreezServices_refund(it, FfiConverterTypeRefundRequest.lower(`req`),  _status)
+    _UniFFILib.INSTANCE.breez_sdk_bcde_BlockingBreezServices_refund(it, FfiConverterTypeRefundRequest.lower(`req`),  _status)
 }
         }.let {
             FfiConverterTypeRefundResponse.lift(it)
@@ -1298,7 +1313,7 @@ class BlockingBreezServices(
     @Throws(SdkException::class)override fun `fetchReverseSwapFees`(`req`: ReverseSwapFeesRequest): ReverseSwapPairInfo =
         callWithPointer {
     rustCallWithError(SdkException) { _status ->
-    _UniFFILib.INSTANCE.breez_sdk_76fc_BlockingBreezServices_fetch_reverse_swap_fees(it, FfiConverterTypeReverseSwapFeesRequest.lower(`req`),  _status)
+    _UniFFILib.INSTANCE.breez_sdk_bcde_BlockingBreezServices_fetch_reverse_swap_fees(it, FfiConverterTypeReverseSwapFeesRequest.lower(`req`),  _status)
 }
         }.let {
             FfiConverterTypeReverseSwapPairInfo.lift(it)
@@ -1307,7 +1322,7 @@ class BlockingBreezServices(
     @Throws(SdkException::class)override fun `inProgressReverseSwaps`(): List<ReverseSwapInfo> =
         callWithPointer {
     rustCallWithError(SdkException) { _status ->
-    _UniFFILib.INSTANCE.breez_sdk_76fc_BlockingBreezServices_in_progress_reverse_swaps(it,  _status)
+    _UniFFILib.INSTANCE.breez_sdk_bcde_BlockingBreezServices_in_progress_reverse_swaps(it,  _status)
 }
         }.let {
             FfiConverterSequenceTypeReverseSwapInfo.lift(it)
@@ -1316,7 +1331,7 @@ class BlockingBreezServices(
     @Throws(SdkException::class)override fun `maxReverseSwapAmount`(): MaxReverseSwapAmountResponse =
         callWithPointer {
     rustCallWithError(SdkException) { _status ->
-    _UniFFILib.INSTANCE.breez_sdk_76fc_BlockingBreezServices_max_reverse_swap_amount(it,  _status)
+    _UniFFILib.INSTANCE.breez_sdk_bcde_BlockingBreezServices_max_reverse_swap_amount(it,  _status)
 }
         }.let {
             FfiConverterTypeMaxReverseSwapAmountResponse.lift(it)
@@ -1325,7 +1340,7 @@ class BlockingBreezServices(
     @Throws(SendOnchainException::class)override fun `sendOnchain`(`req`: SendOnchainRequest): SendOnchainResponse =
         callWithPointer {
     rustCallWithError(SendOnchainException) { _status ->
-    _UniFFILib.INSTANCE.breez_sdk_76fc_BlockingBreezServices_send_onchain(it, FfiConverterTypeSendOnchainRequest.lower(`req`),  _status)
+    _UniFFILib.INSTANCE.breez_sdk_bcde_BlockingBreezServices_send_onchain(it, FfiConverterTypeSendOnchainRequest.lower(`req`),  _status)
 }
         }.let {
             FfiConverterTypeSendOnchainResponse.lift(it)
@@ -1334,7 +1349,7 @@ class BlockingBreezServices(
     @Throws(SdkException::class)override fun `serviceHealthCheck`(): ServiceHealthCheckResponse =
         callWithPointer {
     rustCallWithError(SdkException) { _status ->
-    _UniFFILib.INSTANCE.breez_sdk_76fc_BlockingBreezServices_service_health_check(it,  _status)
+    _UniFFILib.INSTANCE.breez_sdk_bcde_BlockingBreezServices_service_health_check(it,  _status)
 }
         }.let {
             FfiConverterTypeServiceHealthCheckResponse.lift(it)
@@ -1343,7 +1358,7 @@ class BlockingBreezServices(
     @Throws(SdkException::class)override fun `executeDevCommand`(`command`: String): String =
         callWithPointer {
     rustCallWithError(SdkException) { _status ->
-    _UniFFILib.INSTANCE.breez_sdk_76fc_BlockingBreezServices_execute_dev_command(it, FfiConverterString.lower(`command`),  _status)
+    _UniFFILib.INSTANCE.breez_sdk_bcde_BlockingBreezServices_execute_dev_command(it, FfiConverterString.lower(`command`),  _status)
 }
         }.let {
             FfiConverterString.lift(it)
@@ -1352,7 +1367,7 @@ class BlockingBreezServices(
     @Throws(SdkException::class)override fun `sync`() =
         callWithPointer {
     rustCallWithError(SdkException) { _status ->
-    _UniFFILib.INSTANCE.breez_sdk_76fc_BlockingBreezServices_sync(it,  _status)
+    _UniFFILib.INSTANCE.breez_sdk_bcde_BlockingBreezServices_sync(it,  _status)
 }
         }
     
@@ -1360,7 +1375,7 @@ class BlockingBreezServices(
     @Throws(SdkException::class)override fun `recommendedFees`(): RecommendedFees =
         callWithPointer {
     rustCallWithError(SdkException) { _status ->
-    _UniFFILib.INSTANCE.breez_sdk_76fc_BlockingBreezServices_recommended_fees(it,  _status)
+    _UniFFILib.INSTANCE.breez_sdk_bcde_BlockingBreezServices_recommended_fees(it,  _status)
 }
         }.let {
             FfiConverterTypeRecommendedFees.lift(it)
@@ -1369,19 +1384,19 @@ class BlockingBreezServices(
     @Throws(ReceiveOnchainException::class)override fun `buyBitcoin`(`req`: BuyBitcoinRequest): BuyBitcoinResponse =
         callWithPointer {
     rustCallWithError(ReceiveOnchainException) { _status ->
-    _UniFFILib.INSTANCE.breez_sdk_76fc_BlockingBreezServices_buy_bitcoin(it, FfiConverterTypeBuyBitcoinRequest.lower(`req`),  _status)
+    _UniFFILib.INSTANCE.breez_sdk_bcde_BlockingBreezServices_buy_bitcoin(it, FfiConverterTypeBuyBitcoinRequest.lower(`req`),  _status)
 }
         }.let {
             FfiConverterTypeBuyBitcoinResponse.lift(it)
         }
     
-    @Throws(SdkException::class)override fun `prepareSweep`(`req`: PrepareSweepRequest): PrepareSweepResponse =
+    @Throws(SdkException::class)override fun `prepareRedeemOnchainFunds`(`req`: PrepareRedeemOnchainFundsRequest): PrepareRedeemOnchainFundsResponse =
         callWithPointer {
     rustCallWithError(SdkException) { _status ->
-    _UniFFILib.INSTANCE.breez_sdk_76fc_BlockingBreezServices_prepare_sweep(it, FfiConverterTypePrepareSweepRequest.lower(`req`),  _status)
+    _UniFFILib.INSTANCE.breez_sdk_bcde_BlockingBreezServices_prepare_redeem_onchain_funds(it, FfiConverterTypePrepareRedeemOnchainFundsRequest.lower(`req`),  _status)
 }
         }.let {
-            FfiConverterTypePrepareSweepResponse.lift(it)
+            FfiConverterTypePrepareRedeemOnchainFundsResponse.lift(it)
         }
     
 
@@ -1654,9 +1669,9 @@ public object FfiConverterTypeCheckMessageResponse: FfiConverterRustBuffer<Check
 
 
 data class ClosedChannelPaymentDetails (
-    var `shortChannelId`: String, 
     var `state`: ChannelState, 
     var `fundingTxid`: String, 
+    var `shortChannelId`: String?, 
     var `closingTxid`: String?
 ) {
     
@@ -1665,24 +1680,24 @@ data class ClosedChannelPaymentDetails (
 public object FfiConverterTypeClosedChannelPaymentDetails: FfiConverterRustBuffer<ClosedChannelPaymentDetails> {
     override fun read(buf: ByteBuffer): ClosedChannelPaymentDetails {
         return ClosedChannelPaymentDetails(
-            FfiConverterString.read(buf),
             FfiConverterTypeChannelState.read(buf),
             FfiConverterString.read(buf),
+            FfiConverterOptionalString.read(buf),
             FfiConverterOptionalString.read(buf),
         )
     }
 
     override fun allocationSize(value: ClosedChannelPaymentDetails) = (
-            FfiConverterString.allocationSize(value.`shortChannelId`) +
             FfiConverterTypeChannelState.allocationSize(value.`state`) +
             FfiConverterString.allocationSize(value.`fundingTxid`) +
+            FfiConverterOptionalString.allocationSize(value.`shortChannelId`) +
             FfiConverterOptionalString.allocationSize(value.`closingTxid`)
     )
 
     override fun write(value: ClosedChannelPaymentDetails, buf: ByteBuffer) {
-            FfiConverterString.write(value.`shortChannelId`, buf)
             FfiConverterTypeChannelState.write(value.`state`, buf)
             FfiConverterString.write(value.`fundingTxid`, buf)
+            FfiConverterOptionalString.write(value.`shortChannelId`, buf)
             FfiConverterOptionalString.write(value.`closingTxid`, buf)
     }
 }
@@ -1991,6 +2006,7 @@ public object FfiConverterTypeLnInvoice: FfiConverterRustBuffer<LnInvoice> {
 
 data class ListPaymentsRequest (
     var `filters`: List<PaymentTypeFilter>? = null, 
+    var `metadataFilters`: List<MetadataFilter>? = null, 
     var `fromTimestamp`: Long? = null, 
     var `toTimestamp`: Long? = null, 
     var `includeFailures`: Boolean? = null, 
@@ -2004,6 +2020,7 @@ public object FfiConverterTypeListPaymentsRequest: FfiConverterRustBuffer<ListPa
     override fun read(buf: ByteBuffer): ListPaymentsRequest {
         return ListPaymentsRequest(
             FfiConverterOptionalSequenceTypePaymentTypeFilter.read(buf),
+            FfiConverterOptionalSequenceTypeMetadataFilter.read(buf),
             FfiConverterOptionalLong.read(buf),
             FfiConverterOptionalLong.read(buf),
             FfiConverterOptionalBoolean.read(buf),
@@ -2014,6 +2031,7 @@ public object FfiConverterTypeListPaymentsRequest: FfiConverterRustBuffer<ListPa
 
     override fun allocationSize(value: ListPaymentsRequest) = (
             FfiConverterOptionalSequenceTypePaymentTypeFilter.allocationSize(value.`filters`) +
+            FfiConverterOptionalSequenceTypeMetadataFilter.allocationSize(value.`metadataFilters`) +
             FfiConverterOptionalLong.allocationSize(value.`fromTimestamp`) +
             FfiConverterOptionalLong.allocationSize(value.`toTimestamp`) +
             FfiConverterOptionalBoolean.allocationSize(value.`includeFailures`) +
@@ -2023,6 +2041,7 @@ public object FfiConverterTypeListPaymentsRequest: FfiConverterRustBuffer<ListPa
 
     override fun write(value: ListPaymentsRequest, buf: ByteBuffer) {
             FfiConverterOptionalSequenceTypePaymentTypeFilter.write(value.`filters`, buf)
+            FfiConverterOptionalSequenceTypeMetadataFilter.write(value.`metadataFilters`, buf)
             FfiConverterOptionalLong.write(value.`fromTimestamp`, buf)
             FfiConverterOptionalLong.write(value.`toTimestamp`, buf)
             FfiConverterOptionalBoolean.write(value.`includeFailures`, buf)
@@ -2045,7 +2064,8 @@ data class LnPaymentDetails (
     var `lnurlMetadata`: String?, 
     var `lnAddress`: String?, 
     var `lnurlWithdrawEndpoint`: String?, 
-    var `swapInfo`: SwapInfo?
+    var `swapInfo`: SwapInfo?, 
+    var `pendingExpirationBlock`: UInt?
 ) {
     
 }
@@ -2064,6 +2084,7 @@ public object FfiConverterTypeLnPaymentDetails: FfiConverterRustBuffer<LnPayment
             FfiConverterOptionalString.read(buf),
             FfiConverterOptionalString.read(buf),
             FfiConverterOptionalTypeSwapInfo.read(buf),
+            FfiConverterOptionalUInt.read(buf),
         )
     }
 
@@ -2078,7 +2099,8 @@ public object FfiConverterTypeLnPaymentDetails: FfiConverterRustBuffer<LnPayment
             FfiConverterOptionalString.allocationSize(value.`lnurlMetadata`) +
             FfiConverterOptionalString.allocationSize(value.`lnAddress`) +
             FfiConverterOptionalString.allocationSize(value.`lnurlWithdrawEndpoint`) +
-            FfiConverterOptionalTypeSwapInfo.allocationSize(value.`swapInfo`)
+            FfiConverterOptionalTypeSwapInfo.allocationSize(value.`swapInfo`) +
+            FfiConverterOptionalUInt.allocationSize(value.`pendingExpirationBlock`)
     )
 
     override fun write(value: LnPaymentDetails, buf: ByteBuffer) {
@@ -2093,6 +2115,7 @@ public object FfiConverterTypeLnPaymentDetails: FfiConverterRustBuffer<LnPayment
             FfiConverterOptionalString.write(value.`lnAddress`, buf)
             FfiConverterOptionalString.write(value.`lnurlWithdrawEndpoint`, buf)
             FfiConverterOptionalTypeSwapInfo.write(value.`swapInfo`, buf)
+            FfiConverterOptionalUInt.write(value.`pendingExpirationBlock`, buf)
     }
 }
 
@@ -2614,6 +2637,35 @@ public object FfiConverterTypeMessageSuccessActionData: FfiConverterRustBuffer<M
 
 
 
+data class MetadataFilter (
+    var `jsonPath`: String, 
+    var `jsonValue`: String
+) {
+    
+}
+
+public object FfiConverterTypeMetadataFilter: FfiConverterRustBuffer<MetadataFilter> {
+    override fun read(buf: ByteBuffer): MetadataFilter {
+        return MetadataFilter(
+            FfiConverterString.read(buf),
+            FfiConverterString.read(buf),
+        )
+    }
+
+    override fun allocationSize(value: MetadataFilter) = (
+            FfiConverterString.allocationSize(value.`jsonPath`) +
+            FfiConverterString.allocationSize(value.`jsonValue`)
+    )
+
+    override fun write(value: MetadataFilter, buf: ByteBuffer) {
+            FfiConverterString.write(value.`jsonPath`, buf)
+            FfiConverterString.write(value.`jsonValue`, buf)
+    }
+}
+
+
+
+
 data class MetadataItem (
     var `key`: String, 
     var `value`: String
@@ -2843,8 +2895,10 @@ data class Payment (
     var `amountMsat`: ULong, 
     var `feeMsat`: ULong, 
     var `status`: PaymentStatus, 
+    var `error`: String?, 
     var `description`: String?, 
-    var `details`: PaymentDetails
+    var `details`: PaymentDetails, 
+    var `metadata`: String?
 ) {
     
 }
@@ -2859,7 +2913,9 @@ public object FfiConverterTypePayment: FfiConverterRustBuffer<Payment> {
             FfiConverterULong.read(buf),
             FfiConverterTypePaymentStatus.read(buf),
             FfiConverterOptionalString.read(buf),
+            FfiConverterOptionalString.read(buf),
             FfiConverterTypePaymentDetails.read(buf),
+            FfiConverterOptionalString.read(buf),
         )
     }
 
@@ -2870,8 +2926,10 @@ public object FfiConverterTypePayment: FfiConverterRustBuffer<Payment> {
             FfiConverterULong.allocationSize(value.`amountMsat`) +
             FfiConverterULong.allocationSize(value.`feeMsat`) +
             FfiConverterTypePaymentStatus.allocationSize(value.`status`) +
+            FfiConverterOptionalString.allocationSize(value.`error`) +
             FfiConverterOptionalString.allocationSize(value.`description`) +
-            FfiConverterTypePaymentDetails.allocationSize(value.`details`)
+            FfiConverterTypePaymentDetails.allocationSize(value.`details`) +
+            FfiConverterOptionalString.allocationSize(value.`metadata`)
     )
 
     override fun write(value: Payment, buf: ByteBuffer) {
@@ -2881,8 +2939,10 @@ public object FfiConverterTypePayment: FfiConverterRustBuffer<Payment> {
             FfiConverterULong.write(value.`amountMsat`, buf)
             FfiConverterULong.write(value.`feeMsat`, buf)
             FfiConverterTypePaymentStatus.write(value.`status`, buf)
+            FfiConverterOptionalString.write(value.`error`, buf)
             FfiConverterOptionalString.write(value.`description`, buf)
             FfiConverterTypePaymentDetails.write(value.`details`, buf)
+            FfiConverterOptionalString.write(value.`metadata`, buf)
     }
 }
 
@@ -2916,6 +2976,64 @@ public object FfiConverterTypePaymentFailedData: FfiConverterRustBuffer<PaymentF
             FfiConverterString.write(value.`error`, buf)
             FfiConverterString.write(value.`nodeId`, buf)
             FfiConverterOptionalTypeLnInvoice.write(value.`invoice`, buf)
+    }
+}
+
+
+
+
+data class PrepareRedeemOnchainFundsRequest (
+    var `toAddress`: String, 
+    var `satPerVbyte`: UInt
+) {
+    
+}
+
+public object FfiConverterTypePrepareRedeemOnchainFundsRequest: FfiConverterRustBuffer<PrepareRedeemOnchainFundsRequest> {
+    override fun read(buf: ByteBuffer): PrepareRedeemOnchainFundsRequest {
+        return PrepareRedeemOnchainFundsRequest(
+            FfiConverterString.read(buf),
+            FfiConverterUInt.read(buf),
+        )
+    }
+
+    override fun allocationSize(value: PrepareRedeemOnchainFundsRequest) = (
+            FfiConverterString.allocationSize(value.`toAddress`) +
+            FfiConverterUInt.allocationSize(value.`satPerVbyte`)
+    )
+
+    override fun write(value: PrepareRedeemOnchainFundsRequest, buf: ByteBuffer) {
+            FfiConverterString.write(value.`toAddress`, buf)
+            FfiConverterUInt.write(value.`satPerVbyte`, buf)
+    }
+}
+
+
+
+
+data class PrepareRedeemOnchainFundsResponse (
+    var `txWeight`: ULong, 
+    var `txFeeSat`: ULong
+) {
+    
+}
+
+public object FfiConverterTypePrepareRedeemOnchainFundsResponse: FfiConverterRustBuffer<PrepareRedeemOnchainFundsResponse> {
+    override fun read(buf: ByteBuffer): PrepareRedeemOnchainFundsResponse {
+        return PrepareRedeemOnchainFundsResponse(
+            FfiConverterULong.read(buf),
+            FfiConverterULong.read(buf),
+        )
+    }
+
+    override fun allocationSize(value: PrepareRedeemOnchainFundsResponse) = (
+            FfiConverterULong.allocationSize(value.`txWeight`) +
+            FfiConverterULong.allocationSize(value.`txFeeSat`)
+    )
+
+    override fun write(value: PrepareRedeemOnchainFundsResponse, buf: ByteBuffer) {
+            FfiConverterULong.write(value.`txWeight`, buf)
+            FfiConverterULong.write(value.`txFeeSat`, buf)
     }
 }
 
@@ -2978,64 +3096,6 @@ public object FfiConverterTypePrepareRefundResponse: FfiConverterRustBuffer<Prep
     override fun write(value: PrepareRefundResponse, buf: ByteBuffer) {
             FfiConverterUInt.write(value.`refundTxWeight`, buf)
             FfiConverterULong.write(value.`refundTxFeeSat`, buf)
-    }
-}
-
-
-
-
-data class PrepareSweepRequest (
-    var `toAddress`: String, 
-    var `satPerVbyte`: ULong
-) {
-    
-}
-
-public object FfiConverterTypePrepareSweepRequest: FfiConverterRustBuffer<PrepareSweepRequest> {
-    override fun read(buf: ByteBuffer): PrepareSweepRequest {
-        return PrepareSweepRequest(
-            FfiConverterString.read(buf),
-            FfiConverterULong.read(buf),
-        )
-    }
-
-    override fun allocationSize(value: PrepareSweepRequest) = (
-            FfiConverterString.allocationSize(value.`toAddress`) +
-            FfiConverterULong.allocationSize(value.`satPerVbyte`)
-    )
-
-    override fun write(value: PrepareSweepRequest, buf: ByteBuffer) {
-            FfiConverterString.write(value.`toAddress`, buf)
-            FfiConverterULong.write(value.`satPerVbyte`, buf)
-    }
-}
-
-
-
-
-data class PrepareSweepResponse (
-    var `sweepTxWeight`: ULong, 
-    var `sweepTxFeeSat`: ULong
-) {
-    
-}
-
-public object FfiConverterTypePrepareSweepResponse: FfiConverterRustBuffer<PrepareSweepResponse> {
-    override fun read(buf: ByteBuffer): PrepareSweepResponse {
-        return PrepareSweepResponse(
-            FfiConverterULong.read(buf),
-            FfiConverterULong.read(buf),
-        )
-    }
-
-    override fun allocationSize(value: PrepareSweepResponse) = (
-            FfiConverterULong.allocationSize(value.`sweepTxWeight`) +
-            FfiConverterULong.allocationSize(value.`sweepTxFeeSat`)
-    )
-
-    override fun write(value: PrepareSweepResponse, buf: ByteBuffer) {
-            FfiConverterULong.write(value.`sweepTxWeight`, buf)
-            FfiConverterULong.write(value.`sweepTxFeeSat`, buf)
     }
 }
 
@@ -3213,6 +3273,60 @@ public object FfiConverterTypeRecommendedFees: FfiConverterRustBuffer<Recommende
             FfiConverterULong.write(value.`hourFee`, buf)
             FfiConverterULong.write(value.`economyFee`, buf)
             FfiConverterULong.write(value.`minimumFee`, buf)
+    }
+}
+
+
+
+
+data class RedeemOnchainFundsRequest (
+    var `toAddress`: String, 
+    var `satPerVbyte`: UInt
+) {
+    
+}
+
+public object FfiConverterTypeRedeemOnchainFundsRequest: FfiConverterRustBuffer<RedeemOnchainFundsRequest> {
+    override fun read(buf: ByteBuffer): RedeemOnchainFundsRequest {
+        return RedeemOnchainFundsRequest(
+            FfiConverterString.read(buf),
+            FfiConverterUInt.read(buf),
+        )
+    }
+
+    override fun allocationSize(value: RedeemOnchainFundsRequest) = (
+            FfiConverterString.allocationSize(value.`toAddress`) +
+            FfiConverterUInt.allocationSize(value.`satPerVbyte`)
+    )
+
+    override fun write(value: RedeemOnchainFundsRequest, buf: ByteBuffer) {
+            FfiConverterString.write(value.`toAddress`, buf)
+            FfiConverterUInt.write(value.`satPerVbyte`, buf)
+    }
+}
+
+
+
+
+data class RedeemOnchainFundsResponse (
+    var `txid`: List<UByte>
+) {
+    
+}
+
+public object FfiConverterTypeRedeemOnchainFundsResponse: FfiConverterRustBuffer<RedeemOnchainFundsResponse> {
+    override fun read(buf: ByteBuffer): RedeemOnchainFundsResponse {
+        return RedeemOnchainFundsResponse(
+            FfiConverterSequenceUByte.read(buf),
+        )
+    }
+
+    override fun allocationSize(value: RedeemOnchainFundsResponse) = (
+            FfiConverterSequenceUByte.allocationSize(value.`txid`)
+    )
+
+    override fun write(value: RedeemOnchainFundsResponse, buf: ByteBuffer) {
+            FfiConverterSequenceUByte.write(value.`txid`, buf)
     }
 }
 
@@ -3617,7 +3731,8 @@ public object FfiConverterTypeSendPaymentResponse: FfiConverterRustBuffer<SendPa
 
 data class SendSpontaneousPaymentRequest (
     var `nodeId`: String, 
-    var `amountMsat`: ULong
+    var `amountMsat`: ULong, 
+    var `extraTlvs`: List<TlvEntry>? = null
 ) {
     
 }
@@ -3627,17 +3742,20 @@ public object FfiConverterTypeSendSpontaneousPaymentRequest: FfiConverterRustBuf
         return SendSpontaneousPaymentRequest(
             FfiConverterString.read(buf),
             FfiConverterULong.read(buf),
+            FfiConverterOptionalSequenceTypeTlvEntry.read(buf),
         )
     }
 
     override fun allocationSize(value: SendSpontaneousPaymentRequest) = (
             FfiConverterString.allocationSize(value.`nodeId`) +
-            FfiConverterULong.allocationSize(value.`amountMsat`)
+            FfiConverterULong.allocationSize(value.`amountMsat`) +
+            FfiConverterOptionalSequenceTypeTlvEntry.allocationSize(value.`extraTlvs`)
     )
 
     override fun write(value: SendSpontaneousPaymentRequest, buf: ByteBuffer) {
             FfiConverterString.write(value.`nodeId`, buf)
             FfiConverterULong.write(value.`amountMsat`, buf)
+            FfiConverterOptionalSequenceTypeTlvEntry.write(value.`extraTlvs`, buf)
     }
 }
 
@@ -3874,60 +3992,6 @@ public object FfiConverterTypeSwapInfo: FfiConverterRustBuffer<SwapInfo> {
 
 
 
-data class SweepRequest (
-    var `toAddress`: String, 
-    var `satPerVbyte`: UInt
-) {
-    
-}
-
-public object FfiConverterTypeSweepRequest: FfiConverterRustBuffer<SweepRequest> {
-    override fun read(buf: ByteBuffer): SweepRequest {
-        return SweepRequest(
-            FfiConverterString.read(buf),
-            FfiConverterUInt.read(buf),
-        )
-    }
-
-    override fun allocationSize(value: SweepRequest) = (
-            FfiConverterString.allocationSize(value.`toAddress`) +
-            FfiConverterUInt.allocationSize(value.`satPerVbyte`)
-    )
-
-    override fun write(value: SweepRequest, buf: ByteBuffer) {
-            FfiConverterString.write(value.`toAddress`, buf)
-            FfiConverterUInt.write(value.`satPerVbyte`, buf)
-    }
-}
-
-
-
-
-data class SweepResponse (
-    var `txid`: List<UByte>
-) {
-    
-}
-
-public object FfiConverterTypeSweepResponse: FfiConverterRustBuffer<SweepResponse> {
-    override fun read(buf: ByteBuffer): SweepResponse {
-        return SweepResponse(
-            FfiConverterSequenceUByte.read(buf),
-        )
-    }
-
-    override fun allocationSize(value: SweepResponse) = (
-            FfiConverterSequenceUByte.allocationSize(value.`txid`)
-    )
-
-    override fun write(value: SweepResponse, buf: ByteBuffer) {
-            FfiConverterSequenceUByte.write(value.`txid`, buf)
-    }
-}
-
-
-
-
 data class Symbol (
     var `grapheme`: String?, 
     var `template`: String?, 
@@ -3959,6 +4023,35 @@ public object FfiConverterTypeSymbol: FfiConverterRustBuffer<Symbol> {
             FfiConverterOptionalString.write(value.`template`, buf)
             FfiConverterOptionalBoolean.write(value.`rtl`, buf)
             FfiConverterOptionalUInt.write(value.`position`, buf)
+    }
+}
+
+
+
+
+data class TlvEntry (
+    var `fieldNumber`: ULong, 
+    var `value`: List<UByte>
+) {
+    
+}
+
+public object FfiConverterTypeTlvEntry: FfiConverterRustBuffer<TlvEntry> {
+    override fun read(buf: ByteBuffer): TlvEntry {
+        return TlvEntry(
+            FfiConverterULong.read(buf),
+            FfiConverterSequenceUByte.read(buf),
+        )
+    }
+
+    override fun allocationSize(value: TlvEntry) = (
+            FfiConverterULong.allocationSize(value.`fieldNumber`) +
+            FfiConverterSequenceUByte.allocationSize(value.`value`)
+    )
+
+    override fun write(value: TlvEntry, buf: ByteBuffer) {
+            FfiConverterULong.write(value.`fieldNumber`, buf)
+            FfiConverterSequenceUByte.write(value.`value`, buf)
     }
 }
 
@@ -5876,7 +5969,7 @@ public object FfiConverterTypeEventListener: FfiConverterCallbackInterface<Event
 ) {
     override fun register(lib: _UniFFILib) {
         rustCall() { status ->
-            lib.ffi_breez_sdk_76fc_EventListener_init_callback(this.foreignCallback, status)
+            lib.ffi_breez_sdk_bcde_EventListener_init_callback(this.foreignCallback, status)
         }
     }
 }
@@ -5962,7 +6055,7 @@ public object FfiConverterTypeLogStream: FfiConverterCallbackInterface<LogStream
 ) {
     override fun register(lib: _UniFFILib) {
         rustCall() { status ->
-            lib.ffi_breez_sdk_76fc_LogStream_init_callback(this.foreignCallback, status)
+            lib.ffi_breez_sdk_bcde_LogStream_init_callback(this.foreignCallback, status)
         }
     }
 }
@@ -6492,6 +6585,64 @@ public object FfiConverterOptionalSequenceTypeLocalizedName: FfiConverterRustBuf
 
 
 
+public object FfiConverterOptionalSequenceTypeMetadataFilter: FfiConverterRustBuffer<List<MetadataFilter>?> {
+    override fun read(buf: ByteBuffer): List<MetadataFilter>? {
+        if (buf.get().toInt() == 0) {
+            return null
+        }
+        return FfiConverterSequenceTypeMetadataFilter.read(buf)
+    }
+
+    override fun allocationSize(value: List<MetadataFilter>?): Int {
+        if (value == null) {
+            return 1
+        } else {
+            return 1 + FfiConverterSequenceTypeMetadataFilter.allocationSize(value)
+        }
+    }
+
+    override fun write(value: List<MetadataFilter>?, buf: ByteBuffer) {
+        if (value == null) {
+            buf.put(0)
+        } else {
+            buf.put(1)
+            FfiConverterSequenceTypeMetadataFilter.write(value, buf)
+        }
+    }
+}
+
+
+
+
+public object FfiConverterOptionalSequenceTypeTlvEntry: FfiConverterRustBuffer<List<TlvEntry>?> {
+    override fun read(buf: ByteBuffer): List<TlvEntry>? {
+        if (buf.get().toInt() == 0) {
+            return null
+        }
+        return FfiConverterSequenceTypeTlvEntry.read(buf)
+    }
+
+    override fun allocationSize(value: List<TlvEntry>?): Int {
+        if (value == null) {
+            return 1
+        } else {
+            return 1 + FfiConverterSequenceTypeTlvEntry.allocationSize(value)
+        }
+    }
+
+    override fun write(value: List<TlvEntry>?, buf: ByteBuffer) {
+        if (value == null) {
+            buf.put(0)
+        } else {
+            buf.put(1)
+            FfiConverterSequenceTypeTlvEntry.write(value, buf)
+        }
+    }
+}
+
+
+
+
 public object FfiConverterOptionalSequenceTypePaymentTypeFilter: FfiConverterRustBuffer<List<PaymentTypeFilter>?> {
     override fun read(buf: ByteBuffer): List<PaymentTypeFilter>? {
         if (buf.get().toInt() == 0) {
@@ -6664,6 +6815,31 @@ public object FfiConverterSequenceTypeLspInformation: FfiConverterRustBuffer<Lis
         buf.putInt(value.size)
         value.forEach {
             FfiConverterTypeLspInformation.write(it, buf)
+        }
+    }
+}
+
+
+
+
+public object FfiConverterSequenceTypeMetadataFilter: FfiConverterRustBuffer<List<MetadataFilter>> {
+    override fun read(buf: ByteBuffer): List<MetadataFilter> {
+        val len = buf.getInt()
+        return List<MetadataFilter>(len) {
+            FfiConverterTypeMetadataFilter.read(buf)
+        }
+    }
+
+    override fun allocationSize(value: List<MetadataFilter>): Int {
+        val sizeForLength = 4
+        val sizeForItems = value.map { FfiConverterTypeMetadataFilter.allocationSize(it) }.sum()
+        return sizeForLength + sizeForItems
+    }
+
+    override fun write(value: List<MetadataFilter>, buf: ByteBuffer) {
+        buf.putInt(value.size)
+        value.forEach {
+            FfiConverterTypeMetadataFilter.write(it, buf)
         }
     }
 }
@@ -6846,6 +7022,31 @@ public object FfiConverterSequenceTypeSwapInfo: FfiConverterRustBuffer<List<Swap
 
 
 
+public object FfiConverterSequenceTypeTlvEntry: FfiConverterRustBuffer<List<TlvEntry>> {
+    override fun read(buf: ByteBuffer): List<TlvEntry> {
+        val len = buf.getInt()
+        return List<TlvEntry>(len) {
+            FfiConverterTypeTlvEntry.read(buf)
+        }
+    }
+
+    override fun allocationSize(value: List<TlvEntry>): Int {
+        val sizeForLength = 4
+        val sizeForItems = value.map { FfiConverterTypeTlvEntry.allocationSize(it) }.sum()
+        return sizeForLength + sizeForItems
+    }
+
+    override fun write(value: List<TlvEntry>, buf: ByteBuffer) {
+        buf.putInt(value.size)
+        value.forEach {
+            FfiConverterTypeTlvEntry.write(it, buf)
+        }
+    }
+}
+
+
+
+
 public object FfiConverterSequenceTypeUnspentTransactionOutput: FfiConverterRustBuffer<List<UnspentTransactionOutput>> {
     override fun read(buf: ByteBuffer): List<UnspentTransactionOutput> {
         val len = buf.getInt()
@@ -6897,7 +7098,7 @@ public object FfiConverterSequenceTypePaymentTypeFilter: FfiConverterRustBuffer<
 fun `connect`(`config`: Config, `seed`: List<UByte>, `listener`: EventListener): BlockingBreezServices {
     return FfiConverterTypeBlockingBreezServices.lift(
     rustCallWithError(SdkException) { _status ->
-    _UniFFILib.INSTANCE.breez_sdk_76fc_connect(FfiConverterTypeConfig.lower(`config`), FfiConverterSequenceUByte.lower(`seed`), FfiConverterTypeEventListener.lower(`listener`), _status)
+    _UniFFILib.INSTANCE.breez_sdk_bcde_connect(FfiConverterTypeConfig.lower(`config`), FfiConverterSequenceUByte.lower(`seed`), FfiConverterTypeEventListener.lower(`listener`), _status)
 })
 }
 
@@ -6907,7 +7108,7 @@ fun `connect`(`config`: Config, `seed`: List<UByte>, `listener`: EventListener):
 fun `setLogStream`(`logStream`: LogStream) =
     
     rustCallWithError(SdkException) { _status ->
-    _UniFFILib.INSTANCE.breez_sdk_76fc_set_log_stream(FfiConverterTypeLogStream.lower(`logStream`), _status)
+    _UniFFILib.INSTANCE.breez_sdk_bcde_set_log_stream(FfiConverterTypeLogStream.lower(`logStream`), _status)
 }
 
 @Throws(SdkException::class)
@@ -6915,7 +7116,7 @@ fun `setLogStream`(`logStream`: LogStream) =
 fun `parseInvoice`(`invoice`: String): LnInvoice {
     return FfiConverterTypeLnInvoice.lift(
     rustCallWithError(SdkException) { _status ->
-    _UniFFILib.INSTANCE.breez_sdk_76fc_parse_invoice(FfiConverterString.lower(`invoice`), _status)
+    _UniFFILib.INSTANCE.breez_sdk_bcde_parse_invoice(FfiConverterString.lower(`invoice`), _status)
 })
 }
 
@@ -6925,7 +7126,7 @@ fun `parseInvoice`(`invoice`: String): LnInvoice {
 fun `parseInput`(`s`: String): InputType {
     return FfiConverterTypeInputType.lift(
     rustCallWithError(SdkException) { _status ->
-    _UniFFILib.INSTANCE.breez_sdk_76fc_parse_input(FfiConverterString.lower(`s`), _status)
+    _UniFFILib.INSTANCE.breez_sdk_bcde_parse_input(FfiConverterString.lower(`s`), _status)
 })
 }
 
@@ -6935,7 +7136,7 @@ fun `parseInput`(`s`: String): InputType {
 fun `mnemonicToSeed`(`phrase`: String): List<UByte> {
     return FfiConverterSequenceUByte.lift(
     rustCallWithError(SdkException) { _status ->
-    _UniFFILib.INSTANCE.breez_sdk_76fc_mnemonic_to_seed(FfiConverterString.lower(`phrase`), _status)
+    _UniFFILib.INSTANCE.breez_sdk_bcde_mnemonic_to_seed(FfiConverterString.lower(`phrase`), _status)
 })
 }
 
@@ -6944,7 +7145,7 @@ fun `mnemonicToSeed`(`phrase`: String): List<UByte> {
 fun `defaultConfig`(`envType`: EnvironmentType, `apiKey`: String, `nodeConfig`: NodeConfig): Config {
     return FfiConverterTypeConfig.lift(
     rustCall() { _status ->
-    _UniFFILib.INSTANCE.breez_sdk_76fc_default_config(FfiConverterTypeEnvironmentType.lower(`envType`), FfiConverterString.lower(`apiKey`), FfiConverterTypeNodeConfig.lower(`nodeConfig`), _status)
+    _UniFFILib.INSTANCE.breez_sdk_bcde_default_config(FfiConverterTypeEnvironmentType.lower(`envType`), FfiConverterString.lower(`apiKey`), FfiConverterTypeNodeConfig.lower(`nodeConfig`), _status)
 })
 }
 
@@ -6954,7 +7155,7 @@ fun `defaultConfig`(`envType`: EnvironmentType, `apiKey`: String, `nodeConfig`: 
 fun `staticBackup`(`req`: StaticBackupRequest): StaticBackupResponse {
     return FfiConverterTypeStaticBackupResponse.lift(
     rustCallWithError(SdkException) { _status ->
-    _UniFFILib.INSTANCE.breez_sdk_76fc_static_backup(FfiConverterTypeStaticBackupRequest.lower(`req`), _status)
+    _UniFFILib.INSTANCE.breez_sdk_bcde_static_backup(FfiConverterTypeStaticBackupRequest.lower(`req`), _status)
 })
 }
 
