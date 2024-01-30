@@ -23,7 +23,5 @@ jobs:
       - uses: dart-lang/setup-dart@v1 # GitHub authenticates to pub.dev via OIDC in this step
       - name: Install dependencies
         run: dart pub get
-      - name: Dry run
-        run: dart pub publish --dry-run --skip-validation
       - name: Publish
-        run: dart pub publish --force
+        run: dart pub publish --force --skip-validation
