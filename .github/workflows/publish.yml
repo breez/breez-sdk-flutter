@@ -19,7 +19,7 @@ jobs:
       id-token: write
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: dart-lang/setup-dart@v1 # GitHub authenticates to pub.dev via OIDC in this step
       - name: Install dependencies
         run: dart pub get
