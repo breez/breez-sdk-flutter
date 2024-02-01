@@ -6,11 +6,6 @@ url = "https://github.com/breez/breez-sdk-swift/releases/download/#{tag_version}
 frameworks_dir = "bindings-swift"
 
 `
-
-if [ ! -d #{frameworks_dir}/#{framework} ]; then
-    curl -L #{url} -o #{lib_name}.zip    
-fi
-
 if [ ! -d #{frameworks_dir}/#{framework} ]; then
     mkdir -p #{frameworks_dir}
     curl -L #{url} -o #{frameworks_dir}/#{lib_name}.zip
