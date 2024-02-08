@@ -1,0 +1,27 @@
+# The recommended way to publish on pub.dev is via
+# their automated publishing feature.
+# This requires the GitHub action that publishes to pub.dev
+# to be triggered by a Git tag being pushed.
+# The Git tag for releases in this repo is created and pushed automatically
+# in the main repo's publis-flutter workflow.
+# See: https://dart.dev/tools/pub/automated-publishing
+
+name: Publish to pub.dev
+
+on:
+  push:
+    tags:
+    - 'v[0-9]+.[0-9]+.[0-9]+*'
+
+jobs:
+  publish:
+    permissions:
+      id-token: write
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dart-lang/setup-dart@v1 # GitHub authenticates to pub.dev via OIDC in this step
+      - name: Install dependencies
+        run: dart pub get
+      - name: Publish
+        run: dart pub publish --force --skip-validation
