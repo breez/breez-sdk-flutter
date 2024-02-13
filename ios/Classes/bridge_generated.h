@@ -47,6 +47,7 @@ typedef struct wire_NodeConfig {
 
 typedef struct wire_Config {
   struct wire_uint_8_list *breezserver;
+  struct wire_uint_8_list *chainnotifier_url;
   struct wire_uint_8_list *mempoolspace_url;
   struct wire_uint_8_list *working_dir;
   int32_t network;
@@ -57,6 +58,10 @@ typedef struct wire_Config {
   uint64_t exemptfee_msat;
   struct wire_NodeConfig node_config;
 } wire_Config;
+
+typedef struct wire_ConfigureNodeRequest {
+  struct wire_uint_8_list *close_to_address;
+} wire_ConfigureNodeRequest;
 
 typedef struct wire_SignMessageRequest {
   struct wire_uint_8_list *message;
@@ -231,7 +236,7 @@ typedef struct wire_RefundRequest {
 } wire_RefundRequest;
 
 typedef struct wire_OpenChannelFeeRequest {
-  uint64_t amount_msat;
+  uint64_t *amount_msat;
   uint32_t *expiry;
 } wire_OpenChannelFeeRequest;
 
@@ -260,6 +265,8 @@ void wire_sync(int64_t port_);
 void wire_node_credentials(int64_t port_);
 
 void wire_node_info(int64_t port_);
+
+void wire_configure_node(int64_t port_, struct wire_ConfigureNodeRequest *req);
 
 void wire_disconnect(int64_t port_);
 
@@ -306,6 +313,10 @@ void wire_list_payments(int64_t port_, struct wire_ListPaymentsRequest *req);
 
 void wire_payment_by_hash(int64_t port_, struct wire_uint_8_list *hash);
 
+void wire_set_payment_metadata(int64_t port_,
+                               struct wire_uint_8_list *hash,
+                               struct wire_uint_8_list *metadata);
+
 void wire_send_payment(int64_t port_, struct wire_SendPaymentRequest *req);
 
 void wire_send_spontaneous_payment(int64_t port_, struct wire_SendSpontaneousPaymentRequest *req);
@@ -345,6 +356,8 @@ void wire_prepare_refund(int64_t port_, struct wire_PrepareRefundRequest *req);
 
 void wire_refund(int64_t port_, struct wire_RefundRequest *req);
 
+void wire_rescan_swaps(int64_t port_);
+
 void wire_in_progress_swap(int64_t port_);
 
 void wire_in_progress_reverse_swaps(int64_t port_);
@@ -364,6 +377,8 @@ struct wire_BuyBitcoinRequest *new_box_autoadd_buy_bitcoin_request_0(void);
 struct wire_CheckMessageRequest *new_box_autoadd_check_message_request_0(void);
 
 struct wire_Config *new_box_autoadd_config_0(void);
+
+struct wire_ConfigureNodeRequest *new_box_autoadd_configure_node_request_0(void);
 
 struct wire_GreenlightCredentials *new_box_autoadd_greenlight_credentials_0(void);
 
@@ -438,6 +453,7 @@ static int64_t dummy_method_to_enforce_bundling(void) {
     dummy_var ^= ((int64_t) (void*) wire_sync);
     dummy_var ^= ((int64_t) (void*) wire_node_credentials);
     dummy_var ^= ((int64_t) (void*) wire_node_info);
+    dummy_var ^= ((int64_t) (void*) wire_configure_node);
     dummy_var ^= ((int64_t) (void*) wire_disconnect);
     dummy_var ^= ((int64_t) (void*) wire_sign_message);
     dummy_var ^= ((int64_t) (void*) wire_check_message);
@@ -459,6 +475,7 @@ static int64_t dummy_method_to_enforce_bundling(void) {
     dummy_var ^= ((int64_t) (void*) wire_parse_input);
     dummy_var ^= ((int64_t) (void*) wire_list_payments);
     dummy_var ^= ((int64_t) (void*) wire_payment_by_hash);
+    dummy_var ^= ((int64_t) (void*) wire_set_payment_metadata);
     dummy_var ^= ((int64_t) (void*) wire_send_payment);
     dummy_var ^= ((int64_t) (void*) wire_send_spontaneous_payment);
     dummy_var ^= ((int64_t) (void*) wire_receive_payment);
@@ -478,6 +495,7 @@ static int64_t dummy_method_to_enforce_bundling(void) {
     dummy_var ^= ((int64_t) (void*) wire_list_refundables);
     dummy_var ^= ((int64_t) (void*) wire_prepare_refund);
     dummy_var ^= ((int64_t) (void*) wire_refund);
+    dummy_var ^= ((int64_t) (void*) wire_rescan_swaps);
     dummy_var ^= ((int64_t) (void*) wire_in_progress_swap);
     dummy_var ^= ((int64_t) (void*) wire_in_progress_reverse_swaps);
     dummy_var ^= ((int64_t) (void*) wire_open_channel_fee);
@@ -488,6 +506,7 @@ static int64_t dummy_method_to_enforce_bundling(void) {
     dummy_var ^= ((int64_t) (void*) new_box_autoadd_buy_bitcoin_request_0);
     dummy_var ^= ((int64_t) (void*) new_box_autoadd_check_message_request_0);
     dummy_var ^= ((int64_t) (void*) new_box_autoadd_config_0);
+    dummy_var ^= ((int64_t) (void*) new_box_autoadd_configure_node_request_0);
     dummy_var ^= ((int64_t) (void*) new_box_autoadd_greenlight_credentials_0);
     dummy_var ^= ((int64_t) (void*) new_box_autoadd_greenlight_node_config_0);
     dummy_var ^= ((int64_t) (void*) new_box_autoadd_i64_0);

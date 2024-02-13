@@ -13,12 +13,12 @@ class BreezSDK {
 
   /* Streams */
   /// Listen to paid Invoice events
-  final StreamController<InvoicePaidDetails> _invoicePaidStream = BehaviorSubject<InvoicePaidDetails>();
+  final StreamController<InvoicePaidDetails> _invoicePaidStream = StreamController.broadcast();
 
   Stream<InvoicePaidDetails> get invoicePaidStream => _invoicePaidStream.stream;
 
   /// Listen to payment results
-  final StreamController<Payment> _paymentResultStream = BehaviorSubject<Payment>();
+  final StreamController<Payment> _paymentResultStream = StreamController.broadcast();
 
   Stream<Payment> get paymentResultStream => _paymentResultStream.stream;
 
@@ -219,6 +219,14 @@ class BreezSDK {
     required String hash,
   }) async {
     return await _lnToolkit.paymentByHash(hash: hash);
+  }
+
+  /// Set the external metadata of a payment as a valid JSON string
+  Future<void> setPaymentMetadata({
+    required String hash,
+    required String metadata,
+  }) async {
+    return await _lnToolkit.setPaymentMetadata(hash: hash, metadata: metadata);
   }
 
   /* Lightning Payment API's */
@@ -434,6 +442,7 @@ class BreezSDK {
 extension SDKConfig on Config {
   Config copyWith({
     String? breezserver,
+    String? chainnotifierUrl,
     String? mempoolspaceUrl,
     String? workingDir,
     Network? network,
@@ -446,6 +455,7 @@ extension SDKConfig on Config {
   }) {
     return Config(
       breezserver: breezserver ?? this.breezserver,
+      chainnotifierUrl: chainnotifierUrl ?? this.chainnotifierUrl,
       mempoolspaceUrl: mempoolspaceUrl ?? this.mempoolspaceUrl,
       workingDir: workingDir ?? this.workingDir,
       network: network ?? this.network,
