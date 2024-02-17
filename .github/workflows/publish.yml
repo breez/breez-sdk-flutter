@@ -3,7 +3,7 @@
 # This requires the GitHub action that publishes to pub.dev
 # to be triggered by a Git tag being pushed.
 # The Git tag for releases in this repo is created and pushed automatically
-# in the main repo's publis-flutter workflow.
+# in the main repo's publish-flutter workflow.
 # See: https://dart.dev/tools/pub/automated-publishing
 
 name: Publish to pub.dev
@@ -21,6 +21,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: dart-lang/setup-dart@v1 # GitHub authenticates to pub.dev via OIDC in this step
+      - uses: flutter-actions/setup-flutter@v2
+        with:
+          channel: stable
+          version: 3.19.0
       - name: Install dependencies
         run: dart pub get
       - name: Publish
