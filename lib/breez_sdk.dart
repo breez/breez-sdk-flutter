@@ -1,9 +1,10 @@
 import 'dart:async';
-import 'dart:typed_data';
 
 import 'package:breez_sdk/bridge_generated.dart';
 import 'package:breez_sdk/exceptions.dart';
 import 'package:breez_sdk/native_toolkit.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart';
 import 'package:rxdart/rxdart.dart';
 
 class BreezSDK {
@@ -12,6 +13,7 @@ class BreezSDK {
   BreezSDK();
 
   /* Streams */
+
   /// Listen to paid Invoice events
   final StreamController<InvoicePaidDetails> _invoicePaidStream = StreamController.broadcast();
 
@@ -22,8 +24,14 @@ class BreezSDK {
 
   Stream<Payment> get paymentResultStream => _paymentResultStream.stream;
 
+  /// Initializes SDK events & log streams
   void initialize() {
-    /// Listen to BreezEvent's(new block, invoice paid, synced)
+    _initializeEventsStream();
+    _initializeLogStream();
+  }
+
+  /// Listen to BreezEvent's(new block, invoice paid, synced)
+  void _initializeEventsStream() {
     _lnToolkit.breezEventsStream().listen((event) async {
       if (event is BreezEvent_InvoicePaid) {
         _invoicePaidStream.add(event.details);
@@ -47,12 +55,29 @@ class BreezSDK {
       if (event is BreezEvent_BackupFailed) {
         _backupStreamController.addError(BackupException(event.details));
       }
+      if (event is BreezEvent_SwapUpdated) {
+        _swapEventsStreamController.add(event);
+      }
     });
-    _lnToolkit.breezLogStream().listen((logEntry) {
-      _logStreamController.add(logEntry);
-    }, onError: (e) {
-      _logStreamController.addError(e);
-    });
+  }
+
+  /// Listen to node logs
+  void _initializeLogStream() {
+    if (defaultTargetPlatform == TargetPlatform.android) {
+      const EventChannel('breez_sdk_node_logs')
+          .receiveBroadcastStream()
+          .map((log) => LogEntry(line: log["line"], level: log["level"]))
+          .listen(
+            (log) => _logStreamController.add(log),
+            onError: (e) => _logStreamController.addError(e),
+          );
+    } else {
+      _lnToolkit.breezLogStream().listen((logEntry) {
+        _logStreamController.add(logEntry);
+      }, onError: (e) {
+        _logStreamController.addError(e);
+      });
+    }
   }
 
   final _logStreamController = StreamController<LogEntry>.broadcast();
@@ -79,15 +104,12 @@ class BreezSDK {
   ///
   /// # Arguments
   ///
-  /// * `config` - The sdk configuration
-  /// * `seed` - The node private key
+  /// * `req` - The connect request containing the `config` sdk configuration and `seed` node private key
   Future connect({
-    required Config config,
-    required Uint8List seed,
+    required ConnectRequest req,
   }) async {
     await _lnToolkit.connect(
-      config: config,
-      seed: seed,
+      req: req,
     );
     await fetchNodeData();
   }
@@ -307,13 +329,35 @@ class BreezSDK {
   /// List all available fiat currencies
   Future<List<FiatCurrency>> listFiatCurrencies() async => await _lnToolkit.listFiatCurrencies();
 
+  /* Swap Stream */
+
+  final StreamController<BreezEvent_SwapUpdated> _swapEventsStreamController =
+      BehaviorSubject<BreezEvent_SwapUpdated>();
+
+  Stream<BreezEvent_SwapUpdated> get swapEventsStream => _swapEventsStreamController.stream;
+
   /* On-Chain Swap API's */
 
   /// Creates a reverse swap and attempts to pay the HODL invoice
+  @Deprecated(
+    'Use payOnchain instead. '
+    'This method was deprecated after v0.3.2',
+  )
   Future<SendOnchainResponse> sendOnchain({
     required SendOnchainRequest req,
   }) async {
     return await _lnToolkit.sendOnchain(req: req);
+  }
+
+  Future<OnchainPaymentLimitsResponse> onchainPaymentLimits() async {
+    return await _lnToolkit.onchainPaymentLimits();
+  }
+
+  /// Creates a reverse swap and attempts to pay the HODL invoice
+  Future<PayOnchainResponse> payOnchain({
+    required PayOnchainRequest req,
+  }) async {
+    return await _lnToolkit.payOnchain(req: req);
   }
 
   /// Onchain receive swap API
@@ -380,7 +424,23 @@ class BreezSDK {
   /// A [SwapInfo] is in-progress if it is waiting for confirmation to be redeemed and complete the swap.
   Future<SwapInfo?> inProgressSwap() async => await _lnToolkit.inProgressSwap();
 
+  /// Redeems an individual swap.
+  ///
+  /// To be used only in the context of mobile notifications, where the notification triggers
+  /// an individual redeem.
+  ///
+  /// This is taken care of automatically in the context of typical SDK usage.
+  Future<void> redeemSwap({
+    required String swapAddress,
+  }) async {
+    return await _lnToolkit.redeemSwap(swapAddress: swapAddress);
+  }
+
   /// Returns the blocking [ReverseSwapInfo]s that are in progress
+  @Deprecated(
+    'Use inProgressOnchainPayments instead. '
+    'This method was deprecated after v0.3.6',
+  )
   Future<List<ReverseSwapInfo>> inProgressReverseSwaps() async => _lnToolkit.inProgressReverseSwaps();
 
   /* Swap Fee API's */
@@ -393,11 +453,25 @@ class BreezSDK {
   }
 
   /// Lookup the most recent reverse swap pair info using the Boltz API
+  @Deprecated(
+    'Use prepareOnchainPayment instead. '
+    'This method was deprecated after v0.3.2',
+  )
   Future<ReverseSwapPairInfo> fetchReverseSwapFees({
     required ReverseSwapFeesRequest req,
   }) async {
     return await _lnToolkit.fetchReverseSwapFees(req: req);
   }
+
+  /// Lookup the most recent reverse swap pair info using the Boltz API
+  Future<PrepareOnchainPaymentResponse> prepareOnchainPayment({
+    required PrepareOnchainPaymentRequest req,
+  }) async {
+    return await _lnToolkit.prepareOnchainPayment(req: req);
+  }
+
+  /// Returns the blocking [ReverseSwapInfo]s that are in progress
+  Future<List<ReverseSwapInfo>> inProgressOnchainPayments() async => _lnToolkit.inProgressOnchainPayments();
 
   /// Fetches the current recommended fees
   Future<RecommendedFees> recommendedFees() async => await _lnToolkit.recommendedFees();
@@ -419,7 +493,10 @@ class BreezSDK {
   }
 
   /// Fetches the service health check from the support API.
-  Future<ServiceHealthCheckResponse> serviceHealthCheck() async => await _lnToolkit.serviceHealthCheck();
+  Future<ServiceHealthCheckResponse> serviceHealthCheck({
+    required String apiKey,
+  }) async =>
+      await _lnToolkit.serviceHealthCheck(apiKey: apiKey);
 
   /* CLI API's */
 
