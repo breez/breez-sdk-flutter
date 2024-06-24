@@ -11,6 +11,10 @@ typedef struct _Dart_Handle* Dart_Handle;
 
 #define ESTIMATED_LOCKUP_TX_VSIZE 153
 
+#define MOCK_REVERSE_SWAP_MIN 50000
+
+#define MOCK_REVERSE_SWAP_MAX 1000000
+
 typedef struct DartCObject DartCObject;
 
 typedef int64_t DartPort;
@@ -23,8 +27,8 @@ typedef struct wire_uint_8_list {
 } wire_uint_8_list;
 
 typedef struct wire_GreenlightCredentials {
-  struct wire_uint_8_list *device_key;
-  struct wire_uint_8_list *device_cert;
+  struct wire_uint_8_list *developer_key;
+  struct wire_uint_8_list *developer_cert;
 } wire_GreenlightCredentials;
 
 typedef struct wire_GreenlightNodeConfig {
