@@ -282,6 +282,11 @@ abstract class BreezSdkCore {
 
   FlutterRustBridgeTaskConstMeta get kInProgressReverseSwapsConstMeta;
 
+  /// See [BreezServices::claim_reverse_swap]
+  Future<void> claimReverseSwap({required String lockupAddress, dynamic hint});
+
+  FlutterRustBridgeTaskConstMeta get kClaimReverseSwapConstMeta;
+
   /// See [BreezServices::open_channel_fee]
   Future<OpenChannelFeeResponse> openChannelFee({required OpenChannelFeeRequest req, dynamic hint});
 
@@ -415,6 +420,15 @@ sealed class BreezEvent with _$BreezEvent {
   const factory BreezEvent.backupFailed({
     required BackupFailedData details,
   }) = BreezEvent_BackupFailed;
+
+  /// Indicates that a reverse swap has been updated which may also
+  /// include a status change
+  const factory BreezEvent.reverseSwapUpdated({
+    required ReverseSwapInfo details,
+  }) = BreezEvent_ReverseSwapUpdated;
+
+  /// Indicates that a swap has been updated which may also
+  /// include a status change
   const factory BreezEvent.swapUpdated({
     required SwapInfo details,
   }) = BreezEvent_SwapUpdated;
@@ -844,12 +858,14 @@ class LnUrlPayRequest {
   final int amountMsat;
   final String? comment;
   final String? paymentLabel;
+  final bool? validateSuccessActionUrl;
 
   const LnUrlPayRequest({
     required this.data,
     required this.amountMsat,
     this.comment,
     this.paymentLabel,
+    this.validateSuccessActionUrl,
   });
 }
 
@@ -933,6 +949,9 @@ sealed class LnUrlWithdrawResult with _$LnUrlWithdrawResult {
   const factory LnUrlWithdrawResult.ok({
     required LnUrlWithdrawSuccessData data,
   }) = LnUrlWithdrawResult_Ok;
+  const factory LnUrlWithdrawResult.timeout({
+    required LnUrlWithdrawSuccessData data,
+  }) = LnUrlWithdrawResult_Timeout;
   const factory LnUrlWithdrawResult.errorStatus({
     required LnUrlErrorData data,
   }) = LnUrlWithdrawResult_ErrorStatus;
@@ -1113,19 +1132,19 @@ class NodeState {
 }
 
 class OnchainPaymentLimitsResponse {
-  /// Minimum amount that can be sent. This value is influenced by
-  /// - what can be sent given the available channels and balance
-  /// - the lower limit of what the reverse swap service accepts as a send amount
+  /// Minimum amount the reverse swap service accepts as a send amount
   final int minSat;
 
-  /// Maximum amount that can be sent. This value is influenced by
-  /// - what can be sent given the available channels and balance
-  /// - the upper limit of what the reverse swap service accepts as a send amount
+  /// Maximum amount the reverse swap service accepts as a send amount
   final int maxSat;
+
+  /// Maximum amount this node can send with the current channels and the current local balance
+  final int maxPayableSat;
 
   const OnchainPaymentLimitsResponse({
     required this.minSat,
     required this.maxSat,
+    required this.maxPayableSat,
   });
 }
 
@@ -1820,7 +1839,7 @@ class SwapInfo {
   /// Amount of millisatoshis claimed from sent funds and paid for via bolt11 invoice.
   final int paidMsat;
 
-  /// Total amount of transactions sent to the swap address.
+  /// Total count of transactions sent to the swap address.
   final int totalIncomingTxs;
 
   /// Confirmed onchain sats to be claim with an bolt11 invoice or refunded if swap fails.
@@ -2862,6 +2881,23 @@ class BreezSdkCoreImpl implements BreezSdkCore {
         argNames: [],
       );
 
+  Future<void> claimReverseSwap({required String lockupAddress, dynamic hint}) {
+    var arg0 = _platform.api2wire_String(lockupAddress);
+    return _platform.executeNormal(FlutterRustBridgeTask(
+      callFfi: (port_) => _platform.inner.wire_claim_reverse_swap(port_, arg0),
+      parseSuccessData: _wire2api_unit,
+      parseErrorData: _wire2api_FrbAnyhowException,
+      constMeta: kClaimReverseSwapConstMeta,
+      argValues: [lockupAddress],
+      hint: hint,
+    ));
+  }
+
+  FlutterRustBridgeTaskConstMeta get kClaimReverseSwapConstMeta => const FlutterRustBridgeTaskConstMeta(
+        debugName: "claim_reverse_swap",
+        argNames: ["lockupAddress"],
+      );
+
   Future<OpenChannelFeeResponse> openChannelFee({required OpenChannelFeeRequest req, dynamic hint}) {
     var arg0 = _platform.api2wire_box_autoadd_open_channel_fee_request(req);
     return _platform.executeNormal(FlutterRustBridgeTask(
@@ -3227,6 +3263,10 @@ class BreezSdkCoreImpl implements BreezSdkCore {
           details: _wire2api_box_autoadd_backup_failed_data(raw[1]),
         );
       case 8:
+        return BreezEvent_ReverseSwapUpdated(
+          details: _wire2api_box_autoadd_reverse_swap_info(raw[1]),
+        );
+      case 9:
         return BreezEvent_SwapUpdated(
           details: _wire2api_box_autoadd_swap_info(raw[1]),
         );
@@ -3593,6 +3633,10 @@ class BreezSdkCoreImpl implements BreezSdkCore {
           data: _wire2api_box_autoadd_ln_url_withdraw_success_data(raw[1]),
         );
       case 1:
+        return LnUrlWithdrawResult_Timeout(
+          data: _wire2api_box_autoadd_ln_url_withdraw_success_data(raw[1]),
+        );
+      case 2:
         return LnUrlWithdrawResult_ErrorStatus(
           data: _wire2api_box_autoadd_ln_url_error_data(raw[1]),
         );
@@ -3718,10 +3762,11 @@ class BreezSdkCoreImpl implements BreezSdkCore {
 
   OnchainPaymentLimitsResponse _wire2api_onchain_payment_limits_response(dynamic raw) {
     final arr = raw as List<dynamic>;
-    if (arr.length != 2) throw Exception('unexpected arr length: expect 2 but see ${arr.length}');
+    if (arr.length != 3) throw Exception('unexpected arr length: expect 3 but see ${arr.length}');
     return OnchainPaymentLimitsResponse(
       minSat: _wire2api_u64(arr[0]),
       maxSat: _wire2api_u64(arr[1]),
+      maxPayableSat: _wire2api_u64(arr[2]),
     );
   }
 
@@ -4783,6 +4828,7 @@ class BreezSdkCorePlatform extends FlutterRustBridgeBase<BreezSdkCoreWire> {
     wireObj.amount_msat = api2wire_u64(apiObj.amountMsat);
     wireObj.comment = api2wire_opt_String(apiObj.comment);
     wireObj.payment_label = api2wire_opt_String(apiObj.paymentLabel);
+    wireObj.validate_success_action_url = api2wire_opt_box_autoadd_bool(apiObj.validateSuccessActionUrl);
   }
 
   void _api_fill_to_wire_ln_url_pay_request_data(
@@ -5821,6 +5867,22 @@ class BreezSdkCoreWire implements FlutterRustBridgeWireBase {
   late final _wire_in_progress_reverse_swaps =
       _wire_in_progress_reverse_swapsPtr.asFunction<void Function(int)>();
 
+  void wire_claim_reverse_swap(
+    int port_,
+    ffi.Pointer<wire_uint_8_list> lockup_address,
+  ) {
+    return _wire_claim_reverse_swap(
+      port_,
+      lockup_address,
+    );
+  }
+
+  late final _wire_claim_reverse_swapPtr =
+      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Int64, ffi.Pointer<wire_uint_8_list>)>>(
+          'wire_claim_reverse_swap');
+  late final _wire_claim_reverse_swap =
+      _wire_claim_reverse_swapPtr.asFunction<void Function(int, ffi.Pointer<wire_uint_8_list>)>();
+
   void wire_open_channel_fee(
     int port_,
     ffi.Pointer<wire_OpenChannelFeeRequest> req,
@@ -6598,6 +6660,8 @@ final class wire_LnUrlPayRequest extends ffi.Struct {
   external ffi.Pointer<wire_uint_8_list> comment;
 
   external ffi.Pointer<wire_uint_8_list> payment_label;
+
+  external ffi.Pointer<ffi.Bool> validate_success_action_url;
 }
 
 final class wire_LnUrlWithdrawRequestData extends ffi.Struct {

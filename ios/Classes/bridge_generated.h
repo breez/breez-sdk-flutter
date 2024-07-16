@@ -171,6 +171,7 @@ typedef struct wire_LnUrlPayRequest {
   uint64_t amount_msat;
   struct wire_uint_8_list *comment;
   struct wire_uint_8_list *payment_label;
+  bool *validate_success_action_url;
 } wire_LnUrlPayRequest;
 
 typedef struct wire_LnUrlWithdrawRequestData {
@@ -405,6 +406,8 @@ void wire_in_progress_swap(int64_t port_);
 
 void wire_in_progress_reverse_swaps(int64_t port_);
 
+void wire_claim_reverse_swap(int64_t port_, struct wire_uint_8_list *lockup_address);
+
 void wire_open_channel_fee(int64_t port_, struct wire_OpenChannelFeeRequest *req);
 
 void wire_fetch_reverse_swap_fees(int64_t port_, struct wire_ReverseSwapFeesRequest *req);
@@ -556,6 +559,7 @@ static int64_t dummy_method_to_enforce_bundling(void) {
     dummy_var ^= ((int64_t) (void*) wire_redeem_swap);
     dummy_var ^= ((int64_t) (void*) wire_in_progress_swap);
     dummy_var ^= ((int64_t) (void*) wire_in_progress_reverse_swaps);
+    dummy_var ^= ((int64_t) (void*) wire_claim_reverse_swap);
     dummy_var ^= ((int64_t) (void*) wire_open_channel_fee);
     dummy_var ^= ((int64_t) (void*) wire_fetch_reverse_swap_fees);
     dummy_var ^= ((int64_t) (void*) wire_onchain_payment_limits);
