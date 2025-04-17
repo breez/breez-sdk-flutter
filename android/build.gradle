@@ -1,19 +1,12 @@
 plugins {
-    id 'com.android.library'
-    id 'org.jetbrains.kotlin.android'
-    id 'org.jetbrains.kotlin.plugin.serialization'
+    id("com.android.library")
+    id("org.jetbrains.kotlin.android")
+    id("org.jetbrains.kotlin.plugin.serialization")
 }
 
-version '0.6.7'
-
 android {
-    namespace 'com.breez.breez_sdk'
-    compileSdk 35
-
-    defaultConfig {
-        minSdk 24
-        targetSdk 35
-    }
+    namespace = "com.breez.breez_sdk"
+    compileSdk = 35
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
@@ -21,15 +14,17 @@ android {
     }
 
     kotlinOptions {
-        jvmTarget = '17'
+        jvmTarget = "17"
     }
 }
 
+version = "0.6.7"
+
 dependencies {
-    api "breez_sdk:bindings-android:$version"
+    api("breez_sdk:bindings-android:$version")
     implementation("net.java.dev.jna:jna:5.14.0") {
         exclude group: "net.java.dev.jna", module: "jna-platform"
     }
-    /* JSON serialization */
-    implementation 'org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3'
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.2")
 }
