@@ -1,30 +1,64 @@
-plugins {
-    id("com.android.library")
-    id("org.jetbrains.kotlin.android")
-    id("org.jetbrains.kotlin.plugin.serialization")
+group 'com.breez.breez_sdk'
+version '0.7.1'
+
+buildscript {
+    ext.kotlin_version = '1.8.20'
+    repositories {
+        google()
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:4.2.2'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "org.jetbrains.kotlin:kotlin-serialization:$kotlin_version"
+    }
 }
 
+rootProject.allprojects {
+    repositories {
+        google()
+        mavenCentral()
+        maven { url("https://mvn.breez.technology/releases") }
+    }
+}
+
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlinx-serialization'
+
 android {
-    namespace = "com.breez.breez_sdk"
-    compileSdk = 35
+    // Conditional for compatibility with AGP <4.2.
+    if (project.android.hasProperty("namespace")) {
+      namespace "$group"
+    }
+
+    compileSdk 35
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
 
     kotlinOptions {
-        jvmTarget = "17"
+        jvmTarget = '11'
+    }
+
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+    }
+
+    defaultConfig {
+        ndkVersion = flutter.ndkVersion
+        minSdk = 24
     }
 }
 
-version = "0.6.7"
-
 dependencies {
-    api("breez_sdk:bindings-android:$version")
-    implementation("net.java.dev.jna:jna:5.14.0") {
-        exclude group: "net.java.dev.jna", module: "jna-platform"
+    api "breez_sdk:bindings-android:$version"
+    implementation("net.java.dev.jna:jna:5.14.0@aar") {
+        exclude group: 'net.java.dev.jna', module: 'jna'
     }
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.10.2")
+    /* JSON serialization */
+    implementation 'org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3'
 }
