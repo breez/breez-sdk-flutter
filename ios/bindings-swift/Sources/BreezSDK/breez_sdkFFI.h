@@ -4,6 +4,7 @@
 #pragma once
 
 #include <stdbool.h>
+#include <stddef.h>
 #include <stdint.h>
 
 // The following structs are used to implement the lowest level
@@ -23,12 +24,10 @@
 
 typedef struct RustBuffer
 {
-    int32_t capacity;
-    int32_t len;
+    uint64_t capacity;
+    uint64_t len;
     uint8_t *_Nullable data;
 } RustBuffer;
-
-typedef int32_t (*ForeignCallback)(uint64_t, int32_t, RustBuffer, RustBuffer *_Nonnull);
 
 typedef struct ForeignBytes
 {
@@ -45,264 +44,1197 @@ typedef struct RustCallStatus {
 // ⚠️ Attention: If you change this #else block (ending in `#endif // def UNIFFI_SHARED_H`) you *must* ⚠️
 // ⚠️ increment the version suffix in all instances of UNIFFI_SHARED_HEADER_V4 in this file.           ⚠️
 #endif // def UNIFFI_SHARED_H
+#ifndef UNIFFI_FFIDEF_RUST_FUTURE_CONTINUATION_CALLBACK
+#define UNIFFI_FFIDEF_RUST_FUTURE_CONTINUATION_CALLBACK
+typedef void (*UniffiRustFutureContinuationCallback)(uint64_t, int8_t
+    );
 
-void ffi_breez_sdk_a865_BlockingBreezServices_object_free(
-      void*_Nonnull ptr,
-    RustCallStatus *_Nonnull out_status
-    );
-void breez_sdk_a865_BlockingBreezServices_disconnect(
-      void*_Nonnull ptr,
-    RustCallStatus *_Nonnull out_status
-    );
-void breez_sdk_a865_BlockingBreezServices_configure_node(
-      void*_Nonnull ptr,RustBuffer req,
-    RustCallStatus *_Nonnull out_status
-    );
-RustBuffer breez_sdk_a865_BlockingBreezServices_send_payment(
-      void*_Nonnull ptr,RustBuffer req,
-    RustCallStatus *_Nonnull out_status
-    );
-RustBuffer breez_sdk_a865_BlockingBreezServices_send_spontaneous_payment(
-      void*_Nonnull ptr,RustBuffer req,
-    RustCallStatus *_Nonnull out_status
-    );
-RustBuffer breez_sdk_a865_BlockingBreezServices_receive_payment(
-      void*_Nonnull ptr,RustBuffer req,
-    RustCallStatus *_Nonnull out_status
-    );
-RustBuffer breez_sdk_a865_BlockingBreezServices_pay_lnurl(
-      void*_Nonnull ptr,RustBuffer req,
-    RustCallStatus *_Nonnull out_status
-    );
-RustBuffer breez_sdk_a865_BlockingBreezServices_withdraw_lnurl(
-      void*_Nonnull ptr,RustBuffer request,
-    RustCallStatus *_Nonnull out_status
-    );
-RustBuffer breez_sdk_a865_BlockingBreezServices_lnurl_auth(
-      void*_Nonnull ptr,RustBuffer req_data,
-    RustCallStatus *_Nonnull out_status
-    );
-void breez_sdk_a865_BlockingBreezServices_report_issue(
-      void*_Nonnull ptr,RustBuffer req,
-    RustCallStatus *_Nonnull out_status
-    );
-RustBuffer breez_sdk_a865_BlockingBreezServices_node_credentials(
-      void*_Nonnull ptr,
-    RustCallStatus *_Nonnull out_status
-    );
-RustBuffer breez_sdk_a865_BlockingBreezServices_node_info(
-      void*_Nonnull ptr,
-    RustCallStatus *_Nonnull out_status
-    );
-RustBuffer breez_sdk_a865_BlockingBreezServices_sign_message(
-      void*_Nonnull ptr,RustBuffer req,
-    RustCallStatus *_Nonnull out_status
-    );
-RustBuffer breez_sdk_a865_BlockingBreezServices_check_message(
-      void*_Nonnull ptr,RustBuffer req,
-    RustCallStatus *_Nonnull out_status
-    );
-RustBuffer breez_sdk_a865_BlockingBreezServices_backup_status(
-      void*_Nonnull ptr,
-    RustCallStatus *_Nonnull out_status
-    );
-void breez_sdk_a865_BlockingBreezServices_backup(
-      void*_Nonnull ptr,
-    RustCallStatus *_Nonnull out_status
-    );
-RustBuffer breez_sdk_a865_BlockingBreezServices_list_payments(
-      void*_Nonnull ptr,RustBuffer req,
-    RustCallStatus *_Nonnull out_status
-    );
-RustBuffer breez_sdk_a865_BlockingBreezServices_payment_by_hash(
-      void*_Nonnull ptr,RustBuffer hash,
-    RustCallStatus *_Nonnull out_status
-    );
-void breez_sdk_a865_BlockingBreezServices_set_payment_metadata(
-      void*_Nonnull ptr,RustBuffer hash,RustBuffer metadata,
-    RustCallStatus *_Nonnull out_status
-    );
-RustBuffer breez_sdk_a865_BlockingBreezServices_redeem_onchain_funds(
-      void*_Nonnull ptr,RustBuffer req,
-    RustCallStatus *_Nonnull out_status
-    );
-RustBuffer breez_sdk_a865_BlockingBreezServices_fetch_fiat_rates(
-      void*_Nonnull ptr,
-    RustCallStatus *_Nonnull out_status
-    );
-RustBuffer breez_sdk_a865_BlockingBreezServices_list_fiat_currencies(
-      void*_Nonnull ptr,
-    RustCallStatus *_Nonnull out_status
-    );
-RustBuffer breez_sdk_a865_BlockingBreezServices_list_lsps(
-      void*_Nonnull ptr,
-    RustCallStatus *_Nonnull out_status
-    );
-void breez_sdk_a865_BlockingBreezServices_connect_lsp(
-      void*_Nonnull ptr,RustBuffer lsp_id,
-    RustCallStatus *_Nonnull out_status
-    );
-RustBuffer breez_sdk_a865_BlockingBreezServices_fetch_lsp_info(
-      void*_Nonnull ptr,RustBuffer lsp_id,
-    RustCallStatus *_Nonnull out_status
-    );
-RustBuffer breez_sdk_a865_BlockingBreezServices_open_channel_fee(
-      void*_Nonnull ptr,RustBuffer req,
-    RustCallStatus *_Nonnull out_status
-    );
-RustBuffer breez_sdk_a865_BlockingBreezServices_lsp_id(
-      void*_Nonnull ptr,
-    RustCallStatus *_Nonnull out_status
-    );
-RustBuffer breez_sdk_a865_BlockingBreezServices_lsp_info(
-      void*_Nonnull ptr,
-    RustCallStatus *_Nonnull out_status
-    );
-void breez_sdk_a865_BlockingBreezServices_close_lsp_channels(
-      void*_Nonnull ptr,
-    RustCallStatus *_Nonnull out_status
-    );
-void breez_sdk_a865_BlockingBreezServices_register_webhook(
-      void*_Nonnull ptr,RustBuffer webhook_url,
-    RustCallStatus *_Nonnull out_status
-    );
-void breez_sdk_a865_BlockingBreezServices_unregister_webhook(
-      void*_Nonnull ptr,RustBuffer webhook_url,
-    RustCallStatus *_Nonnull out_status
-    );
-RustBuffer breez_sdk_a865_BlockingBreezServices_receive_onchain(
-      void*_Nonnull ptr,RustBuffer req,
-    RustCallStatus *_Nonnull out_status
-    );
-RustBuffer breez_sdk_a865_BlockingBreezServices_in_progress_swap(
-      void*_Nonnull ptr,
-    RustCallStatus *_Nonnull out_status
-    );
-void breez_sdk_a865_BlockingBreezServices_rescan_swaps(
-      void*_Nonnull ptr,
-    RustCallStatus *_Nonnull out_status
-    );
-void breez_sdk_a865_BlockingBreezServices_redeem_swap(
-      void*_Nonnull ptr,RustBuffer swap_address,
-    RustCallStatus *_Nonnull out_status
-    );
-RustBuffer breez_sdk_a865_BlockingBreezServices_list_refundables(
-      void*_Nonnull ptr,
-    RustCallStatus *_Nonnull out_status
-    );
-RustBuffer breez_sdk_a865_BlockingBreezServices_prepare_refund(
-      void*_Nonnull ptr,RustBuffer req,
-    RustCallStatus *_Nonnull out_status
-    );
-RustBuffer breez_sdk_a865_BlockingBreezServices_refund(
-      void*_Nonnull ptr,RustBuffer req,
-    RustCallStatus *_Nonnull out_status
-    );
-RustBuffer breez_sdk_a865_BlockingBreezServices_list_swaps(
-      void*_Nonnull ptr,RustBuffer req,
-    RustCallStatus *_Nonnull out_status
-    );
-RustBuffer breez_sdk_a865_BlockingBreezServices_fetch_reverse_swap_fees(
-      void*_Nonnull ptr,RustBuffer req,
-    RustCallStatus *_Nonnull out_status
-    );
-RustBuffer breez_sdk_a865_BlockingBreezServices_onchain_payment_limits(
-      void*_Nonnull ptr,
-    RustCallStatus *_Nonnull out_status
-    );
-RustBuffer breez_sdk_a865_BlockingBreezServices_prepare_onchain_payment(
-      void*_Nonnull ptr,RustBuffer req,
-    RustCallStatus *_Nonnull out_status
-    );
-RustBuffer breez_sdk_a865_BlockingBreezServices_in_progress_onchain_payments(
-      void*_Nonnull ptr,
-    RustCallStatus *_Nonnull out_status
-    );
-void breez_sdk_a865_BlockingBreezServices_claim_reverse_swap(
-      void*_Nonnull ptr,RustBuffer lockup_address,
-    RustCallStatus *_Nonnull out_status
-    );
-RustBuffer breez_sdk_a865_BlockingBreezServices_pay_onchain(
-      void*_Nonnull ptr,RustBuffer req,
-    RustCallStatus *_Nonnull out_status
-    );
-RustBuffer breez_sdk_a865_BlockingBreezServices_execute_dev_command(
-      void*_Nonnull ptr,RustBuffer command,
-    RustCallStatus *_Nonnull out_status
-    );
-RustBuffer breez_sdk_a865_BlockingBreezServices_generate_diagnostic_data(
-      void*_Nonnull ptr,
-    RustCallStatus *_Nonnull out_status
-    );
-void breez_sdk_a865_BlockingBreezServices_sync(
-      void*_Nonnull ptr,
-    RustCallStatus *_Nonnull out_status
-    );
-RustBuffer breez_sdk_a865_BlockingBreezServices_recommended_fees(
-      void*_Nonnull ptr,
-    RustCallStatus *_Nonnull out_status
-    );
-RustBuffer breez_sdk_a865_BlockingBreezServices_buy_bitcoin(
-      void*_Nonnull ptr,RustBuffer req,
-    RustCallStatus *_Nonnull out_status
-    );
-RustBuffer breez_sdk_a865_BlockingBreezServices_prepare_redeem_onchain_funds(
-      void*_Nonnull ptr,RustBuffer req,
-    RustCallStatus *_Nonnull out_status
-    );
-void ffi_breez_sdk_a865_LogStream_init_callback(
-      ForeignCallback  _Nonnull callback_stub,
-    RustCallStatus *_Nonnull out_status
-    );
-void ffi_breez_sdk_a865_EventListener_init_callback(
-      ForeignCallback  _Nonnull callback_stub,
-    RustCallStatus *_Nonnull out_status
-    );
-void*_Nonnull breez_sdk_a865_connect(
-      RustBuffer req,uint64_t listener,
-    RustCallStatus *_Nonnull out_status
-    );
-void breez_sdk_a865_set_log_stream(
-      uint64_t log_stream,
-    RustCallStatus *_Nonnull out_status
-    );
-RustBuffer breez_sdk_a865_parse_invoice(
-      RustBuffer invoice,
-    RustCallStatus *_Nonnull out_status
-    );
-RustBuffer breez_sdk_a865_parse_input(
-      RustBuffer s,
-    RustCallStatus *_Nonnull out_status
-    );
-RustBuffer breez_sdk_a865_mnemonic_to_seed(
-      RustBuffer phrase,
-    RustCallStatus *_Nonnull out_status
-    );
-RustBuffer breez_sdk_a865_default_config(
-      RustBuffer env_type,RustBuffer api_key,RustBuffer node_config,
-    RustCallStatus *_Nonnull out_status
-    );
-RustBuffer breez_sdk_a865_static_backup(
-      RustBuffer req,
-    RustCallStatus *_Nonnull out_status
-    );
-RustBuffer breez_sdk_a865_service_health_check(
-      RustBuffer api_key,
-    RustCallStatus *_Nonnull out_status
-    );
-RustBuffer ffi_breez_sdk_a865_rustbuffer_alloc(
-      int32_t size,
-    RustCallStatus *_Nonnull out_status
-    );
-RustBuffer ffi_breez_sdk_a865_rustbuffer_from_bytes(
-      ForeignBytes bytes,
-    RustCallStatus *_Nonnull out_status
-    );
-void ffi_breez_sdk_a865_rustbuffer_free(
-      RustBuffer buf,
-    RustCallStatus *_Nonnull out_status
-    );
-RustBuffer ffi_breez_sdk_a865_rustbuffer_reserve(
-      RustBuffer buf,int32_t additional,
-    RustCallStatus *_Nonnull out_status
-    );
+#endif
+#ifndef UNIFFI_FFIDEF_FOREIGN_FUTURE_FREE
+#define UNIFFI_FFIDEF_FOREIGN_FUTURE_FREE
+typedef void (*UniffiForeignFutureFree)(uint64_t
+    );
+
+#endif
+#ifndef UNIFFI_FFIDEF_CALLBACK_INTERFACE_FREE
+#define UNIFFI_FFIDEF_CALLBACK_INTERFACE_FREE
+typedef void (*UniffiCallbackInterfaceFree)(uint64_t
+    );
+
+#endif
+#ifndef UNIFFI_FFIDEF_FOREIGN_FUTURE
+#define UNIFFI_FFIDEF_FOREIGN_FUTURE
+typedef struct UniffiForeignFuture {
+    uint64_t handle;
+    UniffiForeignFutureFree _Nonnull free;
+} UniffiForeignFuture;
+
+#endif
+#ifndef UNIFFI_FFIDEF_FOREIGN_FUTURE_STRUCT_U8
+#define UNIFFI_FFIDEF_FOREIGN_FUTURE_STRUCT_U8
+typedef struct UniffiForeignFutureStructU8 {
+    uint8_t returnValue;
+    RustCallStatus callStatus;
+} UniffiForeignFutureStructU8;
+
+#endif
+#ifndef UNIFFI_FFIDEF_FOREIGN_FUTURE_COMPLETE_U8
+#define UNIFFI_FFIDEF_FOREIGN_FUTURE_COMPLETE_U8
+typedef void (*UniffiForeignFutureCompleteU8)(uint64_t, UniffiForeignFutureStructU8
+    );
+
+#endif
+#ifndef UNIFFI_FFIDEF_FOREIGN_FUTURE_STRUCT_I8
+#define UNIFFI_FFIDEF_FOREIGN_FUTURE_STRUCT_I8
+typedef struct UniffiForeignFutureStructI8 {
+    int8_t returnValue;
+    RustCallStatus callStatus;
+} UniffiForeignFutureStructI8;
+
+#endif
+#ifndef UNIFFI_FFIDEF_FOREIGN_FUTURE_COMPLETE_I8
+#define UNIFFI_FFIDEF_FOREIGN_FUTURE_COMPLETE_I8
+typedef void (*UniffiForeignFutureCompleteI8)(uint64_t, UniffiForeignFutureStructI8
+    );
+
+#endif
+#ifndef UNIFFI_FFIDEF_FOREIGN_FUTURE_STRUCT_U16
+#define UNIFFI_FFIDEF_FOREIGN_FUTURE_STRUCT_U16
+typedef struct UniffiForeignFutureStructU16 {
+    uint16_t returnValue;
+    RustCallStatus callStatus;
+} UniffiForeignFutureStructU16;
+
+#endif
+#ifndef UNIFFI_FFIDEF_FOREIGN_FUTURE_COMPLETE_U16
+#define UNIFFI_FFIDEF_FOREIGN_FUTURE_COMPLETE_U16
+typedef void (*UniffiForeignFutureCompleteU16)(uint64_t, UniffiForeignFutureStructU16
+    );
+
+#endif
+#ifndef UNIFFI_FFIDEF_FOREIGN_FUTURE_STRUCT_I16
+#define UNIFFI_FFIDEF_FOREIGN_FUTURE_STRUCT_I16
+typedef struct UniffiForeignFutureStructI16 {
+    int16_t returnValue;
+    RustCallStatus callStatus;
+} UniffiForeignFutureStructI16;
+
+#endif
+#ifndef UNIFFI_FFIDEF_FOREIGN_FUTURE_COMPLETE_I16
+#define UNIFFI_FFIDEF_FOREIGN_FUTURE_COMPLETE_I16
+typedef void (*UniffiForeignFutureCompleteI16)(uint64_t, UniffiForeignFutureStructI16
+    );
+
+#endif
+#ifndef UNIFFI_FFIDEF_FOREIGN_FUTURE_STRUCT_U32
+#define UNIFFI_FFIDEF_FOREIGN_FUTURE_STRUCT_U32
+typedef struct UniffiForeignFutureStructU32 {
+    uint32_t returnValue;
+    RustCallStatus callStatus;
+} UniffiForeignFutureStructU32;
+
+#endif
+#ifndef UNIFFI_FFIDEF_FOREIGN_FUTURE_COMPLETE_U32
+#define UNIFFI_FFIDEF_FOREIGN_FUTURE_COMPLETE_U32
+typedef void (*UniffiForeignFutureCompleteU32)(uint64_t, UniffiForeignFutureStructU32
+    );
+
+#endif
+#ifndef UNIFFI_FFIDEF_FOREIGN_FUTURE_STRUCT_I32
+#define UNIFFI_FFIDEF_FOREIGN_FUTURE_STRUCT_I32
+typedef struct UniffiForeignFutureStructI32 {
+    int32_t returnValue;
+    RustCallStatus callStatus;
+} UniffiForeignFutureStructI32;
+
+#endif
+#ifndef UNIFFI_FFIDEF_FOREIGN_FUTURE_COMPLETE_I32
+#define UNIFFI_FFIDEF_FOREIGN_FUTURE_COMPLETE_I32
+typedef void (*UniffiForeignFutureCompleteI32)(uint64_t, UniffiForeignFutureStructI32
+    );
+
+#endif
+#ifndef UNIFFI_FFIDEF_FOREIGN_FUTURE_STRUCT_U64
+#define UNIFFI_FFIDEF_FOREIGN_FUTURE_STRUCT_U64
+typedef struct UniffiForeignFutureStructU64 {
+    uint64_t returnValue;
+    RustCallStatus callStatus;
+} UniffiForeignFutureStructU64;
+
+#endif
+#ifndef UNIFFI_FFIDEF_FOREIGN_FUTURE_COMPLETE_U64
+#define UNIFFI_FFIDEF_FOREIGN_FUTURE_COMPLETE_U64
+typedef void (*UniffiForeignFutureCompleteU64)(uint64_t, UniffiForeignFutureStructU64
+    );
+
+#endif
+#ifndef UNIFFI_FFIDEF_FOREIGN_FUTURE_STRUCT_I64
+#define UNIFFI_FFIDEF_FOREIGN_FUTURE_STRUCT_I64
+typedef struct UniffiForeignFutureStructI64 {
+    int64_t returnValue;
+    RustCallStatus callStatus;
+} UniffiForeignFutureStructI64;
+
+#endif
+#ifndef UNIFFI_FFIDEF_FOREIGN_FUTURE_COMPLETE_I64
+#define UNIFFI_FFIDEF_FOREIGN_FUTURE_COMPLETE_I64
+typedef void (*UniffiForeignFutureCompleteI64)(uint64_t, UniffiForeignFutureStructI64
+    );
+
+#endif
+#ifndef UNIFFI_FFIDEF_FOREIGN_FUTURE_STRUCT_F32
+#define UNIFFI_FFIDEF_FOREIGN_FUTURE_STRUCT_F32
+typedef struct UniffiForeignFutureStructF32 {
+    float returnValue;
+    RustCallStatus callStatus;
+} UniffiForeignFutureStructF32;
+
+#endif
+#ifndef UNIFFI_FFIDEF_FOREIGN_FUTURE_COMPLETE_F32
+#define UNIFFI_FFIDEF_FOREIGN_FUTURE_COMPLETE_F32
+typedef void (*UniffiForeignFutureCompleteF32)(uint64_t, UniffiForeignFutureStructF32
+    );
+
+#endif
+#ifndef UNIFFI_FFIDEF_FOREIGN_FUTURE_STRUCT_F64
+#define UNIFFI_FFIDEF_FOREIGN_FUTURE_STRUCT_F64
+typedef struct UniffiForeignFutureStructF64 {
+    double returnValue;
+    RustCallStatus callStatus;
+} UniffiForeignFutureStructF64;
+
+#endif
+#ifndef UNIFFI_FFIDEF_FOREIGN_FUTURE_COMPLETE_F64
+#define UNIFFI_FFIDEF_FOREIGN_FUTURE_COMPLETE_F64
+typedef void (*UniffiForeignFutureCompleteF64)(uint64_t, UniffiForeignFutureStructF64
+    );
+
+#endif
+#ifndef UNIFFI_FFIDEF_FOREIGN_FUTURE_STRUCT_POINTER
+#define UNIFFI_FFIDEF_FOREIGN_FUTURE_STRUCT_POINTER
+typedef struct UniffiForeignFutureStructPointer {
+    void*_Nonnull returnValue;
+    RustCallStatus callStatus;
+} UniffiForeignFutureStructPointer;
+
+#endif
+#ifndef UNIFFI_FFIDEF_FOREIGN_FUTURE_COMPLETE_POINTER
+#define UNIFFI_FFIDEF_FOREIGN_FUTURE_COMPLETE_POINTER
+typedef void (*UniffiForeignFutureCompletePointer)(uint64_t, UniffiForeignFutureStructPointer
+    );
+
+#endif
+#ifndef UNIFFI_FFIDEF_FOREIGN_FUTURE_STRUCT_RUST_BUFFER
+#define UNIFFI_FFIDEF_FOREIGN_FUTURE_STRUCT_RUST_BUFFER
+typedef struct UniffiForeignFutureStructRustBuffer {
+    RustBuffer returnValue;
+    RustCallStatus callStatus;
+} UniffiForeignFutureStructRustBuffer;
+
+#endif
+#ifndef UNIFFI_FFIDEF_FOREIGN_FUTURE_COMPLETE_RUST_BUFFER
+#define UNIFFI_FFIDEF_FOREIGN_FUTURE_COMPLETE_RUST_BUFFER
+typedef void (*UniffiForeignFutureCompleteRustBuffer)(uint64_t, UniffiForeignFutureStructRustBuffer
+    );
+
+#endif
+#ifndef UNIFFI_FFIDEF_FOREIGN_FUTURE_STRUCT_VOID
+#define UNIFFI_FFIDEF_FOREIGN_FUTURE_STRUCT_VOID
+typedef struct UniffiForeignFutureStructVoid {
+    RustCallStatus callStatus;
+} UniffiForeignFutureStructVoid;
+
+#endif
+#ifndef UNIFFI_FFIDEF_FOREIGN_FUTURE_COMPLETE_VOID
+#define UNIFFI_FFIDEF_FOREIGN_FUTURE_COMPLETE_VOID
+typedef void (*UniffiForeignFutureCompleteVoid)(uint64_t, UniffiForeignFutureStructVoid
+    );
+
+#endif
+#ifndef UNIFFI_FFIDEF_CALLBACK_INTERFACE_EVENT_LISTENER_METHOD0
+#define UNIFFI_FFIDEF_CALLBACK_INTERFACE_EVENT_LISTENER_METHOD0
+typedef void (*UniffiCallbackInterfaceEventListenerMethod0)(uint64_t, RustBuffer, void* _Nonnull, 
+        RustCallStatus *_Nonnull uniffiCallStatus
+    );
+
+#endif
+#ifndef UNIFFI_FFIDEF_CALLBACK_INTERFACE_LOG_STREAM_METHOD0
+#define UNIFFI_FFIDEF_CALLBACK_INTERFACE_LOG_STREAM_METHOD0
+typedef void (*UniffiCallbackInterfaceLogStreamMethod0)(uint64_t, RustBuffer, void* _Nonnull, 
+        RustCallStatus *_Nonnull uniffiCallStatus
+    );
+
+#endif
+#ifndef UNIFFI_FFIDEF_V_TABLE_CALLBACK_INTERFACE_EVENT_LISTENER
+#define UNIFFI_FFIDEF_V_TABLE_CALLBACK_INTERFACE_EVENT_LISTENER
+typedef struct UniffiVTableCallbackInterfaceEventListener {
+    UniffiCallbackInterfaceEventListenerMethod0 _Nonnull onEvent;
+    UniffiCallbackInterfaceFree _Nonnull uniffiFree;
+} UniffiVTableCallbackInterfaceEventListener;
+
+#endif
+#ifndef UNIFFI_FFIDEF_V_TABLE_CALLBACK_INTERFACE_LOG_STREAM
+#define UNIFFI_FFIDEF_V_TABLE_CALLBACK_INTERFACE_LOG_STREAM
+typedef struct UniffiVTableCallbackInterfaceLogStream {
+    UniffiCallbackInterfaceLogStreamMethod0 _Nonnull log;
+    UniffiCallbackInterfaceFree _Nonnull uniffiFree;
+} UniffiVTableCallbackInterfaceLogStream;
+
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_CLONE_BLOCKINGBREEZSERVICES
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_CLONE_BLOCKINGBREEZSERVICES
+void*_Nonnull uniffi_breez_sdk_bindings_fn_clone_blockingbreezservices(void*_Nonnull ptr, RustCallStatus *_Nonnull out_status
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_FREE_BLOCKINGBREEZSERVICES
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_FREE_BLOCKINGBREEZSERVICES
+void uniffi_breez_sdk_bindings_fn_free_blockingbreezservices(void*_Nonnull ptr, RustCallStatus *_Nonnull out_status
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_METHOD_BLOCKINGBREEZSERVICES_BACKUP
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_METHOD_BLOCKINGBREEZSERVICES_BACKUP
+void uniffi_breez_sdk_bindings_fn_method_blockingbreezservices_backup(void*_Nonnull ptr, RustCallStatus *_Nonnull out_status
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_METHOD_BLOCKINGBREEZSERVICES_BACKUP_STATUS
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_METHOD_BLOCKINGBREEZSERVICES_BACKUP_STATUS
+RustBuffer uniffi_breez_sdk_bindings_fn_method_blockingbreezservices_backup_status(void*_Nonnull ptr, RustCallStatus *_Nonnull out_status
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_METHOD_BLOCKINGBREEZSERVICES_BUY_BITCOIN
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_METHOD_BLOCKINGBREEZSERVICES_BUY_BITCOIN
+RustBuffer uniffi_breez_sdk_bindings_fn_method_blockingbreezservices_buy_bitcoin(void*_Nonnull ptr, RustBuffer req, RustCallStatus *_Nonnull out_status
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_METHOD_BLOCKINGBREEZSERVICES_CHECK_MESSAGE
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_METHOD_BLOCKINGBREEZSERVICES_CHECK_MESSAGE
+RustBuffer uniffi_breez_sdk_bindings_fn_method_blockingbreezservices_check_message(void*_Nonnull ptr, RustBuffer req, RustCallStatus *_Nonnull out_status
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_METHOD_BLOCKINGBREEZSERVICES_CLAIM_REVERSE_SWAP
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_METHOD_BLOCKINGBREEZSERVICES_CLAIM_REVERSE_SWAP
+void uniffi_breez_sdk_bindings_fn_method_blockingbreezservices_claim_reverse_swap(void*_Nonnull ptr, RustBuffer lockup_address, RustCallStatus *_Nonnull out_status
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_METHOD_BLOCKINGBREEZSERVICES_CLOSE_LSP_CHANNELS
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_METHOD_BLOCKINGBREEZSERVICES_CLOSE_LSP_CHANNELS
+void uniffi_breez_sdk_bindings_fn_method_blockingbreezservices_close_lsp_channels(void*_Nonnull ptr, RustCallStatus *_Nonnull out_status
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_METHOD_BLOCKINGBREEZSERVICES_CONFIGURE_NODE
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_METHOD_BLOCKINGBREEZSERVICES_CONFIGURE_NODE
+void uniffi_breez_sdk_bindings_fn_method_blockingbreezservices_configure_node(void*_Nonnull ptr, RustBuffer req, RustCallStatus *_Nonnull out_status
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_METHOD_BLOCKINGBREEZSERVICES_CONNECT_LSP
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_METHOD_BLOCKINGBREEZSERVICES_CONNECT_LSP
+void uniffi_breez_sdk_bindings_fn_method_blockingbreezservices_connect_lsp(void*_Nonnull ptr, RustBuffer lsp_id, RustCallStatus *_Nonnull out_status
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_METHOD_BLOCKINGBREEZSERVICES_DISCONNECT
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_METHOD_BLOCKINGBREEZSERVICES_DISCONNECT
+void uniffi_breez_sdk_bindings_fn_method_blockingbreezservices_disconnect(void*_Nonnull ptr, RustCallStatus *_Nonnull out_status
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_METHOD_BLOCKINGBREEZSERVICES_EXECUTE_DEV_COMMAND
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_METHOD_BLOCKINGBREEZSERVICES_EXECUTE_DEV_COMMAND
+RustBuffer uniffi_breez_sdk_bindings_fn_method_blockingbreezservices_execute_dev_command(void*_Nonnull ptr, RustBuffer command, RustCallStatus *_Nonnull out_status
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_METHOD_BLOCKINGBREEZSERVICES_FETCH_FIAT_RATES
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_METHOD_BLOCKINGBREEZSERVICES_FETCH_FIAT_RATES
+RustBuffer uniffi_breez_sdk_bindings_fn_method_blockingbreezservices_fetch_fiat_rates(void*_Nonnull ptr, RustCallStatus *_Nonnull out_status
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_METHOD_BLOCKINGBREEZSERVICES_FETCH_LSP_INFO
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_METHOD_BLOCKINGBREEZSERVICES_FETCH_LSP_INFO
+RustBuffer uniffi_breez_sdk_bindings_fn_method_blockingbreezservices_fetch_lsp_info(void*_Nonnull ptr, RustBuffer lsp_id, RustCallStatus *_Nonnull out_status
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_METHOD_BLOCKINGBREEZSERVICES_FETCH_REVERSE_SWAP_FEES
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_METHOD_BLOCKINGBREEZSERVICES_FETCH_REVERSE_SWAP_FEES
+RustBuffer uniffi_breez_sdk_bindings_fn_method_blockingbreezservices_fetch_reverse_swap_fees(void*_Nonnull ptr, RustBuffer req, RustCallStatus *_Nonnull out_status
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_METHOD_BLOCKINGBREEZSERVICES_GENERATE_DIAGNOSTIC_DATA
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_METHOD_BLOCKINGBREEZSERVICES_GENERATE_DIAGNOSTIC_DATA
+RustBuffer uniffi_breez_sdk_bindings_fn_method_blockingbreezservices_generate_diagnostic_data(void*_Nonnull ptr, RustCallStatus *_Nonnull out_status
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_METHOD_BLOCKINGBREEZSERVICES_IN_PROGRESS_ONCHAIN_PAYMENTS
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_METHOD_BLOCKINGBREEZSERVICES_IN_PROGRESS_ONCHAIN_PAYMENTS
+RustBuffer uniffi_breez_sdk_bindings_fn_method_blockingbreezservices_in_progress_onchain_payments(void*_Nonnull ptr, RustCallStatus *_Nonnull out_status
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_METHOD_BLOCKINGBREEZSERVICES_IN_PROGRESS_SWAP
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_METHOD_BLOCKINGBREEZSERVICES_IN_PROGRESS_SWAP
+RustBuffer uniffi_breez_sdk_bindings_fn_method_blockingbreezservices_in_progress_swap(void*_Nonnull ptr, RustCallStatus *_Nonnull out_status
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_METHOD_BLOCKINGBREEZSERVICES_LIST_FIAT_CURRENCIES
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_METHOD_BLOCKINGBREEZSERVICES_LIST_FIAT_CURRENCIES
+RustBuffer uniffi_breez_sdk_bindings_fn_method_blockingbreezservices_list_fiat_currencies(void*_Nonnull ptr, RustCallStatus *_Nonnull out_status
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_METHOD_BLOCKINGBREEZSERVICES_LIST_LSPS
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_METHOD_BLOCKINGBREEZSERVICES_LIST_LSPS
+RustBuffer uniffi_breez_sdk_bindings_fn_method_blockingbreezservices_list_lsps(void*_Nonnull ptr, RustCallStatus *_Nonnull out_status
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_METHOD_BLOCKINGBREEZSERVICES_LIST_PAYMENTS
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_METHOD_BLOCKINGBREEZSERVICES_LIST_PAYMENTS
+RustBuffer uniffi_breez_sdk_bindings_fn_method_blockingbreezservices_list_payments(void*_Nonnull ptr, RustBuffer req, RustCallStatus *_Nonnull out_status
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_METHOD_BLOCKINGBREEZSERVICES_LIST_REFUNDABLES
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_METHOD_BLOCKINGBREEZSERVICES_LIST_REFUNDABLES
+RustBuffer uniffi_breez_sdk_bindings_fn_method_blockingbreezservices_list_refundables(void*_Nonnull ptr, RustCallStatus *_Nonnull out_status
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_METHOD_BLOCKINGBREEZSERVICES_LIST_SWAPS
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_METHOD_BLOCKINGBREEZSERVICES_LIST_SWAPS
+RustBuffer uniffi_breez_sdk_bindings_fn_method_blockingbreezservices_list_swaps(void*_Nonnull ptr, RustBuffer req, RustCallStatus *_Nonnull out_status
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_METHOD_BLOCKINGBREEZSERVICES_LNURL_AUTH
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_METHOD_BLOCKINGBREEZSERVICES_LNURL_AUTH
+RustBuffer uniffi_breez_sdk_bindings_fn_method_blockingbreezservices_lnurl_auth(void*_Nonnull ptr, RustBuffer req_data, RustCallStatus *_Nonnull out_status
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_METHOD_BLOCKINGBREEZSERVICES_LSP_ID
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_METHOD_BLOCKINGBREEZSERVICES_LSP_ID
+RustBuffer uniffi_breez_sdk_bindings_fn_method_blockingbreezservices_lsp_id(void*_Nonnull ptr, RustCallStatus *_Nonnull out_status
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_METHOD_BLOCKINGBREEZSERVICES_LSP_INFO
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_METHOD_BLOCKINGBREEZSERVICES_LSP_INFO
+RustBuffer uniffi_breez_sdk_bindings_fn_method_blockingbreezservices_lsp_info(void*_Nonnull ptr, RustCallStatus *_Nonnull out_status
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_METHOD_BLOCKINGBREEZSERVICES_NODE_CREDENTIALS
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_METHOD_BLOCKINGBREEZSERVICES_NODE_CREDENTIALS
+RustBuffer uniffi_breez_sdk_bindings_fn_method_blockingbreezservices_node_credentials(void*_Nonnull ptr, RustCallStatus *_Nonnull out_status
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_METHOD_BLOCKINGBREEZSERVICES_NODE_INFO
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_METHOD_BLOCKINGBREEZSERVICES_NODE_INFO
+RustBuffer uniffi_breez_sdk_bindings_fn_method_blockingbreezservices_node_info(void*_Nonnull ptr, RustCallStatus *_Nonnull out_status
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_METHOD_BLOCKINGBREEZSERVICES_ONCHAIN_PAYMENT_LIMITS
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_METHOD_BLOCKINGBREEZSERVICES_ONCHAIN_PAYMENT_LIMITS
+RustBuffer uniffi_breez_sdk_bindings_fn_method_blockingbreezservices_onchain_payment_limits(void*_Nonnull ptr, RustCallStatus *_Nonnull out_status
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_METHOD_BLOCKINGBREEZSERVICES_OPEN_CHANNEL_FEE
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_METHOD_BLOCKINGBREEZSERVICES_OPEN_CHANNEL_FEE
+RustBuffer uniffi_breez_sdk_bindings_fn_method_blockingbreezservices_open_channel_fee(void*_Nonnull ptr, RustBuffer req, RustCallStatus *_Nonnull out_status
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_METHOD_BLOCKINGBREEZSERVICES_PAY_LNURL
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_METHOD_BLOCKINGBREEZSERVICES_PAY_LNURL
+RustBuffer uniffi_breez_sdk_bindings_fn_method_blockingbreezservices_pay_lnurl(void*_Nonnull ptr, RustBuffer req, RustCallStatus *_Nonnull out_status
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_METHOD_BLOCKINGBREEZSERVICES_PAY_ONCHAIN
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_METHOD_BLOCKINGBREEZSERVICES_PAY_ONCHAIN
+RustBuffer uniffi_breez_sdk_bindings_fn_method_blockingbreezservices_pay_onchain(void*_Nonnull ptr, RustBuffer req, RustCallStatus *_Nonnull out_status
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_METHOD_BLOCKINGBREEZSERVICES_PAYMENT_BY_HASH
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_METHOD_BLOCKINGBREEZSERVICES_PAYMENT_BY_HASH
+RustBuffer uniffi_breez_sdk_bindings_fn_method_blockingbreezservices_payment_by_hash(void*_Nonnull ptr, RustBuffer hash, RustCallStatus *_Nonnull out_status
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_METHOD_BLOCKINGBREEZSERVICES_PREPARE_ONCHAIN_PAYMENT
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_METHOD_BLOCKINGBREEZSERVICES_PREPARE_ONCHAIN_PAYMENT
+RustBuffer uniffi_breez_sdk_bindings_fn_method_blockingbreezservices_prepare_onchain_payment(void*_Nonnull ptr, RustBuffer req, RustCallStatus *_Nonnull out_status
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_METHOD_BLOCKINGBREEZSERVICES_PREPARE_REDEEM_ONCHAIN_FUNDS
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_METHOD_BLOCKINGBREEZSERVICES_PREPARE_REDEEM_ONCHAIN_FUNDS
+RustBuffer uniffi_breez_sdk_bindings_fn_method_blockingbreezservices_prepare_redeem_onchain_funds(void*_Nonnull ptr, RustBuffer req, RustCallStatus *_Nonnull out_status
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_METHOD_BLOCKINGBREEZSERVICES_PREPARE_REFUND
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_METHOD_BLOCKINGBREEZSERVICES_PREPARE_REFUND
+RustBuffer uniffi_breez_sdk_bindings_fn_method_blockingbreezservices_prepare_refund(void*_Nonnull ptr, RustBuffer req, RustCallStatus *_Nonnull out_status
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_METHOD_BLOCKINGBREEZSERVICES_RECEIVE_ONCHAIN
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_METHOD_BLOCKINGBREEZSERVICES_RECEIVE_ONCHAIN
+RustBuffer uniffi_breez_sdk_bindings_fn_method_blockingbreezservices_receive_onchain(void*_Nonnull ptr, RustBuffer req, RustCallStatus *_Nonnull out_status
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_METHOD_BLOCKINGBREEZSERVICES_RECEIVE_PAYMENT
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_METHOD_BLOCKINGBREEZSERVICES_RECEIVE_PAYMENT
+RustBuffer uniffi_breez_sdk_bindings_fn_method_blockingbreezservices_receive_payment(void*_Nonnull ptr, RustBuffer req, RustCallStatus *_Nonnull out_status
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_METHOD_BLOCKINGBREEZSERVICES_RECOMMENDED_FEES
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_METHOD_BLOCKINGBREEZSERVICES_RECOMMENDED_FEES
+RustBuffer uniffi_breez_sdk_bindings_fn_method_blockingbreezservices_recommended_fees(void*_Nonnull ptr, RustCallStatus *_Nonnull out_status
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_METHOD_BLOCKINGBREEZSERVICES_REDEEM_ONCHAIN_FUNDS
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_METHOD_BLOCKINGBREEZSERVICES_REDEEM_ONCHAIN_FUNDS
+RustBuffer uniffi_breez_sdk_bindings_fn_method_blockingbreezservices_redeem_onchain_funds(void*_Nonnull ptr, RustBuffer req, RustCallStatus *_Nonnull out_status
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_METHOD_BLOCKINGBREEZSERVICES_REDEEM_SWAP
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_METHOD_BLOCKINGBREEZSERVICES_REDEEM_SWAP
+void uniffi_breez_sdk_bindings_fn_method_blockingbreezservices_redeem_swap(void*_Nonnull ptr, RustBuffer swap_address, RustCallStatus *_Nonnull out_status
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_METHOD_BLOCKINGBREEZSERVICES_REFUND
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_METHOD_BLOCKINGBREEZSERVICES_REFUND
+RustBuffer uniffi_breez_sdk_bindings_fn_method_blockingbreezservices_refund(void*_Nonnull ptr, RustBuffer req, RustCallStatus *_Nonnull out_status
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_METHOD_BLOCKINGBREEZSERVICES_REGISTER_WEBHOOK
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_METHOD_BLOCKINGBREEZSERVICES_REGISTER_WEBHOOK
+void uniffi_breez_sdk_bindings_fn_method_blockingbreezservices_register_webhook(void*_Nonnull ptr, RustBuffer webhook_url, RustCallStatus *_Nonnull out_status
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_METHOD_BLOCKINGBREEZSERVICES_REPORT_ISSUE
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_METHOD_BLOCKINGBREEZSERVICES_REPORT_ISSUE
+void uniffi_breez_sdk_bindings_fn_method_blockingbreezservices_report_issue(void*_Nonnull ptr, RustBuffer req, RustCallStatus *_Nonnull out_status
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_METHOD_BLOCKINGBREEZSERVICES_RESCAN_SWAPS
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_METHOD_BLOCKINGBREEZSERVICES_RESCAN_SWAPS
+void uniffi_breez_sdk_bindings_fn_method_blockingbreezservices_rescan_swaps(void*_Nonnull ptr, RustCallStatus *_Nonnull out_status
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_METHOD_BLOCKINGBREEZSERVICES_SEND_PAYMENT
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_METHOD_BLOCKINGBREEZSERVICES_SEND_PAYMENT
+RustBuffer uniffi_breez_sdk_bindings_fn_method_blockingbreezservices_send_payment(void*_Nonnull ptr, RustBuffer req, RustCallStatus *_Nonnull out_status
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_METHOD_BLOCKINGBREEZSERVICES_SEND_SPONTANEOUS_PAYMENT
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_METHOD_BLOCKINGBREEZSERVICES_SEND_SPONTANEOUS_PAYMENT
+RustBuffer uniffi_breez_sdk_bindings_fn_method_blockingbreezservices_send_spontaneous_payment(void*_Nonnull ptr, RustBuffer req, RustCallStatus *_Nonnull out_status
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_METHOD_BLOCKINGBREEZSERVICES_SET_PAYMENT_METADATA
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_METHOD_BLOCKINGBREEZSERVICES_SET_PAYMENT_METADATA
+void uniffi_breez_sdk_bindings_fn_method_blockingbreezservices_set_payment_metadata(void*_Nonnull ptr, RustBuffer hash, RustBuffer metadata, RustCallStatus *_Nonnull out_status
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_METHOD_BLOCKINGBREEZSERVICES_SIGN_MESSAGE
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_METHOD_BLOCKINGBREEZSERVICES_SIGN_MESSAGE
+RustBuffer uniffi_breez_sdk_bindings_fn_method_blockingbreezservices_sign_message(void*_Nonnull ptr, RustBuffer req, RustCallStatus *_Nonnull out_status
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_METHOD_BLOCKINGBREEZSERVICES_SYNC
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_METHOD_BLOCKINGBREEZSERVICES_SYNC
+void uniffi_breez_sdk_bindings_fn_method_blockingbreezservices_sync(void*_Nonnull ptr, RustCallStatus *_Nonnull out_status
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_METHOD_BLOCKINGBREEZSERVICES_UNREGISTER_WEBHOOK
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_METHOD_BLOCKINGBREEZSERVICES_UNREGISTER_WEBHOOK
+void uniffi_breez_sdk_bindings_fn_method_blockingbreezservices_unregister_webhook(void*_Nonnull ptr, RustBuffer webhook_url, RustCallStatus *_Nonnull out_status
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_METHOD_BLOCKINGBREEZSERVICES_WITHDRAW_LNURL
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_METHOD_BLOCKINGBREEZSERVICES_WITHDRAW_LNURL
+RustBuffer uniffi_breez_sdk_bindings_fn_method_blockingbreezservices_withdraw_lnurl(void*_Nonnull ptr, RustBuffer request, RustCallStatus *_Nonnull out_status
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_INIT_CALLBACK_VTABLE_EVENTLISTENER
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_INIT_CALLBACK_VTABLE_EVENTLISTENER
+void uniffi_breez_sdk_bindings_fn_init_callback_vtable_eventlistener(UniffiVTableCallbackInterfaceEventListener* _Nonnull vtable
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_INIT_CALLBACK_VTABLE_LOGSTREAM
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_INIT_CALLBACK_VTABLE_LOGSTREAM
+void uniffi_breez_sdk_bindings_fn_init_callback_vtable_logstream(UniffiVTableCallbackInterfaceLogStream* _Nonnull vtable
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_FUNC_CONNECT
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_FUNC_CONNECT
+void*_Nonnull uniffi_breez_sdk_bindings_fn_func_connect(RustBuffer req, uint64_t listener, RustCallStatus *_Nonnull out_status
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_FUNC_DEFAULT_CONFIG
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_FUNC_DEFAULT_CONFIG
+RustBuffer uniffi_breez_sdk_bindings_fn_func_default_config(RustBuffer env_type, RustBuffer api_key, RustBuffer node_config, RustCallStatus *_Nonnull out_status
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_FUNC_MNEMONIC_TO_SEED
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_FUNC_MNEMONIC_TO_SEED
+RustBuffer uniffi_breez_sdk_bindings_fn_func_mnemonic_to_seed(RustBuffer phrase, RustCallStatus *_Nonnull out_status
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_FUNC_PARSE_INPUT
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_FUNC_PARSE_INPUT
+RustBuffer uniffi_breez_sdk_bindings_fn_func_parse_input(RustBuffer s, RustCallStatus *_Nonnull out_status
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_FUNC_PARSE_INVOICE
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_FUNC_PARSE_INVOICE
+RustBuffer uniffi_breez_sdk_bindings_fn_func_parse_invoice(RustBuffer invoice, RustCallStatus *_Nonnull out_status
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_FUNC_SERVICE_HEALTH_CHECK
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_FUNC_SERVICE_HEALTH_CHECK
+RustBuffer uniffi_breez_sdk_bindings_fn_func_service_health_check(RustBuffer api_key, RustCallStatus *_Nonnull out_status
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_FUNC_SET_LOG_STREAM
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_FUNC_SET_LOG_STREAM
+void uniffi_breez_sdk_bindings_fn_func_set_log_stream(uint64_t log_stream, RustCallStatus *_Nonnull out_status
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_FUNC_STATIC_BACKUP
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_FUNC_STATIC_BACKUP
+RustBuffer uniffi_breez_sdk_bindings_fn_func_static_backup(RustBuffer req, RustCallStatus *_Nonnull out_status
+);
+#endif
+#ifndef UNIFFI_FFIDEF_FFI_BREEZ_SDK_BINDINGS_RUSTBUFFER_ALLOC
+#define UNIFFI_FFIDEF_FFI_BREEZ_SDK_BINDINGS_RUSTBUFFER_ALLOC
+RustBuffer ffi_breez_sdk_bindings_rustbuffer_alloc(uint64_t size, RustCallStatus *_Nonnull out_status
+);
+#endif
+#ifndef UNIFFI_FFIDEF_FFI_BREEZ_SDK_BINDINGS_RUSTBUFFER_FROM_BYTES
+#define UNIFFI_FFIDEF_FFI_BREEZ_SDK_BINDINGS_RUSTBUFFER_FROM_BYTES
+RustBuffer ffi_breez_sdk_bindings_rustbuffer_from_bytes(ForeignBytes bytes, RustCallStatus *_Nonnull out_status
+);
+#endif
+#ifndef UNIFFI_FFIDEF_FFI_BREEZ_SDK_BINDINGS_RUSTBUFFER_FREE
+#define UNIFFI_FFIDEF_FFI_BREEZ_SDK_BINDINGS_RUSTBUFFER_FREE
+void ffi_breez_sdk_bindings_rustbuffer_free(RustBuffer buf, RustCallStatus *_Nonnull out_status
+);
+#endif
+#ifndef UNIFFI_FFIDEF_FFI_BREEZ_SDK_BINDINGS_RUSTBUFFER_RESERVE
+#define UNIFFI_FFIDEF_FFI_BREEZ_SDK_BINDINGS_RUSTBUFFER_RESERVE
+RustBuffer ffi_breez_sdk_bindings_rustbuffer_reserve(RustBuffer buf, uint64_t additional, RustCallStatus *_Nonnull out_status
+);
+#endif
+#ifndef UNIFFI_FFIDEF_FFI_BREEZ_SDK_BINDINGS_RUST_FUTURE_POLL_U8
+#define UNIFFI_FFIDEF_FFI_BREEZ_SDK_BINDINGS_RUST_FUTURE_POLL_U8
+void ffi_breez_sdk_bindings_rust_future_poll_u8(uint64_t handle, UniffiRustFutureContinuationCallback _Nonnull callback, uint64_t callback_data
+);
+#endif
+#ifndef UNIFFI_FFIDEF_FFI_BREEZ_SDK_BINDINGS_RUST_FUTURE_CANCEL_U8
+#define UNIFFI_FFIDEF_FFI_BREEZ_SDK_BINDINGS_RUST_FUTURE_CANCEL_U8
+void ffi_breez_sdk_bindings_rust_future_cancel_u8(uint64_t handle
+);
+#endif
+#ifndef UNIFFI_FFIDEF_FFI_BREEZ_SDK_BINDINGS_RUST_FUTURE_FREE_U8
+#define UNIFFI_FFIDEF_FFI_BREEZ_SDK_BINDINGS_RUST_FUTURE_FREE_U8
+void ffi_breez_sdk_bindings_rust_future_free_u8(uint64_t handle
+);
+#endif
+#ifndef UNIFFI_FFIDEF_FFI_BREEZ_SDK_BINDINGS_RUST_FUTURE_COMPLETE_U8
+#define UNIFFI_FFIDEF_FFI_BREEZ_SDK_BINDINGS_RUST_FUTURE_COMPLETE_U8
+uint8_t ffi_breez_sdk_bindings_rust_future_complete_u8(uint64_t handle, RustCallStatus *_Nonnull out_status
+);
+#endif
+#ifndef UNIFFI_FFIDEF_FFI_BREEZ_SDK_BINDINGS_RUST_FUTURE_POLL_I8
+#define UNIFFI_FFIDEF_FFI_BREEZ_SDK_BINDINGS_RUST_FUTURE_POLL_I8
+void ffi_breez_sdk_bindings_rust_future_poll_i8(uint64_t handle, UniffiRustFutureContinuationCallback _Nonnull callback, uint64_t callback_data
+);
+#endif
+#ifndef UNIFFI_FFIDEF_FFI_BREEZ_SDK_BINDINGS_RUST_FUTURE_CANCEL_I8
+#define UNIFFI_FFIDEF_FFI_BREEZ_SDK_BINDINGS_RUST_FUTURE_CANCEL_I8
+void ffi_breez_sdk_bindings_rust_future_cancel_i8(uint64_t handle
+);
+#endif
+#ifndef UNIFFI_FFIDEF_FFI_BREEZ_SDK_BINDINGS_RUST_FUTURE_FREE_I8
+#define UNIFFI_FFIDEF_FFI_BREEZ_SDK_BINDINGS_RUST_FUTURE_FREE_I8
+void ffi_breez_sdk_bindings_rust_future_free_i8(uint64_t handle
+);
+#endif
+#ifndef UNIFFI_FFIDEF_FFI_BREEZ_SDK_BINDINGS_RUST_FUTURE_COMPLETE_I8
+#define UNIFFI_FFIDEF_FFI_BREEZ_SDK_BINDINGS_RUST_FUTURE_COMPLETE_I8
+int8_t ffi_breez_sdk_bindings_rust_future_complete_i8(uint64_t handle, RustCallStatus *_Nonnull out_status
+);
+#endif
+#ifndef UNIFFI_FFIDEF_FFI_BREEZ_SDK_BINDINGS_RUST_FUTURE_POLL_U16
+#define UNIFFI_FFIDEF_FFI_BREEZ_SDK_BINDINGS_RUST_FUTURE_POLL_U16
+void ffi_breez_sdk_bindings_rust_future_poll_u16(uint64_t handle, UniffiRustFutureContinuationCallback _Nonnull callback, uint64_t callback_data
+);
+#endif
+#ifndef UNIFFI_FFIDEF_FFI_BREEZ_SDK_BINDINGS_RUST_FUTURE_CANCEL_U16
+#define UNIFFI_FFIDEF_FFI_BREEZ_SDK_BINDINGS_RUST_FUTURE_CANCEL_U16
+void ffi_breez_sdk_bindings_rust_future_cancel_u16(uint64_t handle
+);
+#endif
+#ifndef UNIFFI_FFIDEF_FFI_BREEZ_SDK_BINDINGS_RUST_FUTURE_FREE_U16
+#define UNIFFI_FFIDEF_FFI_BREEZ_SDK_BINDINGS_RUST_FUTURE_FREE_U16
+void ffi_breez_sdk_bindings_rust_future_free_u16(uint64_t handle
+);
+#endif
+#ifndef UNIFFI_FFIDEF_FFI_BREEZ_SDK_BINDINGS_RUST_FUTURE_COMPLETE_U16
+#define UNIFFI_FFIDEF_FFI_BREEZ_SDK_BINDINGS_RUST_FUTURE_COMPLETE_U16
+uint16_t ffi_breez_sdk_bindings_rust_future_complete_u16(uint64_t handle, RustCallStatus *_Nonnull out_status
+);
+#endif
+#ifndef UNIFFI_FFIDEF_FFI_BREEZ_SDK_BINDINGS_RUST_FUTURE_POLL_I16
+#define UNIFFI_FFIDEF_FFI_BREEZ_SDK_BINDINGS_RUST_FUTURE_POLL_I16
+void ffi_breez_sdk_bindings_rust_future_poll_i16(uint64_t handle, UniffiRustFutureContinuationCallback _Nonnull callback, uint64_t callback_data
+);
+#endif
+#ifndef UNIFFI_FFIDEF_FFI_BREEZ_SDK_BINDINGS_RUST_FUTURE_CANCEL_I16
+#define UNIFFI_FFIDEF_FFI_BREEZ_SDK_BINDINGS_RUST_FUTURE_CANCEL_I16
+void ffi_breez_sdk_bindings_rust_future_cancel_i16(uint64_t handle
+);
+#endif
+#ifndef UNIFFI_FFIDEF_FFI_BREEZ_SDK_BINDINGS_RUST_FUTURE_FREE_I16
+#define UNIFFI_FFIDEF_FFI_BREEZ_SDK_BINDINGS_RUST_FUTURE_FREE_I16
+void ffi_breez_sdk_bindings_rust_future_free_i16(uint64_t handle
+);
+#endif
+#ifndef UNIFFI_FFIDEF_FFI_BREEZ_SDK_BINDINGS_RUST_FUTURE_COMPLETE_I16
+#define UNIFFI_FFIDEF_FFI_BREEZ_SDK_BINDINGS_RUST_FUTURE_COMPLETE_I16
+int16_t ffi_breez_sdk_bindings_rust_future_complete_i16(uint64_t handle, RustCallStatus *_Nonnull out_status
+);
+#endif
+#ifndef UNIFFI_FFIDEF_FFI_BREEZ_SDK_BINDINGS_RUST_FUTURE_POLL_U32
+#define UNIFFI_FFIDEF_FFI_BREEZ_SDK_BINDINGS_RUST_FUTURE_POLL_U32
+void ffi_breez_sdk_bindings_rust_future_poll_u32(uint64_t handle, UniffiRustFutureContinuationCallback _Nonnull callback, uint64_t callback_data
+);
+#endif
+#ifndef UNIFFI_FFIDEF_FFI_BREEZ_SDK_BINDINGS_RUST_FUTURE_CANCEL_U32
+#define UNIFFI_FFIDEF_FFI_BREEZ_SDK_BINDINGS_RUST_FUTURE_CANCEL_U32
+void ffi_breez_sdk_bindings_rust_future_cancel_u32(uint64_t handle
+);
+#endif
+#ifndef UNIFFI_FFIDEF_FFI_BREEZ_SDK_BINDINGS_RUST_FUTURE_FREE_U32
+#define UNIFFI_FFIDEF_FFI_BREEZ_SDK_BINDINGS_RUST_FUTURE_FREE_U32
+void ffi_breez_sdk_bindings_rust_future_free_u32(uint64_t handle
+);
+#endif
+#ifndef UNIFFI_FFIDEF_FFI_BREEZ_SDK_BINDINGS_RUST_FUTURE_COMPLETE_U32
+#define UNIFFI_FFIDEF_FFI_BREEZ_SDK_BINDINGS_RUST_FUTURE_COMPLETE_U32
+uint32_t ffi_breez_sdk_bindings_rust_future_complete_u32(uint64_t handle, RustCallStatus *_Nonnull out_status
+);
+#endif
+#ifndef UNIFFI_FFIDEF_FFI_BREEZ_SDK_BINDINGS_RUST_FUTURE_POLL_I32
+#define UNIFFI_FFIDEF_FFI_BREEZ_SDK_BINDINGS_RUST_FUTURE_POLL_I32
+void ffi_breez_sdk_bindings_rust_future_poll_i32(uint64_t handle, UniffiRustFutureContinuationCallback _Nonnull callback, uint64_t callback_data
+);
+#endif
+#ifndef UNIFFI_FFIDEF_FFI_BREEZ_SDK_BINDINGS_RUST_FUTURE_CANCEL_I32
+#define UNIFFI_FFIDEF_FFI_BREEZ_SDK_BINDINGS_RUST_FUTURE_CANCEL_I32
+void ffi_breez_sdk_bindings_rust_future_cancel_i32(uint64_t handle
+);
+#endif
+#ifndef UNIFFI_FFIDEF_FFI_BREEZ_SDK_BINDINGS_RUST_FUTURE_FREE_I32
+#define UNIFFI_FFIDEF_FFI_BREEZ_SDK_BINDINGS_RUST_FUTURE_FREE_I32
+void ffi_breez_sdk_bindings_rust_future_free_i32(uint64_t handle
+);
+#endif
+#ifndef UNIFFI_FFIDEF_FFI_BREEZ_SDK_BINDINGS_RUST_FUTURE_COMPLETE_I32
+#define UNIFFI_FFIDEF_FFI_BREEZ_SDK_BINDINGS_RUST_FUTURE_COMPLETE_I32
+int32_t ffi_breez_sdk_bindings_rust_future_complete_i32(uint64_t handle, RustCallStatus *_Nonnull out_status
+);
+#endif
+#ifndef UNIFFI_FFIDEF_FFI_BREEZ_SDK_BINDINGS_RUST_FUTURE_POLL_U64
+#define UNIFFI_FFIDEF_FFI_BREEZ_SDK_BINDINGS_RUST_FUTURE_POLL_U64
+void ffi_breez_sdk_bindings_rust_future_poll_u64(uint64_t handle, UniffiRustFutureContinuationCallback _Nonnull callback, uint64_t callback_data
+);
+#endif
+#ifndef UNIFFI_FFIDEF_FFI_BREEZ_SDK_BINDINGS_RUST_FUTURE_CANCEL_U64
+#define UNIFFI_FFIDEF_FFI_BREEZ_SDK_BINDINGS_RUST_FUTURE_CANCEL_U64
+void ffi_breez_sdk_bindings_rust_future_cancel_u64(uint64_t handle
+);
+#endif
+#ifndef UNIFFI_FFIDEF_FFI_BREEZ_SDK_BINDINGS_RUST_FUTURE_FREE_U64
+#define UNIFFI_FFIDEF_FFI_BREEZ_SDK_BINDINGS_RUST_FUTURE_FREE_U64
+void ffi_breez_sdk_bindings_rust_future_free_u64(uint64_t handle
+);
+#endif
+#ifndef UNIFFI_FFIDEF_FFI_BREEZ_SDK_BINDINGS_RUST_FUTURE_COMPLETE_U64
+#define UNIFFI_FFIDEF_FFI_BREEZ_SDK_BINDINGS_RUST_FUTURE_COMPLETE_U64
+uint64_t ffi_breez_sdk_bindings_rust_future_complete_u64(uint64_t handle, RustCallStatus *_Nonnull out_status
+);
+#endif
+#ifndef UNIFFI_FFIDEF_FFI_BREEZ_SDK_BINDINGS_RUST_FUTURE_POLL_I64
+#define UNIFFI_FFIDEF_FFI_BREEZ_SDK_BINDINGS_RUST_FUTURE_POLL_I64
+void ffi_breez_sdk_bindings_rust_future_poll_i64(uint64_t handle, UniffiRustFutureContinuationCallback _Nonnull callback, uint64_t callback_data
+);
+#endif
+#ifndef UNIFFI_FFIDEF_FFI_BREEZ_SDK_BINDINGS_RUST_FUTURE_CANCEL_I64
+#define UNIFFI_FFIDEF_FFI_BREEZ_SDK_BINDINGS_RUST_FUTURE_CANCEL_I64
+void ffi_breez_sdk_bindings_rust_future_cancel_i64(uint64_t handle
+);
+#endif
+#ifndef UNIFFI_FFIDEF_FFI_BREEZ_SDK_BINDINGS_RUST_FUTURE_FREE_I64
+#define UNIFFI_FFIDEF_FFI_BREEZ_SDK_BINDINGS_RUST_FUTURE_FREE_I64
+void ffi_breez_sdk_bindings_rust_future_free_i64(uint64_t handle
+);
+#endif
+#ifndef UNIFFI_FFIDEF_FFI_BREEZ_SDK_BINDINGS_RUST_FUTURE_COMPLETE_I64
+#define UNIFFI_FFIDEF_FFI_BREEZ_SDK_BINDINGS_RUST_FUTURE_COMPLETE_I64
+int64_t ffi_breez_sdk_bindings_rust_future_complete_i64(uint64_t handle, RustCallStatus *_Nonnull out_status
+);
+#endif
+#ifndef UNIFFI_FFIDEF_FFI_BREEZ_SDK_BINDINGS_RUST_FUTURE_POLL_F32
+#define UNIFFI_FFIDEF_FFI_BREEZ_SDK_BINDINGS_RUST_FUTURE_POLL_F32
+void ffi_breez_sdk_bindings_rust_future_poll_f32(uint64_t handle, UniffiRustFutureContinuationCallback _Nonnull callback, uint64_t callback_data
+);
+#endif
+#ifndef UNIFFI_FFIDEF_FFI_BREEZ_SDK_BINDINGS_RUST_FUTURE_CANCEL_F32
+#define UNIFFI_FFIDEF_FFI_BREEZ_SDK_BINDINGS_RUST_FUTURE_CANCEL_F32
+void ffi_breez_sdk_bindings_rust_future_cancel_f32(uint64_t handle
+);
+#endif
+#ifndef UNIFFI_FFIDEF_FFI_BREEZ_SDK_BINDINGS_RUST_FUTURE_FREE_F32
+#define UNIFFI_FFIDEF_FFI_BREEZ_SDK_BINDINGS_RUST_FUTURE_FREE_F32
+void ffi_breez_sdk_bindings_rust_future_free_f32(uint64_t handle
+);
+#endif
+#ifndef UNIFFI_FFIDEF_FFI_BREEZ_SDK_BINDINGS_RUST_FUTURE_COMPLETE_F32
+#define UNIFFI_FFIDEF_FFI_BREEZ_SDK_BINDINGS_RUST_FUTURE_COMPLETE_F32
+float ffi_breez_sdk_bindings_rust_future_complete_f32(uint64_t handle, RustCallStatus *_Nonnull out_status
+);
+#endif
+#ifndef UNIFFI_FFIDEF_FFI_BREEZ_SDK_BINDINGS_RUST_FUTURE_POLL_F64
+#define UNIFFI_FFIDEF_FFI_BREEZ_SDK_BINDINGS_RUST_FUTURE_POLL_F64
+void ffi_breez_sdk_bindings_rust_future_poll_f64(uint64_t handle, UniffiRustFutureContinuationCallback _Nonnull callback, uint64_t callback_data
+);
+#endif
+#ifndef UNIFFI_FFIDEF_FFI_BREEZ_SDK_BINDINGS_RUST_FUTURE_CANCEL_F64
+#define UNIFFI_FFIDEF_FFI_BREEZ_SDK_BINDINGS_RUST_FUTURE_CANCEL_F64
+void ffi_breez_sdk_bindings_rust_future_cancel_f64(uint64_t handle
+);
+#endif
+#ifndef UNIFFI_FFIDEF_FFI_BREEZ_SDK_BINDINGS_RUST_FUTURE_FREE_F64
+#define UNIFFI_FFIDEF_FFI_BREEZ_SDK_BINDINGS_RUST_FUTURE_FREE_F64
+void ffi_breez_sdk_bindings_rust_future_free_f64(uint64_t handle
+);
+#endif
+#ifndef UNIFFI_FFIDEF_FFI_BREEZ_SDK_BINDINGS_RUST_FUTURE_COMPLETE_F64
+#define UNIFFI_FFIDEF_FFI_BREEZ_SDK_BINDINGS_RUST_FUTURE_COMPLETE_F64
+double ffi_breez_sdk_bindings_rust_future_complete_f64(uint64_t handle, RustCallStatus *_Nonnull out_status
+);
+#endif
+#ifndef UNIFFI_FFIDEF_FFI_BREEZ_SDK_BINDINGS_RUST_FUTURE_POLL_POINTER
+#define UNIFFI_FFIDEF_FFI_BREEZ_SDK_BINDINGS_RUST_FUTURE_POLL_POINTER
+void ffi_breez_sdk_bindings_rust_future_poll_pointer(uint64_t handle, UniffiRustFutureContinuationCallback _Nonnull callback, uint64_t callback_data
+);
+#endif
+#ifndef UNIFFI_FFIDEF_FFI_BREEZ_SDK_BINDINGS_RUST_FUTURE_CANCEL_POINTER
+#define UNIFFI_FFIDEF_FFI_BREEZ_SDK_BINDINGS_RUST_FUTURE_CANCEL_POINTER
+void ffi_breez_sdk_bindings_rust_future_cancel_pointer(uint64_t handle
+);
+#endif
+#ifndef UNIFFI_FFIDEF_FFI_BREEZ_SDK_BINDINGS_RUST_FUTURE_FREE_POINTER
+#define UNIFFI_FFIDEF_FFI_BREEZ_SDK_BINDINGS_RUST_FUTURE_FREE_POINTER
+void ffi_breez_sdk_bindings_rust_future_free_pointer(uint64_t handle
+);
+#endif
+#ifndef UNIFFI_FFIDEF_FFI_BREEZ_SDK_BINDINGS_RUST_FUTURE_COMPLETE_POINTER
+#define UNIFFI_FFIDEF_FFI_BREEZ_SDK_BINDINGS_RUST_FUTURE_COMPLETE_POINTER
+void*_Nonnull ffi_breez_sdk_bindings_rust_future_complete_pointer(uint64_t handle, RustCallStatus *_Nonnull out_status
+);
+#endif
+#ifndef UNIFFI_FFIDEF_FFI_BREEZ_SDK_BINDINGS_RUST_FUTURE_POLL_RUST_BUFFER
+#define UNIFFI_FFIDEF_FFI_BREEZ_SDK_BINDINGS_RUST_FUTURE_POLL_RUST_BUFFER
+void ffi_breez_sdk_bindings_rust_future_poll_rust_buffer(uint64_t handle, UniffiRustFutureContinuationCallback _Nonnull callback, uint64_t callback_data
+);
+#endif
+#ifndef UNIFFI_FFIDEF_FFI_BREEZ_SDK_BINDINGS_RUST_FUTURE_CANCEL_RUST_BUFFER
+#define UNIFFI_FFIDEF_FFI_BREEZ_SDK_BINDINGS_RUST_FUTURE_CANCEL_RUST_BUFFER
+void ffi_breez_sdk_bindings_rust_future_cancel_rust_buffer(uint64_t handle
+);
+#endif
+#ifndef UNIFFI_FFIDEF_FFI_BREEZ_SDK_BINDINGS_RUST_FUTURE_FREE_RUST_BUFFER
+#define UNIFFI_FFIDEF_FFI_BREEZ_SDK_BINDINGS_RUST_FUTURE_FREE_RUST_BUFFER
+void ffi_breez_sdk_bindings_rust_future_free_rust_buffer(uint64_t handle
+);
+#endif
+#ifndef UNIFFI_FFIDEF_FFI_BREEZ_SDK_BINDINGS_RUST_FUTURE_COMPLETE_RUST_BUFFER
+#define UNIFFI_FFIDEF_FFI_BREEZ_SDK_BINDINGS_RUST_FUTURE_COMPLETE_RUST_BUFFER
+RustBuffer ffi_breez_sdk_bindings_rust_future_complete_rust_buffer(uint64_t handle, RustCallStatus *_Nonnull out_status
+);
+#endif
+#ifndef UNIFFI_FFIDEF_FFI_BREEZ_SDK_BINDINGS_RUST_FUTURE_POLL_VOID
+#define UNIFFI_FFIDEF_FFI_BREEZ_SDK_BINDINGS_RUST_FUTURE_POLL_VOID
+void ffi_breez_sdk_bindings_rust_future_poll_void(uint64_t handle, UniffiRustFutureContinuationCallback _Nonnull callback, uint64_t callback_data
+);
+#endif
+#ifndef UNIFFI_FFIDEF_FFI_BREEZ_SDK_BINDINGS_RUST_FUTURE_CANCEL_VOID
+#define UNIFFI_FFIDEF_FFI_BREEZ_SDK_BINDINGS_RUST_FUTURE_CANCEL_VOID
+void ffi_breez_sdk_bindings_rust_future_cancel_void(uint64_t handle
+);
+#endif
+#ifndef UNIFFI_FFIDEF_FFI_BREEZ_SDK_BINDINGS_RUST_FUTURE_FREE_VOID
+#define UNIFFI_FFIDEF_FFI_BREEZ_SDK_BINDINGS_RUST_FUTURE_FREE_VOID
+void ffi_breez_sdk_bindings_rust_future_free_void(uint64_t handle
+);
+#endif
+#ifndef UNIFFI_FFIDEF_FFI_BREEZ_SDK_BINDINGS_RUST_FUTURE_COMPLETE_VOID
+#define UNIFFI_FFIDEF_FFI_BREEZ_SDK_BINDINGS_RUST_FUTURE_COMPLETE_VOID
+void ffi_breez_sdk_bindings_rust_future_complete_void(uint64_t handle, RustCallStatus *_Nonnull out_status
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_FUNC_CONNECT
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_FUNC_CONNECT
+uint16_t uniffi_breez_sdk_bindings_checksum_func_connect(void
+    
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_FUNC_DEFAULT_CONFIG
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_FUNC_DEFAULT_CONFIG
+uint16_t uniffi_breez_sdk_bindings_checksum_func_default_config(void
+    
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_FUNC_MNEMONIC_TO_SEED
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_FUNC_MNEMONIC_TO_SEED
+uint16_t uniffi_breez_sdk_bindings_checksum_func_mnemonic_to_seed(void
+    
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_FUNC_PARSE_INPUT
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_FUNC_PARSE_INPUT
+uint16_t uniffi_breez_sdk_bindings_checksum_func_parse_input(void
+    
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_FUNC_PARSE_INVOICE
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_FUNC_PARSE_INVOICE
+uint16_t uniffi_breez_sdk_bindings_checksum_func_parse_invoice(void
+    
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_FUNC_SERVICE_HEALTH_CHECK
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_FUNC_SERVICE_HEALTH_CHECK
+uint16_t uniffi_breez_sdk_bindings_checksum_func_service_health_check(void
+    
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_FUNC_SET_LOG_STREAM
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_FUNC_SET_LOG_STREAM
+uint16_t uniffi_breez_sdk_bindings_checksum_func_set_log_stream(void
+    
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_FUNC_STATIC_BACKUP
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_FUNC_STATIC_BACKUP
+uint16_t uniffi_breez_sdk_bindings_checksum_func_static_backup(void
+    
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_METHOD_BLOCKINGBREEZSERVICES_BACKUP
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_METHOD_BLOCKINGBREEZSERVICES_BACKUP
+uint16_t uniffi_breez_sdk_bindings_checksum_method_blockingbreezservices_backup(void
+    
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_METHOD_BLOCKINGBREEZSERVICES_BACKUP_STATUS
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_METHOD_BLOCKINGBREEZSERVICES_BACKUP_STATUS
+uint16_t uniffi_breez_sdk_bindings_checksum_method_blockingbreezservices_backup_status(void
+    
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_METHOD_BLOCKINGBREEZSERVICES_BUY_BITCOIN
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_METHOD_BLOCKINGBREEZSERVICES_BUY_BITCOIN
+uint16_t uniffi_breez_sdk_bindings_checksum_method_blockingbreezservices_buy_bitcoin(void
+    
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_METHOD_BLOCKINGBREEZSERVICES_CHECK_MESSAGE
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_METHOD_BLOCKINGBREEZSERVICES_CHECK_MESSAGE
+uint16_t uniffi_breez_sdk_bindings_checksum_method_blockingbreezservices_check_message(void
+    
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_METHOD_BLOCKINGBREEZSERVICES_CLAIM_REVERSE_SWAP
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_METHOD_BLOCKINGBREEZSERVICES_CLAIM_REVERSE_SWAP
+uint16_t uniffi_breez_sdk_bindings_checksum_method_blockingbreezservices_claim_reverse_swap(void
+    
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_METHOD_BLOCKINGBREEZSERVICES_CLOSE_LSP_CHANNELS
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_METHOD_BLOCKINGBREEZSERVICES_CLOSE_LSP_CHANNELS
+uint16_t uniffi_breez_sdk_bindings_checksum_method_blockingbreezservices_close_lsp_channels(void
+    
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_METHOD_BLOCKINGBREEZSERVICES_CONFIGURE_NODE
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_METHOD_BLOCKINGBREEZSERVICES_CONFIGURE_NODE
+uint16_t uniffi_breez_sdk_bindings_checksum_method_blockingbreezservices_configure_node(void
+    
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_METHOD_BLOCKINGBREEZSERVICES_CONNECT_LSP
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_METHOD_BLOCKINGBREEZSERVICES_CONNECT_LSP
+uint16_t uniffi_breez_sdk_bindings_checksum_method_blockingbreezservices_connect_lsp(void
+    
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_METHOD_BLOCKINGBREEZSERVICES_DISCONNECT
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_METHOD_BLOCKINGBREEZSERVICES_DISCONNECT
+uint16_t uniffi_breez_sdk_bindings_checksum_method_blockingbreezservices_disconnect(void
+    
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_METHOD_BLOCKINGBREEZSERVICES_EXECUTE_DEV_COMMAND
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_METHOD_BLOCKINGBREEZSERVICES_EXECUTE_DEV_COMMAND
+uint16_t uniffi_breez_sdk_bindings_checksum_method_blockingbreezservices_execute_dev_command(void
+    
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_METHOD_BLOCKINGBREEZSERVICES_FETCH_FIAT_RATES
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_METHOD_BLOCKINGBREEZSERVICES_FETCH_FIAT_RATES
+uint16_t uniffi_breez_sdk_bindings_checksum_method_blockingbreezservices_fetch_fiat_rates(void
+    
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_METHOD_BLOCKINGBREEZSERVICES_FETCH_LSP_INFO
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_METHOD_BLOCKINGBREEZSERVICES_FETCH_LSP_INFO
+uint16_t uniffi_breez_sdk_bindings_checksum_method_blockingbreezservices_fetch_lsp_info(void
+    
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_METHOD_BLOCKINGBREEZSERVICES_FETCH_REVERSE_SWAP_FEES
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_METHOD_BLOCKINGBREEZSERVICES_FETCH_REVERSE_SWAP_FEES
+uint16_t uniffi_breez_sdk_bindings_checksum_method_blockingbreezservices_fetch_reverse_swap_fees(void
+    
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_METHOD_BLOCKINGBREEZSERVICES_GENERATE_DIAGNOSTIC_DATA
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_METHOD_BLOCKINGBREEZSERVICES_GENERATE_DIAGNOSTIC_DATA
+uint16_t uniffi_breez_sdk_bindings_checksum_method_blockingbreezservices_generate_diagnostic_data(void
+    
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_METHOD_BLOCKINGBREEZSERVICES_IN_PROGRESS_ONCHAIN_PAYMENTS
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_METHOD_BLOCKINGBREEZSERVICES_IN_PROGRESS_ONCHAIN_PAYMENTS
+uint16_t uniffi_breez_sdk_bindings_checksum_method_blockingbreezservices_in_progress_onchain_payments(void
+    
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_METHOD_BLOCKINGBREEZSERVICES_IN_PROGRESS_SWAP
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_METHOD_BLOCKINGBREEZSERVICES_IN_PROGRESS_SWAP
+uint16_t uniffi_breez_sdk_bindings_checksum_method_blockingbreezservices_in_progress_swap(void
+    
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_METHOD_BLOCKINGBREEZSERVICES_LIST_FIAT_CURRENCIES
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_METHOD_BLOCKINGBREEZSERVICES_LIST_FIAT_CURRENCIES
+uint16_t uniffi_breez_sdk_bindings_checksum_method_blockingbreezservices_list_fiat_currencies(void
+    
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_METHOD_BLOCKINGBREEZSERVICES_LIST_LSPS
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_METHOD_BLOCKINGBREEZSERVICES_LIST_LSPS
+uint16_t uniffi_breez_sdk_bindings_checksum_method_blockingbreezservices_list_lsps(void
+    
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_METHOD_BLOCKINGBREEZSERVICES_LIST_PAYMENTS
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_METHOD_BLOCKINGBREEZSERVICES_LIST_PAYMENTS
+uint16_t uniffi_breez_sdk_bindings_checksum_method_blockingbreezservices_list_payments(void
+    
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_METHOD_BLOCKINGBREEZSERVICES_LIST_REFUNDABLES
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_METHOD_BLOCKINGBREEZSERVICES_LIST_REFUNDABLES
+uint16_t uniffi_breez_sdk_bindings_checksum_method_blockingbreezservices_list_refundables(void
+    
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_METHOD_BLOCKINGBREEZSERVICES_LIST_SWAPS
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_METHOD_BLOCKINGBREEZSERVICES_LIST_SWAPS
+uint16_t uniffi_breez_sdk_bindings_checksum_method_blockingbreezservices_list_swaps(void
+    
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_METHOD_BLOCKINGBREEZSERVICES_LNURL_AUTH
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_METHOD_BLOCKINGBREEZSERVICES_LNURL_AUTH
+uint16_t uniffi_breez_sdk_bindings_checksum_method_blockingbreezservices_lnurl_auth(void
+    
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_METHOD_BLOCKINGBREEZSERVICES_LSP_ID
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_METHOD_BLOCKINGBREEZSERVICES_LSP_ID
+uint16_t uniffi_breez_sdk_bindings_checksum_method_blockingbreezservices_lsp_id(void
+    
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_METHOD_BLOCKINGBREEZSERVICES_LSP_INFO
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_METHOD_BLOCKINGBREEZSERVICES_LSP_INFO
+uint16_t uniffi_breez_sdk_bindings_checksum_method_blockingbreezservices_lsp_info(void
+    
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_METHOD_BLOCKINGBREEZSERVICES_NODE_CREDENTIALS
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_METHOD_BLOCKINGBREEZSERVICES_NODE_CREDENTIALS
+uint16_t uniffi_breez_sdk_bindings_checksum_method_blockingbreezservices_node_credentials(void
+    
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_METHOD_BLOCKINGBREEZSERVICES_NODE_INFO
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_METHOD_BLOCKINGBREEZSERVICES_NODE_INFO
+uint16_t uniffi_breez_sdk_bindings_checksum_method_blockingbreezservices_node_info(void
+    
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_METHOD_BLOCKINGBREEZSERVICES_ONCHAIN_PAYMENT_LIMITS
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_METHOD_BLOCKINGBREEZSERVICES_ONCHAIN_PAYMENT_LIMITS
+uint16_t uniffi_breez_sdk_bindings_checksum_method_blockingbreezservices_onchain_payment_limits(void
+    
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_METHOD_BLOCKINGBREEZSERVICES_OPEN_CHANNEL_FEE
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_METHOD_BLOCKINGBREEZSERVICES_OPEN_CHANNEL_FEE
+uint16_t uniffi_breez_sdk_bindings_checksum_method_blockingbreezservices_open_channel_fee(void
+    
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_METHOD_BLOCKINGBREEZSERVICES_PAY_LNURL
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_METHOD_BLOCKINGBREEZSERVICES_PAY_LNURL
+uint16_t uniffi_breez_sdk_bindings_checksum_method_blockingbreezservices_pay_lnurl(void
+    
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_METHOD_BLOCKINGBREEZSERVICES_PAY_ONCHAIN
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_METHOD_BLOCKINGBREEZSERVICES_PAY_ONCHAIN
+uint16_t uniffi_breez_sdk_bindings_checksum_method_blockingbreezservices_pay_onchain(void
+    
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_METHOD_BLOCKINGBREEZSERVICES_PAYMENT_BY_HASH
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_METHOD_BLOCKINGBREEZSERVICES_PAYMENT_BY_HASH
+uint16_t uniffi_breez_sdk_bindings_checksum_method_blockingbreezservices_payment_by_hash(void
+    
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_METHOD_BLOCKINGBREEZSERVICES_PREPARE_ONCHAIN_PAYMENT
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_METHOD_BLOCKINGBREEZSERVICES_PREPARE_ONCHAIN_PAYMENT
+uint16_t uniffi_breez_sdk_bindings_checksum_method_blockingbreezservices_prepare_onchain_payment(void
+    
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_METHOD_BLOCKINGBREEZSERVICES_PREPARE_REDEEM_ONCHAIN_FUNDS
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_METHOD_BLOCKINGBREEZSERVICES_PREPARE_REDEEM_ONCHAIN_FUNDS
+uint16_t uniffi_breez_sdk_bindings_checksum_method_blockingbreezservices_prepare_redeem_onchain_funds(void
+    
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_METHOD_BLOCKINGBREEZSERVICES_PREPARE_REFUND
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_METHOD_BLOCKINGBREEZSERVICES_PREPARE_REFUND
+uint16_t uniffi_breez_sdk_bindings_checksum_method_blockingbreezservices_prepare_refund(void
+    
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_METHOD_BLOCKINGBREEZSERVICES_RECEIVE_ONCHAIN
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_METHOD_BLOCKINGBREEZSERVICES_RECEIVE_ONCHAIN
+uint16_t uniffi_breez_sdk_bindings_checksum_method_blockingbreezservices_receive_onchain(void
+    
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_METHOD_BLOCKINGBREEZSERVICES_RECEIVE_PAYMENT
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_METHOD_BLOCKINGBREEZSERVICES_RECEIVE_PAYMENT
+uint16_t uniffi_breez_sdk_bindings_checksum_method_blockingbreezservices_receive_payment(void
+    
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_METHOD_BLOCKINGBREEZSERVICES_RECOMMENDED_FEES
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_METHOD_BLOCKINGBREEZSERVICES_RECOMMENDED_FEES
+uint16_t uniffi_breez_sdk_bindings_checksum_method_blockingbreezservices_recommended_fees(void
+    
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_METHOD_BLOCKINGBREEZSERVICES_REDEEM_ONCHAIN_FUNDS
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_METHOD_BLOCKINGBREEZSERVICES_REDEEM_ONCHAIN_FUNDS
+uint16_t uniffi_breez_sdk_bindings_checksum_method_blockingbreezservices_redeem_onchain_funds(void
+    
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_METHOD_BLOCKINGBREEZSERVICES_REDEEM_SWAP
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_METHOD_BLOCKINGBREEZSERVICES_REDEEM_SWAP
+uint16_t uniffi_breez_sdk_bindings_checksum_method_blockingbreezservices_redeem_swap(void
+    
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_METHOD_BLOCKINGBREEZSERVICES_REFUND
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_METHOD_BLOCKINGBREEZSERVICES_REFUND
+uint16_t uniffi_breez_sdk_bindings_checksum_method_blockingbreezservices_refund(void
+    
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_METHOD_BLOCKINGBREEZSERVICES_REGISTER_WEBHOOK
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_METHOD_BLOCKINGBREEZSERVICES_REGISTER_WEBHOOK
+uint16_t uniffi_breez_sdk_bindings_checksum_method_blockingbreezservices_register_webhook(void
+    
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_METHOD_BLOCKINGBREEZSERVICES_REPORT_ISSUE
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_METHOD_BLOCKINGBREEZSERVICES_REPORT_ISSUE
+uint16_t uniffi_breez_sdk_bindings_checksum_method_blockingbreezservices_report_issue(void
+    
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_METHOD_BLOCKINGBREEZSERVICES_RESCAN_SWAPS
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_METHOD_BLOCKINGBREEZSERVICES_RESCAN_SWAPS
+uint16_t uniffi_breez_sdk_bindings_checksum_method_blockingbreezservices_rescan_swaps(void
+    
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_METHOD_BLOCKINGBREEZSERVICES_SEND_PAYMENT
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_METHOD_BLOCKINGBREEZSERVICES_SEND_PAYMENT
+uint16_t uniffi_breez_sdk_bindings_checksum_method_blockingbreezservices_send_payment(void
+    
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_METHOD_BLOCKINGBREEZSERVICES_SEND_SPONTANEOUS_PAYMENT
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_METHOD_BLOCKINGBREEZSERVICES_SEND_SPONTANEOUS_PAYMENT
+uint16_t uniffi_breez_sdk_bindings_checksum_method_blockingbreezservices_send_spontaneous_payment(void
+    
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_METHOD_BLOCKINGBREEZSERVICES_SET_PAYMENT_METADATA
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_METHOD_BLOCKINGBREEZSERVICES_SET_PAYMENT_METADATA
+uint16_t uniffi_breez_sdk_bindings_checksum_method_blockingbreezservices_set_payment_metadata(void
+    
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_METHOD_BLOCKINGBREEZSERVICES_SIGN_MESSAGE
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_METHOD_BLOCKINGBREEZSERVICES_SIGN_MESSAGE
+uint16_t uniffi_breez_sdk_bindings_checksum_method_blockingbreezservices_sign_message(void
+    
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_METHOD_BLOCKINGBREEZSERVICES_SYNC
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_METHOD_BLOCKINGBREEZSERVICES_SYNC
+uint16_t uniffi_breez_sdk_bindings_checksum_method_blockingbreezservices_sync(void
+    
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_METHOD_BLOCKINGBREEZSERVICES_UNREGISTER_WEBHOOK
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_METHOD_BLOCKINGBREEZSERVICES_UNREGISTER_WEBHOOK
+uint16_t uniffi_breez_sdk_bindings_checksum_method_blockingbreezservices_unregister_webhook(void
+    
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_METHOD_BLOCKINGBREEZSERVICES_WITHDRAW_LNURL
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_METHOD_BLOCKINGBREEZSERVICES_WITHDRAW_LNURL
+uint16_t uniffi_breez_sdk_bindings_checksum_method_blockingbreezservices_withdraw_lnurl(void
+    
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_METHOD_EVENTLISTENER_ON_EVENT
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_METHOD_EVENTLISTENER_ON_EVENT
+uint16_t uniffi_breez_sdk_bindings_checksum_method_eventlistener_on_event(void
+    
+);
+#endif
+#ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_METHOD_LOGSTREAM_LOG
+#define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_CHECKSUM_METHOD_LOGSTREAM_LOG
+uint16_t uniffi_breez_sdk_bindings_checksum_method_logstream_log(void
+    
+);
+#endif
+#ifndef UNIFFI_FFIDEF_FFI_BREEZ_SDK_BINDINGS_UNIFFI_CONTRACT_VERSION
+#define UNIFFI_FFIDEF_FFI_BREEZ_SDK_BINDINGS_UNIFFI_CONTRACT_VERSION
+uint32_t ffi_breez_sdk_bindings_uniffi_contract_version(void
+    
+);
+#endif
+
