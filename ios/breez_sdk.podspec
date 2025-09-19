@@ -1,4 +1,4 @@
-tag_version = '0.8.3-dev1'
+tag_version = '0.8.3-dev2'
 framework = 'breez_sdkFFI.xcframework'
 lib_name = "breez-sdkFFI.#{tag_version}"
 url = "https://github.com/breez/breez-sdk-swift/releases/download/#{tag_version}/#{framework}.zip"
