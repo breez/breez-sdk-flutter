@@ -1,17 +1,16 @@
 package com.breez.breez_sdk
 
 import breez_sdk.setLogStream
-import breez_sdk.LevelFilter
 import kotlinx.coroutines.CoroutineScope
 
 object SdkLogInitializer {
     private var nodeLogStream: SdkLogListener? = null
 
-    fun initializeNodeLogStream(filterLevel: LevelFilter?): SdkLogListener {
+    fun initializeNodeLogStream(): SdkLogListener {
         if (nodeLogStream == null) {
             try {
                 nodeLogStream = SdkLogListener()
-                setLogStream(nodeLogStream!!, filterLevel)
+                setLogStream(nodeLogStream!!)
             } catch (e: Throwable) {
                 // Reset nodeLogStream if setting log stream fails
                 e.printStackTrace()

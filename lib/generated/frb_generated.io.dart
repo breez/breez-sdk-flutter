@@ -108,9 +108,6 @@ abstract class BreezSdkBindingsApiImplPlatform extends BaseApiImpl<BreezSdkBindi
   InvoicePaidDetails dco_decode_box_autoadd_invoice_paid_details(dynamic raw);
 
   @protected
-  LevelFilter dco_decode_box_autoadd_level_filter(dynamic raw);
-
-  @protected
   ListPaymentsRequest dco_decode_box_autoadd_list_payments_request(dynamic raw);
 
   @protected
@@ -309,9 +306,6 @@ abstract class BreezSdkBindingsApiImplPlatform extends BaseApiImpl<BreezSdkBindi
   InvoicePaidDetails dco_decode_invoice_paid_details(dynamic raw);
 
   @protected
-  LevelFilter dco_decode_level_filter(dynamic raw);
-
-  @protected
   List<String> dco_decode_list_String(dynamic raw);
 
   @protected
@@ -469,9 +463,6 @@ abstract class BreezSdkBindingsApiImplPlatform extends BaseApiImpl<BreezSdkBindi
 
   @protected
   PlatformInt64? dco_decode_opt_box_autoadd_i_64(dynamic raw);
-
-  @protected
-  LevelFilter? dco_decode_opt_box_autoadd_level_filter(dynamic raw);
 
   @protected
   LNInvoice? dco_decode_opt_box_autoadd_ln_invoice(dynamic raw);
@@ -773,9 +764,6 @@ abstract class BreezSdkBindingsApiImplPlatform extends BaseApiImpl<BreezSdkBindi
   InvoicePaidDetails sse_decode_box_autoadd_invoice_paid_details(SseDeserializer deserializer);
 
   @protected
-  LevelFilter sse_decode_box_autoadd_level_filter(SseDeserializer deserializer);
-
-  @protected
   ListPaymentsRequest sse_decode_box_autoadd_list_payments_request(SseDeserializer deserializer);
 
   @protected
@@ -982,9 +970,6 @@ abstract class BreezSdkBindingsApiImplPlatform extends BaseApiImpl<BreezSdkBindi
   InvoicePaidDetails sse_decode_invoice_paid_details(SseDeserializer deserializer);
 
   @protected
-  LevelFilter sse_decode_level_filter(SseDeserializer deserializer);
-
-  @protected
   List<String> sse_decode_list_String(SseDeserializer deserializer);
 
   @protected
@@ -1142,9 +1127,6 @@ abstract class BreezSdkBindingsApiImplPlatform extends BaseApiImpl<BreezSdkBindi
 
   @protected
   PlatformInt64? sse_decode_opt_box_autoadd_i_64(SseDeserializer deserializer);
-
-  @protected
-  LevelFilter? sse_decode_opt_box_autoadd_level_filter(SseDeserializer deserializer);
 
   @protected
   LNInvoice? sse_decode_opt_box_autoadd_ln_invoice(SseDeserializer deserializer);
@@ -1549,12 +1531,6 @@ abstract class BreezSdkBindingsApiImplPlatform extends BaseApiImpl<BreezSdkBindi
     final ptr = wire.cst_new_box_autoadd_invoice_paid_details();
     cst_api_fill_to_wire_invoice_paid_details(raw, ptr.ref);
     return ptr;
-  }
-
-  @protected
-  ffi.Pointer<ffi.Int32> cst_encode_box_autoadd_level_filter(LevelFilter raw) {
-    // Codec=Cst (C-struct based), see doc to use other codecs
-    return wire.cst_new_box_autoadd_level_filter(cst_encode_level_filter(raw));
   }
 
   @protected
@@ -2162,12 +2138,6 @@ abstract class BreezSdkBindingsApiImplPlatform extends BaseApiImpl<BreezSdkBindi
   ffi.Pointer<ffi.Int64> cst_encode_opt_box_autoadd_i_64(PlatformInt64? raw) {
     // Codec=Cst (C-struct based), see doc to use other codecs
     return raw == null ? ffi.nullptr : cst_encode_box_autoadd_i_64(raw);
-  }
-
-  @protected
-  ffi.Pointer<ffi.Int32> cst_encode_opt_box_autoadd_level_filter(LevelFilter? raw) {
-    // Codec=Cst (C-struct based), see doc to use other codecs
-    return raw == null ? ffi.nullptr : cst_encode_box_autoadd_level_filter(raw);
   }
 
   @protected
@@ -3817,9 +3787,6 @@ abstract class BreezSdkBindingsApiImplPlatform extends BaseApiImpl<BreezSdkBindi
   int cst_encode_i_32(int raw);
 
   @protected
-  int cst_encode_level_filter(LevelFilter raw);
-
-  @protected
   int cst_encode_network(Network raw);
 
   @protected
@@ -3950,9 +3917,6 @@ abstract class BreezSdkBindingsApiImplPlatform extends BaseApiImpl<BreezSdkBindi
 
   @protected
   void sse_encode_box_autoadd_invoice_paid_details(InvoicePaidDetails self, SseSerializer serializer);
-
-  @protected
-  void sse_encode_box_autoadd_level_filter(LevelFilter self, SseSerializer serializer);
 
   @protected
   void sse_encode_box_autoadd_list_payments_request(ListPaymentsRequest self, SseSerializer serializer);
@@ -4180,9 +4144,6 @@ abstract class BreezSdkBindingsApiImplPlatform extends BaseApiImpl<BreezSdkBindi
   void sse_encode_invoice_paid_details(InvoicePaidDetails self, SseSerializer serializer);
 
   @protected
-  void sse_encode_level_filter(LevelFilter self, SseSerializer serializer);
-
-  @protected
   void sse_encode_list_String(List<String> self, SseSerializer serializer);
 
   @protected
@@ -4349,9 +4310,6 @@ abstract class BreezSdkBindingsApiImplPlatform extends BaseApiImpl<BreezSdkBindi
 
   @protected
   void sse_encode_opt_box_autoadd_i_64(PlatformInt64? self, SseSerializer serializer);
-
-  @protected
-  void sse_encode_opt_box_autoadd_level_filter(LevelFilter? self, SseSerializer serializer);
 
   @protected
   void sse_encode_opt_box_autoadd_ln_invoice(LNInvoice? self, SseSerializer serializer);
@@ -4671,22 +4629,16 @@ class BreezSdkBindingsWire implements BaseWire {
   late final _wire__crate__binding__breez_events_stream = _wire__crate__binding__breez_events_streamPtr
       .asFunction<void Function(int, ffi.Pointer<wire_cst_list_prim_u_8_strict>)>();
 
-  void wire__crate__binding__breez_log_stream(
-    int port_,
-    ffi.Pointer<wire_cst_list_prim_u_8_strict> s,
-    ffi.Pointer<ffi.Int32> filter_level,
-  ) {
-    return _wire__crate__binding__breez_log_stream(port_, s, filter_level);
+  void wire__crate__binding__breez_log_stream(int port_, ffi.Pointer<wire_cst_list_prim_u_8_strict> s) {
+    return _wire__crate__binding__breez_log_stream(port_, s);
   }
 
   late final _wire__crate__binding__breez_log_streamPtr =
-      _lookup<
-        ffi.NativeFunction<
-          ffi.Void Function(ffi.Int64, ffi.Pointer<wire_cst_list_prim_u_8_strict>, ffi.Pointer<ffi.Int32>)
-        >
-      >('frbgen_breez_sdk_wire__crate__binding__breez_log_stream');
+      _lookup<ffi.NativeFunction<ffi.Void Function(ffi.Int64, ffi.Pointer<wire_cst_list_prim_u_8_strict>)>>(
+        'frbgen_breez_sdk_wire__crate__binding__breez_log_stream',
+      );
   late final _wire__crate__binding__breez_log_stream = _wire__crate__binding__breez_log_streamPtr
-      .asFunction<void Function(int, ffi.Pointer<wire_cst_list_prim_u_8_strict>, ffi.Pointer<ffi.Int32>)>();
+      .asFunction<void Function(int, ffi.Pointer<wire_cst_list_prim_u_8_strict>)>();
 
   void wire__crate__binding__buy_bitcoin(int port_, ffi.Pointer<wire_cst_buy_bitcoin_request> req) {
     return _wire__crate__binding__buy_bitcoin(port_, req);
@@ -5555,17 +5507,6 @@ class BreezSdkBindingsWire implements BaseWire {
       );
   late final _cst_new_box_autoadd_invoice_paid_details = _cst_new_box_autoadd_invoice_paid_detailsPtr
       .asFunction<ffi.Pointer<wire_cst_invoice_paid_details> Function()>();
-
-  ffi.Pointer<ffi.Int32> cst_new_box_autoadd_level_filter(int value) {
-    return _cst_new_box_autoadd_level_filter(value);
-  }
-
-  late final _cst_new_box_autoadd_level_filterPtr =
-      _lookup<ffi.NativeFunction<ffi.Pointer<ffi.Int32> Function(ffi.Int32)>>(
-        'frbgen_breez_sdk_cst_new_box_autoadd_level_filter',
-      );
-  late final _cst_new_box_autoadd_level_filter = _cst_new_box_autoadd_level_filterPtr
-      .asFunction<ffi.Pointer<ffi.Int32> Function(int)>();
 
   ffi.Pointer<wire_cst_list_payments_request> cst_new_box_autoadd_list_payments_request() {
     return _cst_new_box_autoadd_list_payments_request();
