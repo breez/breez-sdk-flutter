@@ -583,7 +583,7 @@ RustBuffer uniffi_breez_sdk_bindings_fn_func_service_health_check(RustBuffer api
 #endif
 #ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_FUNC_SET_LOG_STREAM
 #define UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_FUNC_SET_LOG_STREAM
-void uniffi_breez_sdk_bindings_fn_func_set_log_stream(uint64_t log_stream, RustCallStatus *_Nonnull out_status
+void uniffi_breez_sdk_bindings_fn_func_set_log_stream(uint64_t log_stream, RustBuffer filter_level, RustCallStatus *_Nonnull out_status
 );
 #endif
 #ifndef UNIFFI_FFIDEF_UNIFFI_BREEZ_SDK_BINDINGS_FN_FUNC_STATIC_BACKUP
